@@ -1,6 +1,6 @@
 # Groupie tracker
 
-## By : **Groupe π tracker**
+<ins>By : **Groupe π tracker**</ins>
 
 Groupe :
 - BOIZOT Maxime
