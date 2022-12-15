@@ -1,6 +1,7 @@
 package tracker
 
-func GetRequestedValueJson(requestedValue string) string {
-	// Get the value of the requestedValue from the json file
-	return ""
+func GetApiUrl() []string {
+	return []string{
+		"https://groupietrackers.herokuapp.com/api/",
+	}
 }
