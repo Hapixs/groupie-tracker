@@ -1,7 +1,6 @@
 package tracker
 
 import (
-	"html/template"
 	"net/http"
 )
 
@@ -9,7 +8,7 @@ const (
 	port = ":8080"
 )
 
-func Run () {
-	http.HandleFunc("/", index)
+func Run() {
+	http.HandleFunc("/", indexHandler)
 	http.ListenAndServe(port, nil)
 }
