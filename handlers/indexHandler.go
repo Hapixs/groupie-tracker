@@ -12,6 +12,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		Artist: api.GetAllArtist(),
 		Test:   "yep, fragments are working ! (and with variables ! :D) ",
 	}
+
 	PrepareDataWithFragments(&data)
 	tmpl.Execute(w, data)
 }
