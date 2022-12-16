@@ -14,6 +14,7 @@
 <body>
     <p class="text-2xl">Groupie Tracker</p>
     <p class="text-1xl">By Groupe π tracker</p>
+    {{ index .Fragments "navigationbar.html" }}
     <div>
         <!-- <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
             <div class="carousel-inner relative w-full overflow-hidden">
@@ -53,5 +54,6 @@
             </div>
         {{end}} -->
     </div>
+    {{ index .Fragments "navigationbar.html" }}
 </body>
 </html>
