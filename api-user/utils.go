@@ -5,14 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
-
-type MainPageResponse struct {
-	Artists   string `json:"artists"`
-	Locations string `json:"locations"`
-	Dates     string `json:"dates"`
-	Relation  string `json:"relation"`
-}
 
 func GetApiUrl() []string {
 	response, err := http.Get(apiUrl)
@@ -30,4 +24,80 @@ func GetApiUrl() []string {
 		log.Fatal(err)
 	}
 	return []string{mainPageResponse.Artists, mainPageResponse.Locations, mainPageResponse.Dates, mainPageResponse.Relation}
+}
+
+func GetArtistInfo(id int) Artist {
+	url := GetApiUrl()[0] + "/" + strconv.Itoa(id)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var artist Artist
+	err = json.Unmarshal(body, &artist)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return artist
+}
+
+func GetLocationInfo(id int) Location {
+	url := GetApiUrl()[1] + "/" + strconv.Itoa(id)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var location Location
+	err = json.Unmarshal(body, &location)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return location
+}
+
+func GetDateInfo(id int) Date {
+	url := GetApiUrl()[2] + "/" + strconv.Itoa(id)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var date Date
+	err = json.Unmarshal(body, &date)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return date
+}
+
+func GetRelationInfo(id int) Relation {
+	url := GetApiUrl()[3] + "/" + strconv.Itoa(id)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var relation Relation
+	err = json.Unmarshal(body, &relation)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return relation
 }
