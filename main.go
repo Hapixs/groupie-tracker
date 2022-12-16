@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"tracker/api-user"
+	tracker "tracker/api-user"
 )
 
 func main() {
