@@ -2,13 +2,10 @@ package main
 
 import (
 	"fmt"
-	tracker "tracker/api-user"
+	tracker "tracker/web"
 )
 
 func main() {
-	// fmt.Println(tracker.GetApiUrl())
-	fmt.Println(tracker.GetArtistInfo(1))
-	// fmt.Println(tracker.GetDateInfo(1))
-	// fmt.Println(tracker.GetLocationInfo(1))
-	// fmt.Println(tracker.GetAllArtist())
+	fmt.Println("Hello, World!")
+	tracker.Run()	
 }

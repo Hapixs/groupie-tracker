@@ -9,5 +9,13 @@
 </head>
 <body>
     <h1>un beau site</h1>
+    <div>
+        {{range .Artist}}
+            <div>
+                <h2>{{.Name}}</h2>
+                <img src="{{.Image}}" alt="">
+            </div>
+        {{end}}
+    </div>
 </body>
 </html>
