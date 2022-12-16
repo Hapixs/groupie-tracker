@@ -26,6 +26,25 @@ func GetApiUrl() []string {
 	return []string{mainPageResponse.Artists, mainPageResponse.Locations, mainPageResponse.Dates, mainPageResponse.Relation}
 }
 
+func GetAllArtist() []Artist {
+	url := GetApiUrl()[0]
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var artists []Artist
+	err = json.Unmarshal(body, &artists)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return artists
+}
+
 func GetArtistInfo(id int) Artist {
 	url := GetApiUrl()[0] + "/" + strconv.Itoa(id)
 	response, err := http.Get(url)
@@ -43,6 +62,16 @@ func GetArtistInfo(id int) Artist {
 		log.Fatal(err)
 	}
 	return artist
+}
+
+func GetArtistByName(name string) Artist {
+	allArtist := GetAllArtist()
+	for _, artist := range allArtist {
+		if artist.Name == name {
+			return artist
+		}
+	}
+	return Artist{}
 }
 
 func GetLocationInfo(id int) Location {

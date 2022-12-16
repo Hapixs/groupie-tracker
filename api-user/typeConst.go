@@ -16,7 +16,7 @@ type Artist struct {
 	FirstAlbum   string   `json:"firstAlbum"`
 	Locations    string   `json:"locations"`
 	ConcertDates string   `json:"concertDates"`
-	Relation     string   `json:"relation"`
+	Relations    string   `json:"relations"`
 }
 
 type Location struct {
