@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-
 	utils.PrepareFolders()
 
 	println("Updating all assets...")

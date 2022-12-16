@@ -1,0 +1,17 @@
+package handlers
+
+import (
+	"net/http"
+	"text/template"
+)
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.String() == "/" {
+		http.Redirect(w, r, "/home", http.StatusSeeOther)
+		return
+	}
+	tmpl := template.Must(template.ParseFiles(notfoundTempaltePath))
+	data := HtmlData{}
+	PrepareDataWithFragments(&data)
+	tmpl.Execute(w, data)
+}

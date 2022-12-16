@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	indexTmpl = "static/templates/index.html"
+	homeTemplatePath     = "static/templates/index.html"
+	notfoundTempaltePath = "static/templates/notfound.html"
 )
 
 type HtmlData struct {
@@ -18,7 +19,9 @@ type HtmlData struct {
 }
 
 func InitHandlers() {
-	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/home", homeHandler)
+	http.HandleFunc("/test", testHandler)
 }
 
 func PrepareDataWithFragments(data *HtmlData) {

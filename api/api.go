@@ -171,6 +171,8 @@ func GetRelationInfo(id int) ApiRelation {
 	return relation
 }
 
+//Some random stuff here
+
 type GoogleResponse struct {
 	Search_metadata    []string
 	Search_parameters  []string
