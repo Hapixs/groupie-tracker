@@ -43,8 +43,8 @@ type Date struct {
 }
 
 type Relation struct {
-	Id             int      `json:"id"`
-	DatesLocations []string `json:"datesLocations"`
+	Id             int                   `json:"id"`
+	DatesLocations map[string]([]string) `json:"datesLocations"`
 }
 
 func GetApiUrl() []string {
