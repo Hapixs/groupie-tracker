@@ -1,4 +1,4 @@
-package tracker
+package api
 
 type MainPageResponse struct {
 	Artists   string `json:"artists"`

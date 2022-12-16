@@ -1,4 +1,4 @@
-package tracker
+package api
 
 import (
 	"encoding/json"
