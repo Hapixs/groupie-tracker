@@ -19,6 +19,7 @@ func main() {
 
 	handlers.InitHandlers()
 
+	println("WebServer ready to use !")
 	http.ListenAndServe(port, nil)
 }
 

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 const (
@@ -30,17 +31,6 @@ type ApiArtist struct {
 	Locations    string   `json:"locations"`
 	ConcertDates string   `json:"concertDates"`
 	Relations    string   `json:"relations"`
-}
-
-type ApiLocation struct {
-	Id        int      `json:"id"`
-	Locations []string `json:"locations"`
-	Dates     string   `json:"dates"`
-}
-
-type ApiDate struct {
-	Id    int      `json:"id"`
-	Dates []string `json:"dates"`
 }
 
 type ApiRelation struct {
@@ -171,32 +161,45 @@ type Date struct {
 
 var GroupMap = map[int](Group){}
 
+var wg sync.WaitGroup
+
 func LoadGroups() {
 	println("Loading groups in cache for better performances")
 	groups := getAllArtist()
 	for _, v := range groups {
-		g := Group{
-			Id:             v.Id,
-			ImageLink:      v.Image,
-			Name:           v.Name,
-			CreationYear:   v.CreationDate,
-			FirstAlbumDate: v.FirstAlbum,
-		}
-		for _, m := range v.Members {
-			g.Members = append(g.Members, Artist{m})
-		}
-		relations := GetRelationInfo(v.Id)
-		for key, value := range relations.DatesLocations {
-			for _, date := range value {
-				g.DateLocations = append(g.DateLocations, Date{
-					Locations: key,
-					DateTime:  date,
-				})
-			}
-		}
-		GroupMap[v.Id] = g
+		go transformAndCacheGroup(v)
 	}
+	wg.Wait()
 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
+}
+
+var mutex sync.Mutex
+
+func transformAndCacheGroup(v ApiArtist) {
+	defer wg.Done()
+	wg.Add(1)
+	g := Group{
+		Id:             v.Id,
+		ImageLink:      v.Image,
+		Name:           v.Name,
+		CreationYear:   v.CreationDate,
+		FirstAlbumDate: v.FirstAlbum,
+	}
+	for _, m := range v.Members {
+		g.Members = append(g.Members, Artist{m})
+	}
+	relations := GetRelationInfo(v.Id)
+	for key, value := range relations.DatesLocations {
+		for _, date := range value {
+			g.DateLocations = append(g.DateLocations, Date{
+				Locations: key,
+				DateTime:  date,
+			})
+		}
+	}
+	mutex.Lock()
+	GroupMap[v.Id] = g
+	mutex.Unlock()
 }
 
 func GetCachedGroups() []Group {
