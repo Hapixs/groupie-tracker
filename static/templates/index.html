@@ -18,9 +18,9 @@
     <div>
         <!-- <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
             <div class="carousel-inner relative w-full overflow-hidden">
-            {{range .Artist}}
+            {{range .Groups}}
                 <div class="carousel-item active relative float-left w-full">
-                    <img src="{{.Image}}" class="block w-full" alt="Wild Landscape"/>
+                    <img src="{{.ImageLink}}" class="block w-full" alt="Wild Landscape"/>
                     <p class="absolute top-0 left-0 m-4 text-2xl font-bold text-white">{{.Name}}</p>
                 </div>
             {{end}}
@@ -35,10 +35,10 @@
             </button>
         </div> -->
         <div class="flex">
-        {{range .Artist}}
+        {{range .Groups}}
             <div class="rounded-lg shadow-lg bg-white max-w-sm">
                 <a href="/artist/{{.Id}}/">
-                    <img class="rounded-t-lg" src="{{.Image}}" alt={{.Name}}/>
+                    <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>
                 </a>
                 <div class="p-6">
                     <h5 class="text-gray-900 text-xl font-medium mb-2">{{.Name}}</h5>

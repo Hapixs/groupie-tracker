@@ -13,7 +13,7 @@ const (
 )
 
 type HtmlData struct {
-	Artist    []api.ApiArtist
+	Groups    []api.Group
 	Test      string
 	Fragments map[string](string)
 }

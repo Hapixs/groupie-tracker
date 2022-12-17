@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api"
 	"handlers"
 	"net/http"
 	"utils"
@@ -9,10 +10,8 @@ import (
 func main() {
 	utils.PrepareFolders()
 
-	println("Updating all assets...")
-
-	go utils.UpdateAllAlbumPics()
-	go utils.UpdateAllArtistsPics()
+	api.LoadGroups()
+	go utils.UpdateAllGroupsPics()
 
 	// Can be moved in a func like Run for some reason
 	fs := http.FileServer(http.Dir("./static/"))

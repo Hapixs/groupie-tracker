@@ -13,37 +13,22 @@ func PrepareFolders() {
 		println(assetsErr.Error())
 	}
 
-	albumErr := os.Mkdir("static/assets/album", os.ModePerm)
+	groupsErr := os.Mkdir("static/assets/groups", os.ModePerm)
 
-	if albumErr != nil {
-		println(assetsErr.Error())
-	}
-
-	artistErr := os.Mkdir("static/assets/artistes", os.ModePerm)
-
-	if artistErr != nil {
+	if groupsErr != nil {
 		println(assetsErr.Error())
 	}
 }
 
-func UpdateAllAlbumPics() {
-	Artists := api.GetAllArtist()
-	for _, a := range Artists {
+func UpdateAllGroupsPics() {
+	println("Checking and updating groups images..")
+	groups := api.GetCachedGroups()
+	for _, a := range groups {
 		fileHash := CalculatStringHash(a.Name)
-		DownloadPicture(a.Image, "static/assets/album/"+fileHash+".png")
-	}
-}
-
-func UpdateAllArtistsPics() {
-	for _, a := range api.GetAllArtist() {
-		for _, m := range a.Members {
-			go UpdateArtistPic(m)
+		_, err := os.OpenFile("static/assets/groups/"+fileHash+".jpeg", os.O_RDONLY, os.ModePerm)
+		if err != nil {
+			DownloadPicture(a.ImageLink, "static/assets/groups/"+fileHash+".jpeg")
 		}
 	}
-}
-
-func UpdateArtistPic(name string) {
-	fileHash := CalculatStringHash(name)
-	DownloadPicture(api.GetArtistPictureLink(name), "static/assets/artistes/"+fileHash+"x")
-
+	println("All groups images are downloaded !")
 }
