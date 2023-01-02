@@ -4,10 +4,16 @@ import (
 	"api"
 	"handlers"
 	"net/http"
+	"objects"
+	"os"
 	"utils"
 )
 
 func main() {
+
+	println("Reading start arguments")
+	objects.GameProcessArguments(os.Args[1:])
+
 	utils.PrepareFolders()
 
 	api.LoadGroups()
