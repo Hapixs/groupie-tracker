@@ -18,19 +18,20 @@
         <p class="text-2xl">Groupie Tracker</p>
         <p class="text-1xl">By Groupe π tracker</p>
         {{ index .Fragments "navigationbar.html" }}
-        <div class="grid grid-flow-col grid-rows-5 grid-cols-1 gap-1">
-            {{range .Groups}}
-                <div class="rounded-lg shadow-lg bg-white max-w-sm" loading="lazy">
-                    <a href="/artist/{{.Id}}/">
-                        <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>
-                    </a>
-                    <div class="p-6">
-                        <h5 class="text-gray-900 text-xl font-medium mb-2">{{.Name}}</h5>
-                        <!-- <button type="button" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button> -->
+            <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center">
+                {{range .Groups}}
+                <div class="">
+                    <div class="rounded-lg shadow-lg bg-white w-48" loading="lazy">
+                        <a href="/artist/{{.Id}}/">
+                            <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>
+                        </a>
+                        <div class="p-6">
+                            <h5 class="text-gray-900 text-xl font-medium mb-2">{{.Name}}</h5>
+                            <!-- <button type="button" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button> -->
+                        </div>
                     </div>
                 </div>
-            {{end}}
-        </div>
-        {{ index .Fragments "navigationbar.html" }}
+                {{end}}
+            </div>    
     </body>
 </html>
