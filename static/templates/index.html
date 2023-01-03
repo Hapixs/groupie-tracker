@@ -12,12 +12,10 @@
         <title>Groupe π tracker</title>
     </head>
     <header>
+        {{ index .Fragments "navigationbar.html" }}
         {{ index .Fragments "messages.html" }}
     </header>
     <body>
-        <p class="text-2xl">Groupie Tracker</p>
-        <p class="text-1xl">By Groupe π tracker</p>
-        {{ index .Fragments "navigationbar.html" }}
             <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center">
                 {{range .Groups}}
                 <div class="">
