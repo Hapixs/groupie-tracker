@@ -10,11 +10,9 @@ import (
 	"utils"
 )
 
-var wbc = objects.WebConfig{}
-
 func main() {
 
-	wbc.InitConfig()
+	objects.WebServerConfig.InitConfig()
 
 	println("Reading start arguments")
 	objects.GameProcessArguments(os.Args[1:])
@@ -30,7 +28,6 @@ func main() {
 
 	handlers.InitHandlers()
 
-	println("WebServer ready to use !")
-	serverport, _, _ := wbc.GetConfigItem(objects.ServerPort)
-	http.ListenAndServe(strconv.Itoa(serverport), nil)
+	serverport, _, _ := objects.WebServerConfig.GetConfigItem(objects.ServerPort)
+	http.ListenAndServe(":"+strconv.Itoa(serverport), nil)
 }

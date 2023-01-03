@@ -11,6 +11,9 @@
         <link rel="stylesheet" href="/static/css/notFound.css">
         <title>Oh Snap !</title>
     </head>
+    <header>
+        {{ index .Fragments "navigationbar.html" }}
+    </header>
     <body class="dark:bg-gray-800" onload="changeTheme()">
         <div title="Oh Snap" class="line-1 dark:text-gray-300">Oh Snap</div>
         <div title="Page not found" class="line-2 dark:text-gray-300">Page not found</div>

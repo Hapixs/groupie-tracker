@@ -25,15 +25,20 @@ type WebConfig struct {
 type ConfigKey string
 
 const (
-	ServerPort ConfigKey = "serverport"
+	ServerPort      ConfigKey = "serverport"
+	DownloadPicture ConfigKey = "downloadpictures"
 )
+
+var WebServerConfig = WebConfig{}
 
 func (gc *WebConfig) InitConfig() {
 	gc.IntItems = map[ConfigKey]ConfigItemInt{
 		ServerPort: {8080, 8080},
 	}
 
-	gc.BoolItems = map[ConfigKey]ConfigItemBoolean{}
+	gc.BoolItems = map[ConfigKey]ConfigItemBoolean{
+		DownloadPicture: {true, true},
+	}
 
 	gc.StringItems = map[ConfigKey]ConfigItemString{}
 }

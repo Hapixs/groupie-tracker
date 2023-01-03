@@ -210,15 +210,21 @@ func GetCachedGroups() []Group {
 	return gs
 }
 
-func GetGroupFromName(name string) Group {
+func GetGroupFromName(name string) *Group {
 	for _, v := range GroupMap {
 		if v.Name == name {
-			return v
+			return &v
 		}
 	}
-	return Group{}
+	return &Group{}
 }
 
 func GetGroupFromId(id int) Group {
 	return GroupMap[id]
+}
+
+func EditGroupImageLink(id int, url string) {
+	g := GetGroupFromId(id)
+	g.ImageLink = url
+	GroupMap[id] = g
 }
