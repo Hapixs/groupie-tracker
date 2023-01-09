@@ -2,14 +2,14 @@
 
 <ins>By : **Groupe π tracker**</ins>
 
-Groupe :
+Group :
 - BOIZOT Maxime
 - SAROUILLE Alexandre
 - BONNELL Nathan
 
 Trello : https://trello.com/b/rIyCGasZ/groupie-tracker
 
-Subject : 
+<ins>Subject:</ins>  
 Groupie Trackers consists on receiving a given API and manipulate the data contained in it, in order to create a site, displaying the information.
 
 It will be given an API, that consists in four parts:
