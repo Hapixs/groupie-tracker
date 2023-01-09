@@ -16,8 +16,8 @@
         {{ index .Fragments "messages.html" }}
     </header>
     <body>
-            <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center">
-                {{range .Groups}}
+        <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center">
+            {{range .Groups}}
                 <div class="">
                     <div class="rounded-lg shadow-lg bg-white w-48" loading="lazy">
                         <a href="/artist/{{.Id}}/">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                {{end}}
-            </div>    
+            {{end}}
+        </div>
     </body>
 </html>
