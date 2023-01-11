@@ -19,6 +19,7 @@ type HtmlData struct {
 	Groups    []api.Group
 	Test      string
 	Fragments map[string](string)
+	ProjectName   string
 }
 
 func InitHandlers() {

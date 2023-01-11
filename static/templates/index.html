@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>Groupe π tracker</title>
+        <title>{{ .ProjectName }}</title>
     </head>
     <header>
         {{ index .Fragments "navigationbar.html" }}
@@ -18,7 +18,7 @@
     </header>
     <body class="dark:bg-gray-800">        
         <div class="my-10 mx-5">
-            <form>
+            <form method="post">
                 <div class="flex">
                     <label for="category-select" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
                     <select id="category-select" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">

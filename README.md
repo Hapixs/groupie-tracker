@@ -1,6 +1,6 @@
 # Groupie tracker
 
-<ins>By : **Groupe π tracker**</ins>
+<ins>By : **{{ .ProjectName }}**</ins>
 
 Group :
 - BOIZOT Maxime
