@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+        <link href='https://fonts.googleapis.com/css?family=Nova Square' rel='stylesheet'>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="/static/css/notFound.css">
         <script src="/static/js/script.js"></script>
@@ -17,7 +18,7 @@
         {{ index .Fragments "messages.html" }}
     </header>
     <body class="dark:bg-gray-800">
-        <div div="-z-5 dark:text-gray-200 backgroundText">{{ .ErrorCode }}</div>
+        <div class="-z-5 dark:text-blue-700 opacity-50" style="font-size: 40rem;font-family:'Nova Square';">{{ .ErrorCode }}</div>
         <div title="Oh Snap" class="line-1 dark:text-gray-300 glitchCss">Oh Snap</div>
         <div title="Page not found" class="line-2 dark:text-gray-300 glitchCss">Page not found</div>
         <p class="subText">Try going back to the <a href="/">homepage</a>.</p>
