@@ -15,6 +15,7 @@ const (
 type HtmlData struct {
 	InfoMessage  string
 	ErrorMessage string
+	ErrorCode    int
 
 	Groups    []api.Group
 	Test      string

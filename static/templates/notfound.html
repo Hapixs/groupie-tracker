@@ -10,14 +10,14 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="/static/css/notFound.css">
         <script src="/static/js/script.js"></script>
-        <title>Oh Snap !</title>
+        <title>Oh Snap ! Error {{ .ErrorCode }}</title>
     </head>
     <header class="barre">
         {{ index .Fragments "navigationbar.html" }}
         {{ index .Fragments "messages.html" }}
     </header>
     <body class="dark:bg-gray-800">
-        <div div="-z-5 dark:text-gray-200 backgroundText">404</div>
+        <div div="-z-5 dark:text-gray-200 backgroundText">{{ .ErrorCode }}</div>
         <div title="Oh Snap" class="line-1 dark:text-gray-300 glitchCss">Oh Snap</div>
         <div title="Page not found" class="line-2 dark:text-gray-300 glitchCss">Page not found</div>
         <p class="subText">Try going back to the <a href="/">homepage</a>.</p>
