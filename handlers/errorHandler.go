@@ -10,6 +10,7 @@ func errorHandler(w http.ResponseWriter, r *http.Request) {
 	data := HtmlData{
 		ErrorMessage: "La page demandé n'a pas été trouvé",
 		ErrorCode:    404,
+		ProjectName: "Chazam",
 	}
 	PrepareDataWithFragments(&data)
 	tmpl.Execute(w, data)
