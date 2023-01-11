@@ -74,7 +74,7 @@ body {
 
 .line-1 {
     position: absolute;
-    top: 10vh;
+    top: 25vh;
     /* left: 28%; */
     text-align: center;
     /* background: linear-gradient(90deg, #131313 0%, #131313 50%, #131313 100%); */
@@ -84,7 +84,7 @@ body {
 
 .line-2 {
     position: absolute;
-    top: 45vh;
+    top: 50vh;
     /* left: 35%; */
     text-align: center;
     /* background: linear-gradient(90deg, #131313 0%, #131313 50%, #131313 100%); */
@@ -115,6 +115,6 @@ header {
     letter-spacing: 0;
     color: rgb(97, 97, 97);
     opacity: 0.7;
-    margin: 1%;
+    /* margin: 1%; */
     width: 100%;
 }
