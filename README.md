@@ -24,3 +24,14 @@ This project also focuses on the creation of events/actions and on their visuali
 
 The event/action we want you to do is known as a client call to the server (client-server). We can say it is a feature of your choice that needs to trigger an action. This action must communicate with the server in order to recieve information, ([request-response])(https://en.wikipedia.org/wiki/Request%E2%80%93response)
 An event consists in a system that responds to some kind of action triggered by the client, time, or any other factor.
+
+## Launch of the project
+
+Do the command : 
+
+```bash	
+go run webserver.go
+```
+
+Then go to the address : http://localhost:8080/
+to see the result.
