@@ -63,8 +63,9 @@
                     </div>
                 </a>
             {{end}}
-            {{ if true }}
-            <p>No result found</p>
+            {{ if eq (len .Groups) 0 }}
+            <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">No result found, reread what you have written...</p>
+            {{end}}
         </div>
        {{ if false }} {{ index .Fragments "cookie.html" }} {{end}}
     </body>
