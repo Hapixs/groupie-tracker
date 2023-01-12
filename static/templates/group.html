@@ -20,18 +20,24 @@
         <div class="container mx-auto my-10 text-center justify-center">
             <p class="font-black" style="font-size: 7rem;">{{.Group.Name}}</p>
             <div class="flex flex-wrap">
-                <div class="flex flex-col items-center justify-center mx-auto my-10">
-                    <ins><p class="text-3xl font-extrabold">Informations :</p></ins>
-                    <div>
-                        <p>Members :</p>
-                        {{range .Group.Members}}
-                        <p class="text-2xl font-bold">{{.Name}}</p>
-                        {{end}}
-                    </div>
-                </div>
                 <div class="flex flex-col items-center justify-center mx-auto my-5">
                     <!-- <p class="text-xl font-bold">Image: </p> -->
                     <img src="{{.Group.ImageLink}}" alt="" class="w-96">
+                </div>
+                <div class="flex flex-col items-center mx-auto my-10">
+                    <!-- <ins><p class="text-3xl font-extrabold">Informations :</p></ins> -->
+                    <div class="flex flex-col">
+                        {{range .Group.Members}}
+                        <img src="https://cdn-icons-png.flaticon.com/512/32/32297.png" alt="" class="mt-2 mx-auto w-1/5">
+                        <p class="text-2xl font-bold">{{.Name}}</p>
+                        {{end}}
+                    </div>
+                    <!-- <div class="flex items-center justify-center w-full inline-flex">
+                        {{range .Group.Members}}
+                        <p class="text-2xl font-bold">{{.Name}}</p>
+                        <img src="https://cdn-icons-png.flaticon.com/512/32/32297.png" alt="" class="mt-2 mx-auto w-1/5">
+                        {{end}}
+                    </div>   -->
                 </div>
             </div>
         </div>
