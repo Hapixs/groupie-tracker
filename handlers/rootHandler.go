@@ -9,5 +9,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
+	println("error at " + r.URL.String())
 	http.Redirect(w, r, "/notfound", http.StatusSeeOther)
 }

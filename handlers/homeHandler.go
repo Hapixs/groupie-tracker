@@ -9,7 +9,7 @@ import (
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
 	data := HtmlData{
-		Groups: api.GetCachedGroups(),
+		Groups:      api.GetCachedGroups(),
 		ProjectName: "Chazam",
 	}
 	PrepareDataWithFragments(&data)

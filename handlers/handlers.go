@@ -4,12 +4,14 @@ import (
 	"api"
 	"net/http"
 	"os"
+	"strconv"
 	"utils"
 )
 
 const (
 	homeTemplatePath     = "static/templates/index.html"
 	notfoundTempaltePath = "static/templates/notfound.html"
+	groupTemplatePath    = "static/templates/group.html"
 )
 
 type HtmlData struct {
@@ -17,10 +19,11 @@ type HtmlData struct {
 	ErrorMessage string
 	ErrorCode    int
 
-	Groups    []api.Group
-	Test      string
-	Fragments map[string](string)
-	ProjectName   string
+	Groups []api.Group
+	//Test      string
+	Group       api.Group
+	Fragments   map[string](string)
+	ProjectName string
 }
 
 func InitHandlers() {
@@ -28,6 +31,12 @@ func InitHandlers() {
 	http.HandleFunc("/home", homeHandler)
 	http.HandleFunc("/test", testHandler)
 	http.HandleFunc("/notfound", errorHandler)
+
+	for k := range api.GroupMap {
+		link := "/group/" + strconv.Itoa(k) + "/"
+		http.HandleFunc(link, groupHandler)
+		println("registerd " + link)
+	}
 }
 
 func PrepareDataWithFragments(data *HtmlData) {
