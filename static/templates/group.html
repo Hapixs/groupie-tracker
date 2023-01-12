@@ -23,61 +23,6 @@
                     <h1 class="text-center">Group {{ .Group.Name }}</h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="text-center">Members</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Username</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{ range .Group.Members }}
-                            <tr>
-                                <td>{{ .Username }}</td>
-                                <td>{{ .Email }}</td>
-                                <td>{{ .Role }}</td>
-                                <td>
-                                    <a href="/user/{{ .Username }}" class="btn btn-primary"><i class="bi bi-person"></i></a>
-                                    <a href="/group/{{ $.Group.Name }}/remove/{{ .Username }}" class="btn btn-danger"><i class="bi bi-person-x"></i></a>
-                                </td>
-                            </tr>
-                            {{ end }}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="text-center">Add a member</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <form action="/group/{{ .Group.Name }}/add" method="POST">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-                        </div>
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form select" id="role" name="role">
-                                <option value="member">Member</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </body>
 </html>
