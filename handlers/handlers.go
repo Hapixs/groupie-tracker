@@ -21,6 +21,9 @@ type HtmlData struct {
 
 	PageName string
 
+	LastResearchInput    string
+	LastResearchCategory string
+
 	Groups []api.Group
 	//Test      string
 	Group       api.Group

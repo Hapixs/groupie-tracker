@@ -3,10 +3,7 @@ package handlers
 import (
 	"api"
 	"net/http"
-	"strings"
 	"text/template"
-
-	"golang.org/x/exp/slices"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -21,22 +18,17 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		if err := r.ParseForm(); err != nil {
 			data.ErrorMessage = "Une erreur est survenue lors de l'application des filtres.."
 		} else {
-			str := strings.ToUpper(r.Form.Get("search_input"))
-			switch r.Form.Get("search_category") {
+			str := r.Form.Get("search_input")
+			category := r.Form.Get("search_category")
+			switch category {
 			case "name":
-				slices.SortStableFunc(groups, func(a, b api.Group) bool {
-					return strings.Index(strings.ToUpper(a.Name), str) > strings.Index(strings.ToUpper(b.Name), str)
-				})
-				sortedGroups := []api.Group{}
-				for _, k := range groups {
-					if strings.Contains(strings.ToUpper(k.Name), str) {
-						sortedGroups = append(sortedGroups, k)
-					}
-				}
-				groups = sortedGroups
+				groups = api.GetGroupListFiltredByName(str)
 			case "date":
 			case "places":
+				groups = api.GetGroupListFiltredByLocation(str)
 			}
+			data.LastResearchCategory = category
+			data.LastResearchInput = str
 		}
 	}
 

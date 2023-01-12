@@ -228,3 +228,38 @@ func EditGroupImageLink(id int, url string) {
 	g.ImageLink = url
 	GroupMap[id] = g
 }
+
+func GetGroupListFiltredByName(filter string) []Group {
+	sortedGroups := []Group{}
+	filter = strings.ToUpper(filter)
+	for _, k := range GroupMap {
+		if strings.Contains(strings.ToUpper(k.Name), strings.ToUpper(filter)) {
+			sortedGroups = append(sortedGroups, k)
+		}
+	}
+
+	for i := 0; i < len(sortedGroups); i++ {
+		for j := i + 1; j < len(sortedGroups); j++ {
+			if strings.Index(strings.ToUpper(sortedGroups[i].Name), filter) > strings.Index(strings.ToUpper(sortedGroups[j].Name), filter) {
+				sortedGroups[i], sortedGroups[j] = sortedGroups[j], sortedGroups[i]
+			}
+		}
+	}
+
+	return sortedGroups
+}
+
+func GetGroupListFiltredByLocation(filter string) []Group {
+	sortedGroups := []Group{}
+	filter = strings.ToUpper(filter)
+	for _, k := range GroupMap {
+		for _, date := range k.DateLocations {
+			if strings.Contains(strings.ToUpper(date.Locations), strings.ToUpper(filter)) {
+				sortedGroups = append(sortedGroups, k)
+				break
+			}
+		}
+	}
+
+	return sortedGroups
+}
