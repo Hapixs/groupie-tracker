@@ -323,6 +323,11 @@ func GetGroupListFiltredByAll(filter string) []Group {
 					continue
 				}
 			}
+			for _, m := range k.Members {
+				if strings.Contains(strings.ToUpper(m.Name), f) {
+					check[k.Id] = 1
+				}
+			}
 		}
 	}
 
