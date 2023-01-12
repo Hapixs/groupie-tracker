@@ -1,6 +1,6 @@
 # Groupie tracker
 
-<ins>By : **{{ .ProjectName }}**</ins>
+<ins>By : **Chazam**</ins>
 
 Group :
 - BOIZOT Maxime
