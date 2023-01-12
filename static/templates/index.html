@@ -32,6 +32,12 @@
                                 <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
                             </svg>
                         </button>
+
+                        <a class="absolute top-0 right-10 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-l-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="/">
+                            <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" stroke="currentColor" stroke-width="1.5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                        </a>
                     </div>
                 </div>
             </form>
@@ -62,6 +68,6 @@
             <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">No result found, reread what you have written...</p>
             {{end}}
         </div>
-       {{ if false }} {{ index .Fragments "cookie.html" }} {{end}}
+       {{ index .Fragments "cookie.html" }}
     </body>
 </html>

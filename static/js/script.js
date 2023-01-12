@@ -1,5 +1,14 @@
+if (document.cookie.indexOf("cookies") > -1) {
+    document.getElementById("defaultModal").style.display = "none"
+}
+
 function CloseMessage (id) {
     document.getElementById(id).style.display = "none";
+}
+
+function AcceptCookies() {
+    document.cookie = "cookies=true"
+    document.getElementById('defaultModal').style.display = "none"
 }
 
 function ChangeTheme() {

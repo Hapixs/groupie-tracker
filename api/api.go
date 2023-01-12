@@ -305,7 +305,6 @@ func GetGroupListFiltredByAll(filter string) []Group {
 	filter = strings.ToUpper(filter)
 	check := make(map[int](int))
 
-	//name
 	for _, k := range GroupMap {
 		if strings.Contains(strings.ToUpper(k.Name), filter) {
 			check[k.Id] = 1
@@ -330,9 +329,14 @@ func GetGroupListFiltredByAll(filter string) []Group {
 
 	for i := 0; i < len(sortedGroups); i++ {
 		for j := i + 1; j < len(sortedGroups); j++ {
-			if strings.Index(strings.ToUpper(sortedGroups[i].Name), filter) > strings.Index(strings.ToUpper(sortedGroups[j].Name), filter) {
+			if strings.Contains(strings.ToUpper(sortedGroups[i].Name), filter) && strings.Contains(strings.ToUpper(sortedGroups[j].Name), filter) {
+				if strings.Index(strings.ToUpper(sortedGroups[i].Name), filter) > strings.Index(strings.ToUpper(sortedGroups[j].Name), filter) {
+					sortedGroups[i], sortedGroups[j] = sortedGroups[j], sortedGroups[i]
+				}
+			} else if !strings.Contains(strings.ToUpper(sortedGroups[i].Name), filter) {
 				sortedGroups[i], sortedGroups[j] = sortedGroups[j], sortedGroups[i]
 			}
+
 		}
 	}
 
