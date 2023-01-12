@@ -19,16 +19,16 @@
         </header>
         <div class="container mx-5 my-10 text-center">
             <p class="text-5xl font-bold">Group: {{.Group.Name}}</p>
-            <p class="text-2xl font-bold mt-8">Members: </p>
-            <div class="flex flex-wrap">
+            <p class="text-2xl font-semibold mt-8">Members: </p>
+            <div class="flex flex-wrap justify-center">
                 {{range .Group.Members}}
                 <div class="flex flex-col items-center justify-center m-5">
-                    <p class="text-xl font-bold">{{.Name}}</p>
+                    <p class="text-xl font-medium">{{.Name}}</p>
                 </div>
                 {{end}}
             </div>
             <div>
-                <img src="{{.Group.ImageLink}}" alt="Group image" class="w-1/2 h-1/2">
+                <img src="{{.Group.ImageLink}}" alt="{{.Group.Name}} IMG" class="w-1/2 h-1/2">
             </div>
         </div>
     </body>
