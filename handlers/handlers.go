@@ -19,6 +19,8 @@ type HtmlData struct {
 	ErrorMessage string
 	ErrorCode    int
 
+	PageName string
+
 	Groups []api.Group
 	//Test      string
 	Group       api.Group
@@ -35,8 +37,9 @@ func InitHandlers() {
 	for k := range api.GroupMap {
 		link := "/group/" + strconv.Itoa(k) + "/"
 		http.HandleFunc(link, groupHandler)
-		println("registerd " + link)
 	}
+
+	http.HandleFunc("/random", randomHandler)
 }
 
 func PrepareDataWithFragments(data *HtmlData) {
