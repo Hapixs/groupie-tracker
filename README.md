@@ -1,5 +1,10 @@
 # Groupie tracker
 
+
+<p align="center">
+  <img src="static/assets/chazamPng.png" />
+</p>
+
 <ins>By : **Chazam**</ins>
 
 Group :
