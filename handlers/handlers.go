@@ -58,3 +58,12 @@ func PrepareDataWithFragments(data *HtmlData) {
 		data.Fragments[fl.Name()] = utils.LoadFragmentAsString(fl.Name(), data)
 	}
 }
+
+func CheckForMessageQuery(r *http.Request, data *HtmlData) {
+	info := r.URL.Query().Get("info")
+	err := r.URL.Query().Get("error")
+
+	data.InfoMessage = info
+	data.ErrorMessage = err
+
+}

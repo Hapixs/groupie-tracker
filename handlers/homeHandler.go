@@ -14,6 +14,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		PageName:    "home",
 	}
 
+	CheckForMessageQuery(r, &data)
+
 	if r.Method == "POST" {
 		if err := r.ParseForm(); err != nil {
 			data.ErrorMessage = "Une erreur est survenue lors de l'application des filtres.."

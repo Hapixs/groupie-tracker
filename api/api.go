@@ -303,22 +303,25 @@ func TransformDateToText(dateTime string) string {
 func GetGroupListFiltredByAll(filter string) []Group {
 	sortedGroups := []Group{}
 	filter = strings.ToUpper(filter)
+	filters := strings.Split(filter, ",")
 	check := make(map[int](int))
 
-	for _, k := range GroupMap {
-		if strings.Contains(strings.ToUpper(k.Name), filter) {
-			check[k.Id] = 1
-			continue
-		}
-		for _, date := range k.DateLocations {
-			if strings.Contains(strings.ToUpper(date.Locations), filter) {
+	for _, f := range filters {
+		for _, k := range GroupMap {
+			if strings.Contains(strings.ToUpper(k.Name), f) {
 				check[k.Id] = 1
 				continue
 			}
-			d := TransformDateToText(date.DateTime)
-			if strings.Contains(strings.ToUpper(d), filter) {
-				check[k.Id] = 1
-				continue
+			for _, date := range k.DateLocations {
+				if strings.Contains(strings.ToUpper(date.Locations), f) {
+					check[k.Id] = 1
+					continue
+				}
+				d := TransformDateToText(date.DateTime)
+				if strings.Contains(strings.ToUpper(d), f) {
+					check[k.Id] = 1
+					continue
+				}
 			}
 		}
 	}

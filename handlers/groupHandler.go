@@ -19,7 +19,8 @@ func groupHandler(w http.ResponseWriter, r *http.Request) {
 	groupId, err := strconv.Atoi(splitedUrl[2])
 
 	if err != nil {
-		// TODO: redirect with error message
+		http.Redirect(w, r, "/home?error=Une erreur est survenue", http.StatusSeeOther)
+		return
 	}
 
 	group := api.GetGroupFromId(groupId)
