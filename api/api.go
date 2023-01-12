@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 const (
@@ -262,4 +263,40 @@ func GetGroupListFiltredByLocation(filter string) []Group {
 	}
 
 	return sortedGroups
+}
+
+func GetGroupListFiltredByDate(filter string) []Group {
+	sortedGroups := []Group{}
+	for _, v := range GroupMap {
+		for _, date := range v.DateLocations {
+			d := TransformDateToText(date.DateTime)
+			if strings.Contains(strings.ToUpper(d), strings.ToUpper(filter)) {
+				sortedGroups = append(sortedGroups, v)
+				break
+			}
+		}
+	}
+	return sortedGroups
+}
+
+func IsNumeric(s string) bool {
+	for _, c := range s {
+		if !(c >= 48 && c <= 57) {
+			return false
+		}
+	}
+	return true
+}
+
+func TransformDateToText(dateTime string) string {
+	d := strings.Split(dateTime, "-")
+	day, _ := strconv.Atoi(d[0])
+	month, _ := strconv.Atoi(d[1])
+	year, _ := strconv.Atoi(d[2])
+
+	date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Now().Location())
+
+	str := date.Weekday().String() + "-" + date.Month().String() + "-" + strconv.Itoa(date.Year())
+	println(str)
+	return str
 }

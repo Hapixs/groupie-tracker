@@ -24,6 +24,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			case "name":
 				groups = api.GetGroupListFiltredByName(str)
 			case "date":
+				groups = api.GetGroupListFiltredByDate(str) // Todo: translate to french
 			case "places":
 				groups = api.GetGroupListFiltredByLocation(str)
 			}
