@@ -117,3 +117,7 @@ header {
     /* margin: 1%; */
     width: 100%;
 }
+
+.number {
+    pointer-events: none;
+}
