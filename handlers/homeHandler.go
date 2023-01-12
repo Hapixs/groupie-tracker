@@ -21,6 +21,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			str := r.Form.Get("search_input")
 			category := r.Form.Get("search_category")
 			switch category {
+			case "all":
+				groups = api.GetGroupListFiltredByAll(str)
 			case "name":
 				groups = api.GetGroupListFiltredByName(str)
 			case "date":

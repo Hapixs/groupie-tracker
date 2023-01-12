@@ -297,6 +297,44 @@ func TransformDateToText(dateTime string) string {
 	date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Now().Location())
 
 	str := date.Weekday().String() + "-" + date.Month().String() + "-" + strconv.Itoa(date.Year())
-	println(str)
 	return str
+}
+
+func GetGroupListFiltredByAll(filter string) []Group {
+	sortedGroups := []Group{}
+	filter = strings.ToUpper(filter)
+	check := make(map[int](int))
+
+	//name
+	for _, k := range GroupMap {
+		if strings.Contains(strings.ToUpper(k.Name), filter) {
+			check[k.Id] = 1
+			continue
+		}
+		for _, date := range k.DateLocations {
+			if strings.Contains(strings.ToUpper(date.Locations), filter) {
+				check[k.Id] = 1
+				continue
+			}
+			d := TransformDateToText(date.DateTime)
+			if strings.Contains(strings.ToUpper(d), filter) {
+				check[k.Id] = 1
+				continue
+			}
+		}
+	}
+
+	for k := range check {
+		sortedGroups = append(sortedGroups, GetGroupFromId(k))
+	}
+
+	for i := 0; i < len(sortedGroups); i++ {
+		for j := i + 1; j < len(sortedGroups); j++ {
+			if strings.Index(strings.ToUpper(sortedGroups[i].Name), filter) > strings.Index(strings.ToUpper(sortedGroups[j].Name), filter) {
+				sortedGroups[i], sortedGroups[j] = sortedGroups[j], sortedGroups[i]
+			}
+		}
+	}
+
+	return sortedGroups
 }

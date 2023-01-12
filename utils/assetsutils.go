@@ -34,7 +34,7 @@ func UpdateAllGroupsPics() {
 		if err != nil {
 			DownloadPicture(a.ImageLink, "static/assets/groups/"+fileHash+".jpeg")
 		}
-		api.EditGroupImageLink(a.Id, "static/assets/groups/"+fileHash+".jpeg")
+		api.EditGroupImageLink(a.Id, "/static/assets/groups/"+fileHash+".jpeg")
 	}
 	println("All groups images are downloaded !")
 }
