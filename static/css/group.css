@@ -1,0 +1,24 @@
+footer {
+    /* only positonnement */
+    /* position: fixed; */
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+header {
+    /* only positonnement */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+body {
+    /* only positonnement */
+    position: relative;
+    top: 5vh;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+}

@@ -10,14 +10,15 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">
+        <link rel="stylesheet" href="/static/css/group.css">
         <title>{{ .ProjectName }} - {{ .Group.Name }}</title>
     </head>
+    <header class="barre">
+        {{ index .Fragments "navigationbar.html" }}
+        {{ index .Fragments "messages.html" }}
+    </header>
     <body class="dark:bg-gray-800 dark:text-white" >
-        <header class="barre">
-            {{ index .Fragments "navigationbar.html" }}
-            {{ index .Fragments "messages.html" }}
-        </header>
-        <div class="container mx-auto my-10 text-center justify-center">
+        <div class="container mx-auto my-1 text-center justify-center">
             <p class="font-black" style="font-size: 7rem;">{{.Group.Name}}</p>
             <div class="flex flex-wrap">
                 <div class="flex flex-col items-center justify-center mx-auto my-5">
