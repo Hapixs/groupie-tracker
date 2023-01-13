@@ -29,6 +29,9 @@ func groupHandler(w http.ResponseWriter, r *http.Request) {
 		Group:       group,
 		ProjectName: "Chazam",
 	}
+
+	println("Tracks: " + strconv.Itoa(len(group.DZInformations.TrackList.List)))
+
 	PrepareDataWithFragments(&data)
 	tmpl.Execute(w, data)
 }

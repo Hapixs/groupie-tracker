@@ -79,13 +79,14 @@ func GetDeezerGroup(id int) DeezerGroup {
 	return request
 }
 
-type DeezerTrackList struct {
-	Map map[int](DeezerTrack)
+type DeezerTrackRequest struct {
+	List []DeezerTrack `json:"data"`
 }
 
 type DeezerTrack struct {
-	Title   string `json:"title"`
-	Preview string `json:"preview"`
+	Title   string      `json:"title"`
+	Preview string      `json:"preview"`
+	Album   DeezerAlbum `json:"album"`
 }
 
 type DeezerAlbum struct {
@@ -93,7 +94,7 @@ type DeezerAlbum struct {
 	Cover string `json:"cover_medium"`
 }
 
-func GetDeezerTopTrack(groupId, amount int) DeezerTrackList {
+func GetDeezerTopTrack(groupId, amount int) DeezerTrackRequest {
 	rand.Seed(time.Now().UnixMilli())
 	time.Sleep(time.Duration(rand.Intn(500)))
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(groupId) + "/top?limit=" + strconv.Itoa(amount)
@@ -106,11 +107,11 @@ func GetDeezerTopTrack(groupId, amount int) DeezerTrackList {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var request DeezerTrackList
+	var request DeezerTrackRequest
 	err = json.Unmarshal(body, &request)
 	if err != nil {
 		println("Error when parsing wikipedia api response for" + strconv.Itoa(groupId))
-		return DeezerTrackList{}
+		return DeezerTrackRequest{}
 	}
 	return request
 }
@@ -119,7 +120,7 @@ func GetDeezerTopTrack(groupId, amount int) DeezerTrackList {
 
 type DeezerInformations struct {
 	Group     DeezerGroup
-	TrackList DeezerTrackList
+	TrackList DeezerTrackRequest
 }
 
 func GetDeezerInformationsFromName(name string) DeezerInformations {
@@ -129,7 +130,6 @@ func GetDeezerInformationsFromName(name string) DeezerInformations {
 
 	if len(s.Data) <= 0 {
 		println("Group not found .. for " + name)
-		FailedToLoad = append(FailedToLoad, GetGroupFromName(name).Id)
 		return DeezerInformations{}
 	}
 
@@ -144,14 +144,13 @@ func GetDeezerInformationsFromName(name string) DeezerInformations {
 var FailedToLoad []int = []int{}
 
 func LoadAllDeezerInformations() {
-	time.Sleep(1000)
 	println("Asyncron, loading all deezer informations for groups")
 	for k, v := range GroupMap {
 		v.DZInformations = GetDeezerInformationsFromName(v.Name)
 		mutex.Lock()
 		GroupMap[k] = v
 		mutex.Unlock()
-		time.Sleep(250)
+		time.Sleep(50000000)
 	}
 	println("All deezer informations are loaded !")
 }

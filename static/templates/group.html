@@ -60,13 +60,15 @@
                     </div>
                 </div>
             </div>
+            {{ range .Group.DZInformations.TrackList.List }}
+            <p> {{.Title}}</p>
             <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden sm:py-12">
                 <div x-data="playaudio()" class="h-80 w-80">
                     <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
                         <div class="absolute inset-0 flex items-center justify-center p-8">
                             <div class="w-full h-full transition duration-300 ease-in-out bg-cyan-500 filter group-hover:blur-2xl"></div>
                         </div>
-                        <img alt="card audio player" class="relative rounded-xl" src="https://source.unsplash.com/Esax9RaEl2I/400x400" />
+                        <img alt="card audio player" class="relative rounded-xl" src="{{.Album.Cover}}" />
                         <div class="absolute inset-0 flex items-center justify-center transition duration-200 ease-in-out bg-black rounded-xl bg-opacity-30 group-hover:bg-opacity-20">
                             <div x-show="!currentlyPlaying" class="bg-black bg-opacity-50 rounded-full p-0.5">
                                 <svg class="w-12 h-12 text-white text-opacity-0 transition duration-150 ease-in-out hover:text-opacity-20" viewBox="0 0 284 284" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -83,10 +85,11 @@
                     </button>
             
                     <audio x-ref="audio">
-                        <source src="https://cdns-preview-b.dzcdn.net/stream/c-b6d927bc8521d89904dbc2b932783ee2-5.mp3" type="audio/mp3" />
+                        <source src="{{.Preview}}" type="audio/mp3" />
                     </audio>
                 </div>
             </div>
+            {{ end }}
             {{ if ne .MusicLink "" }}
             <!-- <div class="audioPlayer flex flex-col items-center justify-center mx-auto my-5 dark:bg-gray-600 dark:border-blue-500 border-2 rounded-lg w-1/2 py-5">
                 <div>
