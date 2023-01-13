@@ -24,6 +24,7 @@ func groupHandler(w http.ResponseWriter, r *http.Request) {
 
 	group := api.GetGroupFromId(groupId)
 	tmpl := template.Must(template.ParseFiles(groupTemplatePath))
+	api.UpdateAlternativeGroupsForGroup(&group)
 	data := HtmlData{
 		//Groups:      api.GetCachedGroups(),
 		Group:       group,

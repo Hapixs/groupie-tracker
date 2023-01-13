@@ -57,7 +57,7 @@ type DeezerApiCache struct {
 }
 
 var ApiData = DeezerApiCache{}
-var GroupByGenreMap = map[DeezerGenre](*Group){}
+var GroupByGenreMap = map[DeezerGenre]([]Group){}
 
 func CallDeezerApi[T any](url string, structure *T) {
 	response, err := http.Get(url)
@@ -249,7 +249,8 @@ func SaveDeezerApiCache() {
 }
 
 func DefineMostValuableGenreForGroup(group *Group) {
-	table := map[DeezerGenre](int){}
+	var top DeezerGenre = DeezerGenre{Name: "N/A"}
+	table := map[DeezerGenre](int){top: 0}
 	for _, track := range group.DZInformations.TrackList.List {
 		i := 1
 		val, ok := table[track.Album.Genre]
@@ -258,14 +259,28 @@ func DefineMostValuableGenreForGroup(group *Group) {
 		}
 		table[track.Album.Genre] = i
 	}
-	var top DeezerGenre = DeezerGenre{}
 	for k, v := range table {
 		if v > table[top] {
 			top = k
 		}
 	}
 	group.MostValuableGenre = top
-	GroupByGenreMap[top] = group
+	groups := []Group{*group}
+	val, ok := GroupByGenreMap[top]
+	if ok {
+		groups = append(groups, val...)
+	}
+	GroupByGenreMap[top] = groups
+}
+
+func UpdateAlternativeGroupsForGroup(group *Group) {
+	for v, k := range GroupByGenreMap[group.MostValuableGenre] {
+		println(k.MostValuableGenre.Name)
+		println(group.MostValuableGenre.Name)
+		println(v)
+		println(k.Name)
+	}
+	group.GroupAlternatives = GroupByGenreMap[group.MostValuableGenre]
 }
 
 func GetDeezerGenreList() []DeezerGenre {
