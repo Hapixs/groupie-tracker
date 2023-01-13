@@ -27,16 +27,22 @@ type DeezerTrackRequest struct {
 		Title   string `json:"title"`
 		Preview string `json:"preview"`
 		Album   struct {
-			Id        int    `json:"id"`
-			Title     string `json:"title"`
-			Cover     string `json:"cover_medium"`
-			GenreList struct {
-				List []struct {
-					Name string `json:"name"`
-				} `json:"data"`
-			} `json:"genres"`
+			Id    int    `json:"id"`
+			Title string `json:"title"`
+			Cover string `json:"cover_medium"`
+			Genre string
 		} `json:"album"`
 	} `json:"data"`
+}
+
+type DeezerAlbum struct {
+	Id       int `json:"id"`
+	Genre_Id int `json:"genre_id"`
+}
+
+type DeezerGenre struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 type DeezerApiCache struct {
@@ -44,6 +50,8 @@ type DeezerApiCache struct {
 		TrackRequest DeezerTrackRequest
 		Search       DeezerSearch
 		Group        DeezerGroup
+		Album        DeezerAlbum
+		Genre        DeezerGenre
 	}
 }
 
@@ -116,6 +124,36 @@ func GetDeezerTopTrack(groupId, amount int, update bool) DeezerTrackRequest {
 	return request
 }
 
+func GetDeezerAlbumInformation(albumId int, update bool) DeezerAlbum {
+	var request DeezerAlbum
+	url := "https://api.deezer.com/album/" + strconv.Itoa(albumId)
+	val, ok := ApiData.RequestAndResult[url]
+	if ok && !update {
+		return val.Album
+	}
+	CallDeezerApi(url, &request)
+	data := ApiData.RequestAndResult[url]
+	data.Album = request
+	ApiData.RequestAndResult[url] = data
+	time.Sleep(time.Second / 10)
+	return request
+}
+
+func GetGenreById(id int, update bool) DeezerGenre {
+	var request DeezerGenre
+	url := "https://api.deezer.com/genre/" + strconv.Itoa(id)
+	val, ok := ApiData.RequestAndResult[url]
+	if ok && !update {
+		return val.Genre
+	}
+	CallDeezerApi(url, &request)
+	data := ApiData.RequestAndResult[url]
+	data.Genre = request
+	ApiData.RequestAndResult[url] = data
+	time.Sleep(time.Second / 10)
+	return request
+}
+
 type DeezerInformations struct {
 	Group     DeezerGroup
 	TrackList DeezerTrackRequest
@@ -131,9 +169,19 @@ func GetDeezerInformationsFromName(name string, update bool) DeezerInformations 
 
 	groupId := s.Data[0].SearchArtist.Id
 	infos.Group = GetDeezerGroup(groupId, update)
-	infos.TrackList = GetDeezerTopTrack(groupId, 10, update)
+	trackRequest := GetDeezerTopTrack(groupId, 10, update)
+	UpdateGenreForTracksAlbum(&trackRequest)
+	infos.TrackList = trackRequest
 
 	return infos
+}
+
+func UpdateGenreForTracksAlbum(request *DeezerTrackRequest) {
+	for id, track := range request.List {
+		album := GetDeezerAlbumInformation(track.Album.Id, false)
+		genre := GetGenreById(album.Genre_Id, false)
+		request.List[id].Album.Genre = genre.Name
+	}
 }
 
 func LoadAllDeezerInformations() {
@@ -143,11 +191,17 @@ func LoadAllDeezerInformations() {
 			TrackRequest DeezerTrackRequest
 			Search       DeezerSearch
 			Group        DeezerGroup
+			Album        DeezerAlbum
+			Genre        DeezerGenre
 		}),
 	}
+
 	content, err := os.ReadFile("deezerdata.json")
 	if err == nil {
 		json.Unmarshal(content, &ApiData)
+	} else {
+		println("Seams like the first start of this web server.")
+		println("Some operations may take several minutes.")
 	}
 	UpdateAllDeezerInformations(false)
 	SaveDeezerApiCache()
@@ -158,6 +212,7 @@ func LoadAllDeezerInformations() {
 func UpdateAllDeezerInformations(forceUpdate bool) {
 	for k, v := range GroupMap {
 		v.DZInformations = GetDeezerInformationsFromName(v.Name, forceUpdate)
+		DefineMostValuableGenreForGroup(&v)
 		mutex.Lock()
 		GroupMap[k] = v
 		mutex.Unlock()
@@ -180,11 +235,6 @@ func SaveDeezerApiCache() {
 		println("Error: JSON error")
 		return
 	}
-	_, err = os.OpenFile("deezerdata.json", int(os.ModePerm), os.ModePerm)
-	if err != nil {
-		println("Seams like the first start of this web server.")
-		println("Some operations may take several minutes.")
-	}
 
 	file, err := os.Create("deezerdata.json")
 	if err != nil {
@@ -194,4 +244,23 @@ func SaveDeezerApiCache() {
 
 	file.Write(save)
 	file.Close()
+}
+
+func DefineMostValuableGenreForGroup(group *Group) {
+	table := map[string](int){}
+	for _, track := range group.DZInformations.TrackList.List {
+		i := 1
+		val, ok := table[track.Album.Genre]
+		if ok {
+			i += val
+		}
+		table[track.Album.Genre] = i
+	}
+	top := ""
+	for k, v := range table {
+		if v > table[top] {
+			top = k
+		}
+	}
+	group.MostValuableGenre = top
 }
