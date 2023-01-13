@@ -36,8 +36,8 @@ type Date struct {
 }
 
 var GroupMap = map[int](Group){}
-
 var wg sync.WaitGroup
+var mutex sync.Mutex
 
 func LoadGroups() {
 	println("Loading groups in cache for better performances")
@@ -49,8 +49,6 @@ func LoadGroups() {
 	go LoadAllDeezerInformations()
 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
 }
-
-var mutex sync.Mutex
 
 func transformAndCacheGroup(v ApiArtist) {
 	defer wg.Done()

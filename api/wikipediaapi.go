@@ -11,19 +11,13 @@ import (
 )
 
 type WikiRequest struct {
-	Query WikiQuery `json:"query"`
-}
-
-type WikiQuery struct {
-	Page map[int](WikiData) `json:"pages"`
-}
-
-type WikiData struct {
-	Thumbnail WikiThumbnail `json:"thumbnail"`
-}
-
-type WikiThumbnail struct {
-	Source string `json:"source"`
+	Query struct {
+		Page map[int](struct {
+			Thumbnail struct {
+				Source string `json:"source"`
+			} `json:"thumbnail"`
+		}) `json:"pages"`
+	} `json:"query"`
 }
 
 func GetWikipediaImage(artist string) WikiRequest {
