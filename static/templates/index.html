@@ -47,7 +47,7 @@
         <div class="container w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
             {{range .Groups}}
                 <a href="/group/{{.Id}}/">
-                    <div class="rounded-lg shadow-lg bg-white w-48 mb-5 dark:bg-gray-600 mx-5" loading="lazy">
+                    <div class="rounded-lg shadow-lg bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
                         <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>
                         <div class="p-6">
                             <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{.Name}}</h5>
