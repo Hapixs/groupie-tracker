@@ -125,6 +125,7 @@ func GetDeezerTopTrack(groupId, amount int) DeezerTrackRequest {
 	}
 	for _, v := range request.List {
 		v.Album = GetAlbumInformation(v.Album.Id)
+		time.Sleep(time.Second / 20)
 	}
 	return request
 }
