@@ -25,6 +25,7 @@ function ChangeTheme() {
 }
 
 function playaudio() {
+    // play audio and only play one at a time
     return {
         currentlyPlaying: false,
         //play and stop the audio
@@ -37,6 +38,12 @@ function playaudio() {
                 this.$refs.audio.play();
                 this.currentlyPlaying = true;
             }
+        },
+        //stop the audio
+        stop() {
+            this.$refs.audio.pause();
+            this.$refs.audio.currentTime = 0;
+            this.currentlyPlaying = false;
         }
     }
 }

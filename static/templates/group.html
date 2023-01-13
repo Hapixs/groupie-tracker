@@ -20,8 +20,8 @@
         {{ index .Fragments "messages.html" }}
     </header>
     <body class="dark:bg-gray-800 dark:text-white">
-        <div class="container mx-auto my-1 text-center justify-center">
-            <p class="font-black" style="font-size: 5rem;">{{.Group.Name}}</p>
+        <div class="container mx-auto my-2 text-center justify-center">
+            <p class="font-black" style="font-size: 4rem;">{{.Group.Name}}</p>
             <div class="grid grid-cols-2 gap-5">
                 <div class="col-span-1">
                     <img src="{{.Group.ImageLink}}" alt="" class="w-96 mx-auto">
@@ -41,7 +41,7 @@
                 {{ range .Group.DZInformations.TrackList.List }}
                 <div class="">
                     <div x-data="playaudio()" class="h-80 w-80">
-                        <p> {{.Title}}</p>
+                        <p class="font-bold">{{.Title}}</p>
                         <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
                             <div class="inset-0 flex items-center justify-center">
                                 <div class="w-full h-full transition duration-300 ease-in-out bg-cyan-500 filter group-hover:blur-2xl"></div>
