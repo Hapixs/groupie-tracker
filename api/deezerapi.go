@@ -274,12 +274,6 @@ func DefineMostValuableGenreForGroup(group *Group) {
 }
 
 func UpdateAlternativeGroupsForGroup(group *Group) {
-	for v, k := range GroupByGenreMap[group.MostValuableGenre] {
-		println(k.MostValuableGenre.Name)
-		println(group.MostValuableGenre.Name)
-		println(v)
-		println(k.Name)
-	}
 	group.GroupAlternatives = GroupByGenreMap[group.MostValuableGenre]
 }
 
