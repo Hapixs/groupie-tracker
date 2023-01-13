@@ -9,13 +9,12 @@
         <link href='https://fonts.googleapis.com/css?family=Nova Square' rel='stylesheet'>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">
+        <link rel="stylesheet" href="/static/css/styles.css">
         <title>{{ .ProjectName }}</title>
     </head>
     <header>
         {{ index .Fragments "navigationbar.html" }}
         {{ index .Fragments "messages.html" }}
-    </header>
-    <body class="dark:bg-gray-800">        
         <div class="my-10 mx-5">
             <form method="post">
                 <div class="flex">
@@ -44,6 +43,8 @@
                 </div>
             </form>
         </div>
+    </header>
+    <body class="dark:bg-gray-800 mt-5">        
         <div class="container w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
             {{range .Groups}}
                 <a href="/group/{{.Id}}/">

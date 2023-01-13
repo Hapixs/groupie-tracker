@@ -1,3 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+footer {
+    /* only positonnement */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+header {
+    /* only positonnement */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
