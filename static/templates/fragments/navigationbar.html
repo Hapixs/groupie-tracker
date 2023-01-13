@@ -6,19 +6,19 @@
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ .ProjectName }}</span>
             </a>
             <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
+                <span class="sr-only">Ouvrir le menu principal</span>
                 <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul class="flex flex-col p-4 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900">
                     <li>
-                        <a href="/" class="block py-2 pl-3 pr-4 text-black dark:text-white md:bg-transparent md:p-0 {{ if eq .PageName "home" }} md:text-blue-700 {{ end }}" aria-current="page">Home</a>
+                        <a href="/" class="block py-2 pl-3 pr-4 text-black dark:text-white md:bg-transparent md:p-0 {{ if eq .PageName "home" }} md:text-blue-700 {{ end }}" aria-current="page">Accueil</a>
                     </li>
                     <li>
-                        <a href="/random" class="block py-2 pl-3 pr-4 text-black dark:text-white md:bg-transparent md:p-0 {{ if eq .PageName "idk" }} md:text-blue-700 {{ end }}" aria-current="page">Random group</a>
+                        <a href="/random" class="block py-2 pl-3 pr-4 text-black dark:text-white md:bg-transparent md:p-0 {{ if eq .PageName "idk" }} md:text-blue-700 {{ end }}" aria-current="page">Page aléatoire</a>
                     </li>
                     <li>
-                        <a href="#bottom" class="block py-2 pl-3 pr-4 text-black dark:text-white md:bg-transparent md:p-0 {{ if eq .PageName "bottom" }} md:text-blue-700 {{ end }}" aria-current="page">Bottom of page</a>
+                        <a href="#bottom" class="block py-2 pl-3 pr-4 text-black dark:text-white md:bg-transparent md:p-0 {{ if eq .PageName "bottom" }} md:text-blue-700 {{ end }}" aria-current="page">Bas de la page</a>
                     </li>
                 </ul>
             </div>

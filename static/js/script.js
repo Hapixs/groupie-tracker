@@ -11,6 +11,11 @@ function AcceptCookies() {
     document.getElementById('defaultModal').style.display = "none"
 }
 
+function RefuseCookies() {
+    // redirect to not accept cookies page
+    window.location.href = "/nocookies";
+}
+
 function ChangeTheme() {
     // change tailwind dark mode
     document.documentElement.classList.toggle('dark');

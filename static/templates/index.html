@@ -10,19 +10,19 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">
         <link rel="stylesheet" href="/static/css/home.css">
-        <title>{{ .ProjectName }} - Home</title>
+        <title>{{ .ProjectName }} - Accueil</title>
     </head>
     <header>
         {{ index .Fragments "navigationbar.html" }}
         <div class="mt-2 mx-5">
             <form method="post">
                 <div class="flex">
-                    <label for="category-select" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
+                    <!-- <label for="category-select" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label> -->
                     <select name="search_category" id="category-select" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
-                        <option {{ if eq .LastResearchCategory "all"}} selected {{ end }} value="all">All categories</option>
-                        <option {{ if eq .LastResearchCategory "name"}} selected {{ end }} value="name">Name</option>
+                        <option {{ if eq .LastResearchCategory "all"}} selected {{ end }} value="all">Toutes les catégories</option>
+                        <option {{ if eq .LastResearchCategory "name"}} selected {{ end }} value="name">Nom</option>
                         <option {{ if eq .LastResearchCategory "date"}} selected {{ end }} value="date">Date</option>
-                        <option {{ if eq .LastResearchCategory "places"}} selected {{ end }} value="places">Places</option>
+                        <option {{ if eq .LastResearchCategory "places"}} selected {{ end }} value="places">Endroits</option>
                         <!-- <option value="logos">Logos</option> -->
                     </select>
                     <div class="relative w-full">
@@ -32,7 +32,6 @@
                                 <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
                             </svg>
                         </button>
-
                         <a class="absolute top-0 right-10 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-l-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="/">
                             <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" stroke="currentColor" stroke-width="1.5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -58,7 +57,7 @@
                 </a>
             {{end}}
             {{ if eq (len .Groups) 0 }}
-            <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">No result found, reread what you have written...</p>
+            <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
             {{end}}
         </div>
        {{ index .Fragments "cookie.html" }}
