@@ -17,26 +17,49 @@
         {{ index .Fragments "navigationbar.html" }}
         {{ index .Fragments "messages.html" }}
     </header>
-    <body class="dark:bg-gray-800 dark:text-white" >
+    <body class="dark:bg-gray-800 dark:text-white">
         <div class="container mx-auto my-1 text-center justify-center">
-            <p class="font-black" style="font-size: 7rem;">{{.Group.Name}}</p>
-            <div class="flex flex-wrap">
+            <p class="font-black" style="font-size: 5rem;">{{.Group.Name}}</p>
+            <!-- <div class="flex flex-wrap">
                 <div class="flex flex-col items-center justify-center mx-auto my-5">
-                    <!-- <p class="text-xl font-bold">Image: </p> -->
                     <img src="{{.Group.ImageLink}}" alt="" class="w-96">
                 </div>
                 <div class="flex flex-col items-center mx-auto my-10">
-                    <!-- <ins><p class="text-3xl font-extrabold">Informations :</p></ins> -->
                     <div class="flex flex-col">
                         {{range .Group.Members}}
-                        <img src="{{ .ImageLink }}" alt="" class="mt-2 mx-auto w-1/5">
+                        <img src="{{ .ImageLink }}" alt="" class="mt-2 mx-auto w-1/4">
                         <p class="text-2xl font-bold">{{.Name}}</p>
+                        {{end}}
+                    </div>
+                </div>
+            </div> -->
+            <div class="grid grid-cols-2 gap-5">
+                <div class="col-span-1">
+                    <img src="{{.Group.ImageLink}}" alt="" class="w-96 mx-auto">
+                </div>
+                <div class="col-span-1">
+                    <div class="grid grid-cols-1 gap-5 grid grid-flow-col grid-rows-2 grid-cols-4 gap-4">
+                        {{range .Group.Members}}
+                        <!-- <div class="col-span-1">
+                            <img src="{{ .ImageLink }}" alt="" class="w-1/2 mx-auto">
+                            <p class="text-2xl font-bold">{{.Name}}</p>
+                        </div> -->
+                        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-700 dark:border-gray-700">
+                            <a href="#">
+                                <img class="rounded-t-lg w-full" src="{{ .ImageLink }}" alt="" />
+                            </a>
+                            <div class="py-2">
+                                <a href="#">
+                                    <h5 class="mb-0 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ .Name }}</h5>
+                                </a>
+                            </div>
+                        </div>
                         {{end}}
                     </div>
                 </div>
             </div>
         </div>
         {{ index .Fragments "cookie.html" }}
-        {{ index .Fragments "footer.html" }}
     </body>
+    {{ index .Fragments "footer.html" }}
 </html>

@@ -1,6 +1,6 @@
 footer {
     /* only positonnement without fixed */
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -15,10 +15,7 @@ header {
 }
 
 body {
-    /* only positonnement */
     position: relative;
     top: 5vh;
-    bottom: 50px;
-    left: 0;
-    right: 0;
+    padding-bottom: 15vh;
 }
