@@ -15,7 +15,7 @@
     <header>
         {{ index .Fragments "navigationbar.html" }}
         {{ index .Fragments "messages.html" }}
-        <div class="my-10 mx-5">
+        <div class="mt-2 mx-5">
             <form method="post">
                 <div class="flex">
                     <label for="category-select" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
@@ -44,7 +44,7 @@
             </form>
         </div>
     </header>
-    <body class="dark:bg-gray-800 mt-5">        
+    <body class="dark:bg-gray-800 pt-5">        
         <div class="container w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
             {{range .Groups}}
                 <a href="/group/{{.Id}}/">
