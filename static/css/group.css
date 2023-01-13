@@ -1,6 +1,6 @@
 footer {
-    /* only positonnement */
-    /* position: fixed; */
+    /* only positonnement without fixed */
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
