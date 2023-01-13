@@ -21,7 +21,8 @@ type Group struct {
 	FirstAlbumDate string
 	DateLocations  []Date
 
-	DZInformations DeezerInformations
+	DZInformations    DeezerInformations
+	GroupAlternatives []Group
 }
 
 type Artist struct {

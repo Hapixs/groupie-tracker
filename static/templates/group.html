@@ -69,6 +69,10 @@
                 {{ end }}
             </div>
         </div>
+            {{ end }}
+            {{ range .Group.GroupAlternatives }}
+            <p> {{ .Name}} </p>
+            {{end}}
         {{ index .Fragments "cookie.html" }}
     </body>
     {{ index .Fragments "footer.html" }}

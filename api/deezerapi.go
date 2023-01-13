@@ -90,8 +90,18 @@ type DeezerTrack struct {
 }
 
 type DeezerAlbum struct {
-	Title string `json:"title"`
-	Cover string `json:"cover_medium"`
+	Id        int                  `json:"id"`
+	Title     string               `json:"title"`
+	Cover     string               `json:"cover_medium"`
+	GenreList DeezerAlbumGenreList `json:"genres"`
+}
+
+type DeezerAlbumGenreList struct {
+	List []DeezerAlbumGenre `json:"data"`
+}
+
+type DeezerAlbumGenre struct {
+	Name string `json:"name"`
 }
 
 func GetDeezerTopTrack(groupId, amount int) DeezerTrackRequest {
@@ -112,6 +122,29 @@ func GetDeezerTopTrack(groupId, amount int) DeezerTrackRequest {
 	if err != nil {
 		println("Error when parsing wikipedia api response for" + strconv.Itoa(groupId))
 		return DeezerTrackRequest{}
+	}
+	for _, v := range request.List {
+		v.Album = GetAlbumInformation(v.Album.Id)
+	}
+	return request
+}
+
+func GetAlbumInformation(id int) DeezerAlbum {
+	url := "https://api.deezer.com/album/" + strconv.Itoa(id)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var request DeezerAlbum
+	err = json.Unmarshal(body, &request)
+	if err != nil {
+		println("oupsi")
+		return DeezerAlbum{}
 	}
 	return request
 }
@@ -141,8 +174,6 @@ func GetDeezerInformationsFromName(name string) DeezerInformations {
 	return infos
 }
 
-var FailedToLoad []int = []int{}
-
 func LoadAllDeezerInformations() {
 	println("Asyncron, loading all deezer informations for groups")
 	for k, v := range GroupMap {
@@ -150,7 +181,41 @@ func LoadAllDeezerInformations() {
 		mutex.Lock()
 		GroupMap[k] = v
 		mutex.Unlock()
-		time.Sleep(50000000)
+		time.Sleep(time.Second)
 	}
+	LoadGenreMap()
+	LoadAlternativesForGroups()
 	println("All deezer informations are loaded !")
+}
+
+var genreMap = map[string]([]Group){}
+
+func LoadGenreMap() {
+	for _, group := range GroupMap {
+		for _, track := range group.DZInformations.TrackList.List {
+			for _, genre := range track.Album.GenreList.List {
+				println("yes")
+				val, ok := genreMap[genre.Name]
+				if !ok {
+					val = []Group{}
+				}
+				val = append(val, group)
+				genreMap[genre.Name] = val
+			}
+		}
+	}
+}
+
+func LoadAlternativesForGroups() {
+	for id, group := range GroupMap {
+		group.GroupAlternatives = []Group{}
+		for _, track := range group.DZInformations.TrackList.List {
+			for _, genre := range track.Album.GenreList.List {
+				group.GroupAlternatives = append(group.GroupAlternatives, genreMap[genre.Name]...)
+			}
+		}
+		mutex.Lock()
+		GroupMap[id] = group
+		mutex.Unlock()
+	}
 }
