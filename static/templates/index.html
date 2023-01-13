@@ -45,10 +45,24 @@
     </header>
     <body class="dark:bg-gray-800" style="margin-top: 15vh;">
         <div class="container w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
+            <h1> GENRE </h1>
+            {{range .DeezerGenres}}
+                <a href="/genre/?genre={{.Id}}">
+                    <div class="rounded-lg hover:scale-110 shadow-lg bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
+                        <img class="rounded-t-lg" src="{{.Picture}}" alt={{.Name}}/>
+                        <div class="p-6">
+                            <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{.Name}}</h5>
+                        </div>
+                    </div>
+                </a>
+            {{end}}
+        </div>
+        <h1> GROUPES </h1>
+        <div class="container w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
             {{range .Groups}}
                 <a href="/group/{{.Id}}/">
                     <div class="flex space-x-2 justify-center">
-                        <span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.MostValuableGenre}}</span>
+                        <span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.MostValuableGenre.Name}}</span>
                     </div>
                     <div class="rounded-lg hover:scale-110 shadow-lg bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
                         <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>

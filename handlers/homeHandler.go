@@ -10,8 +10,9 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
 	groups := api.GetCachedGroups()
 	data := HtmlData{
-		ProjectName: "Chazam",
-		PageName:    "home",
+		ProjectName:  "Chazam",
+		PageName:     "home",
+		DeezerGenres: api.GetDeezerGenreList(),
 	}
 
 	CheckForMessageQuery(r, &data)

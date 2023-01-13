@@ -23,7 +23,7 @@ type Group struct {
 
 	DZInformations    DeezerInformations
 	GroupAlternatives []Group
-	MostValuableGenre string
+	MostValuableGenre DeezerGenre
 }
 
 type Artist struct {

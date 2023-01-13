@@ -24,11 +24,12 @@ type HtmlData struct {
 	LastResearchInput    string
 	LastResearchCategory string
 
-	Groups []api.Group
-	//Test      string
+	Groups      []api.Group
 	Group       api.Group
 	Fragments   map[string](string)
 	ProjectName string
+
+	DeezerGenres []api.DeezerGenre
 }
 
 func InitHandlers() {

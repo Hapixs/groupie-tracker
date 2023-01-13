@@ -30,7 +30,7 @@ type DeezerTrackRequest struct {
 			Id    int    `json:"id"`
 			Title string `json:"title"`
 			Cover string `json:"cover_medium"`
-			Genre string
+			Genre DeezerGenre
 		} `json:"album"`
 	} `json:"data"`
 }
@@ -41,8 +41,9 @@ type DeezerAlbum struct {
 }
 
 type DeezerGenre struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	Picture string `json:"picture_medium"`
 }
 
 type DeezerApiCache struct {
@@ -56,6 +57,7 @@ type DeezerApiCache struct {
 }
 
 var ApiData = DeezerApiCache{}
+var GroupByGenreMap = map[DeezerGenre](*Group){}
 
 func CallDeezerApi[T any](url string, structure *T) {
 	response, err := http.Get(url)
@@ -180,7 +182,7 @@ func UpdateGenreForTracksAlbum(request *DeezerTrackRequest) {
 	for id, track := range request.List {
 		album := GetDeezerAlbumInformation(track.Album.Id, false)
 		genre := GetGenreById(album.Genre_Id, false)
-		request.List[id].Album.Genre = genre.Name
+		request.List[id].Album.Genre = genre
 	}
 }
 
@@ -247,7 +249,7 @@ func SaveDeezerApiCache() {
 }
 
 func DefineMostValuableGenreForGroup(group *Group) {
-	table := map[string](int){}
+	table := map[DeezerGenre](int){}
 	for _, track := range group.DZInformations.TrackList.List {
 		i := 1
 		val, ok := table[track.Album.Genre]
@@ -256,11 +258,23 @@ func DefineMostValuableGenreForGroup(group *Group) {
 		}
 		table[track.Album.Genre] = i
 	}
-	top := ""
+	var top DeezerGenre = DeezerGenre{}
 	for k, v := range table {
 		if v > table[top] {
 			top = k
 		}
 	}
 	group.MostValuableGenre = top
+	GroupByGenreMap[top] = group
+}
+
+func GetDeezerGenreList() []DeezerGenre {
+	list := []DeezerGenre{}
+	for k := range GroupByGenreMap {
+		if k.Name == "" {
+			continue
+		}
+		list = append(list, k)
+	}
+	return list
 }
