@@ -14,7 +14,6 @@
     </head>
     <header>
         {{ index .Fragments "navigationbar.html" }}
-        {{ index .Fragments "messages.html" }}
         <div class="mt-2 mx-5">
             <form method="post">
                 <div class="flex">
@@ -43,8 +42,9 @@
                 </div>
             </form>
         </div>
+        {{ index .Fragments "messages.html" }}
     </header>
-    <body class="dark:bg-gray-800 pt-5">        
+    <body class="dark:bg-gray-800" style="margin-top: 15vh;">        
         <div class="container w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
             {{range .Groups}}
                 <a href="/group/{{.Id}}/">

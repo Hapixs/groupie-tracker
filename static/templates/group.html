@@ -62,7 +62,7 @@
             </div>
             {{ range .Group.DZInformations.TrackList.List }}
             <p> {{.Title}}</p>
-            <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden sm:py-12">
+            <div class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
                 <div x-data="playaudio()" class="h-80 w-80">
                     <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
                         <div class="absolute inset-0 flex items-center justify-center p-8">
@@ -83,7 +83,6 @@
                             </div>
                         </div>
                     </button>
-            
                     <audio x-ref="audio">
                         <source src="{{.Preview}}" type="audio/mp3" />
                     </audio>
