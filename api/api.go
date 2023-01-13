@@ -373,7 +373,7 @@ func LoadArtistWithImage(group, m string) Artist {
 			if group == m {
 				artist.ImageLink = "https://cdn-icons-png.flaticon.com/512/32/32297.png"
 			} else {
-				artist = LoadArtistWithImage(group, group)
+				artist.ImageLink = LoadArtistWithImage(group, group).ImageLink
 			}
 		} else {
 			artist.ImageLink = k.Thumbnail.Source
