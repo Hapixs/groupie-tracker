@@ -4,11 +4,17 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+	"unicode"
+
+	"golang.org/x/text/runes"
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
 )
 
 const (
@@ -95,52 +101,6 @@ func GetRelationInfo(id int) ApiRelation {
 	return relation
 }
 
-//Some random stuff here
-
-type GoogleResponse struct {
-	Search_metadata    []string
-	Search_parameters  []string
-	Search_information []string
-	Images_results     []GoogleImage
-}
-
-type GoogleImage struct {
-	Position        int
-	Thumbnail       string
-	Source          string
-	Title           string
-	Link            string
-	Original        string
-	Original_width  int
-	Original_height int
-	Is_product      bool
-}
-
-func GetArtistPictureLink(name string) string {
-	name = strings.Replace(name, " ", "%20", -1)
-	url := "https://serpapi.com/search.json?q=" + name + "&tbm=isch&api_key=2c1bc58028db937882d64c5c61e3b444aa159eacdda9340b385f33023ebe8a14"
-	response, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	GResponse := GoogleResponse{}
-
-	json.Unmarshal(body, &GResponse)
-
-	if len(GResponse.Images_results) < 1 {
-		return "https://www.google.com/url?sa=i&url=http%3A%2F%2Fpleasepretty.elob.fr%2Fjackie-chan-wtf-meme-face-70958233396%2F&psig=AOvVaw2XVDgb6TVEVbxo_yX_3v_q&ust=1671290961728000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMjLpZO6_vsCFQAAAAAdAAAAABAE"
-	}
-	return GResponse.Images_results[0].Thumbnail
-}
-
-// redo the api for local cache
-
 type Group struct {
 	Id             int
 	ImageLink      string
@@ -152,7 +112,8 @@ type Group struct {
 }
 
 type Artist struct {
-	Name string
+	Name      string
+	ImageLink string
 }
 
 type Date struct {
@@ -187,7 +148,8 @@ func transformAndCacheGroup(v ApiArtist) {
 		FirstAlbumDate: v.FirstAlbum,
 	}
 	for _, m := range v.Members {
-		g.Members = append(g.Members, Artist{m})
+		a := LoadArtistWithImage(v.Name, m)
+		g.Members = append(g.Members, a)
 	}
 	relations := GetRelationInfo(v.Id)
 	for key, value := range relations.DatesLocations {
@@ -349,4 +311,73 @@ func GetGroupListFiltredByAll(filter string) []Group {
 	}
 
 	return sortedGroups
+}
+
+// Thx wikipedia :D
+
+type WikiRequest struct {
+	Query WikiQuery `json:"query"`
+}
+
+type WikiQuery struct {
+	Page map[int](WikiData) `json:"pages"`
+}
+
+type WikiData struct {
+	Thumbnail WikiThumbnail `json:"thumbnail"`
+}
+
+type WikiThumbnail struct {
+	Source string `json:"source"`
+}
+
+func GetWikipediaImage(artist string) WikiRequest {
+	artist = RemoveAccents(artist)
+	artist = strings.Join(strings.Split(artist, " "), "%20")
+	rand.Seed(time.Now().UnixMilli())
+	time.Sleep(time.Duration(rand.Intn(150)))
+	url := "https://en.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=pageimages&format=json&pithumbsize=100"
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var request WikiRequest
+	err = json.Unmarshal(body, &request)
+	if err != nil {
+		println("Error when parsing wikipedia api response for" + artist)
+		return WikiRequest{}
+	}
+	return request
+}
+
+func RemoveAccents(s string) string {
+	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+	output, _, e := transform.String(t, s)
+	if e != nil {
+		panic(e)
+	}
+	return output
+}
+
+func LoadArtistWithImage(group, m string) Artist {
+	artist := Artist{m, ""}
+	request := GetWikipediaImage(m)
+
+	for _, k := range request.Query.Page {
+		if k.Thumbnail.Source == "" {
+			if group == m {
+				artist.ImageLink = "https://cdn-icons-png.flaticon.com/512/32/32297.png"
+			} else {
+				artist = LoadArtistWithImage(group, group)
+			}
+		} else {
+			artist.ImageLink = k.Thumbnail.Source
+		}
+	}
+	return artist
 }

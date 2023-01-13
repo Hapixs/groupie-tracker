@@ -29,7 +29,7 @@
                     <!-- <ins><p class="text-3xl font-extrabold">Informations :</p></ins> -->
                     <div class="flex flex-col">
                         {{range .Group.Members}}
-                        <img src="https://cdn-icons-png.flaticon.com/512/32/32297.png" alt="" class="mt-2 mx-auto w-1/5">
+                        <img src="{{ .ImageLink }}" alt="" class="mt-2 mx-auto w-1/5">
                         <p class="text-2xl font-bold">{{.Name}}</p>
                         {{end}}
                     </div>
