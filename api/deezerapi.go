@@ -2,54 +2,58 @@ package api
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"log"
-	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
 type DeezerSearch struct {
-	Data []DeezerSearchTrackdata `json:"data"`
-}
-
-type DeezerSearchTrackdata struct {
-	SearchArtist DeezerSearchArtist `json:"artist"`
-}
-
-type DeezerSearchArtist struct {
-	Id int `json:"id"`
+	Data []struct {
+		SearchArtist struct {
+			Id int `json:"id"`
+		} `json:"artist"`
+	} `json:"data"`
 }
 
 func SearchForDeezzeGroupId(artist string) DeezerSearch {
 	artist = RemoveAccents(artist)
 	artist = strings.Join(strings.Split(artist, " "), "%20")
-	rand.Seed(time.Now().UnixMilli())
-	time.Sleep(time.Duration(rand.Intn(500)))
+
 	url := "https://api.deezer.com/search?q=" + artist
+
+	val, ok := ApiData.RequestAndResult[url]
+	if ok {
+		return val.Search
+	}
+
 	response, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
+	content, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	var request DeezerSearch
-	err = json.Unmarshal(body, &request)
+	err = json.Unmarshal(content, &request)
 	if err != nil {
-		println("Error when parsing deezer api response for" + artist)
-		println(err.Error())
 		return DeezerSearch{}
 	}
 	if len(request.Data) <= 0 {
 		println("-----")
-		println(string(body))
+		println(string(content))
 		println("-----")
 	}
+	data := ApiData.RequestAndResult[url]
+	data.Search = request
+	ApiData.RequestAndResult[url] = data
+	time.Sleep(time.Second / 10)
 	return request
 }
 
@@ -58,95 +62,77 @@ type DeezerGroup struct {
 }
 
 func GetDeezerGroup(id int) DeezerGroup {
-	rand.Seed(time.Now().UnixMilli())
-	time.Sleep(time.Duration(rand.Intn(500)))
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(id)
+	val, ok := ApiData.RequestAndResult[url]
+	if ok {
+		return val.Group
+	}
+
 	response, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
+	content, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	var request DeezerGroup
-	err = json.Unmarshal(body, &request)
+	err = json.Unmarshal(content, &request)
 	if err != nil {
-		println("Error when parsing wikipedia api response for" + strconv.Itoa(id))
 		return DeezerGroup{}
 	}
+	data := ApiData.RequestAndResult[url]
+	data.Group = request
+	ApiData.RequestAndResult[url] = data
+	time.Sleep(time.Second / 10)
 	return request
 }
 
 type DeezerTrackRequest struct {
-	List []DeezerTrack `json:"data"`
-}
-
-type DeezerTrack struct {
-	Title   string      `json:"title"`
-	Preview string      `json:"preview"`
-	Album   DeezerAlbum `json:"album"`
-}
-
-type DeezerAlbum struct {
-	Id        int                  `json:"id"`
-	Title     string               `json:"title"`
-	Cover     string               `json:"cover_medium"`
-	GenreList DeezerAlbumGenreList `json:"genres"`
-}
-
-type DeezerAlbumGenreList struct {
-	List []DeezerAlbumGenre `json:"data"`
-}
-
-type DeezerAlbumGenre struct {
-	Name string `json:"name"`
+	List []struct {
+		Title   string `json:"title"`
+		Preview string `json:"preview"`
+		Album   struct {
+			Id        int    `json:"id"`
+			Title     string `json:"title"`
+			Cover     string `json:"cover_medium"`
+			GenreList struct {
+				List []struct {
+					Name string `json:"name"`
+				} `json:"data"`
+			} `json:"genres"`
+		} `json:"album"`
+	} `json:"data"`
 }
 
 func GetDeezerTopTrack(groupId, amount int) DeezerTrackRequest {
-	rand.Seed(time.Now().UnixMilli())
-	time.Sleep(time.Duration(rand.Intn(500)))
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(groupId) + "/top?limit=" + strconv.Itoa(amount)
+	val, ok := ApiData.RequestAndResult[url]
+
+	if ok {
+		return val.TrackRequest
+	}
 	response, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
+	content, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	var request DeezerTrackRequest
-	err = json.Unmarshal(body, &request)
+	err = json.Unmarshal(content, &request)
 	if err != nil {
-		println("Error when parsing wikipedia api response for" + strconv.Itoa(groupId))
 		return DeezerTrackRequest{}
 	}
-	for _, v := range request.List {
-		v.Album = GetAlbumInformation(v.Album.Id)
-		time.Sleep(time.Second / 20)
-	}
-	return request
-}
-
-func GetAlbumInformation(id int) DeezerAlbum {
-	url := "https://api.deezer.com/album/" + strconv.Itoa(id)
-	response, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var request DeezerAlbum
-	err = json.Unmarshal(body, &request)
-	if err != nil {
-		println("oupsi")
-		return DeezerAlbum{}
-	}
+	data := ApiData.RequestAndResult[url]
+	data.TrackRequest = request
+	ApiData.RequestAndResult[url] = data
+	time.Sleep(time.Second / 10)
 	return request
 }
 
@@ -177,46 +163,52 @@ func GetDeezerInformationsFromName(name string) DeezerInformations {
 
 func LoadAllDeezerInformations() {
 	println("Asyncron, loading all deezer informations for groups")
+	ApiData = SaveAPIInformation{
+		RequestAndResult: make(map[string]struct {
+			TrackRequest DeezerTrackRequest
+			Search       DeezerSearch
+			Group        DeezerGroup
+		}),
+	}
+	content, err := os.ReadFile("deezerdata.json")
+	if err == nil {
+		json.Unmarshal(content, &ApiData)
+	}
+	LoadAllDeezerInformationsFromApi()
+
+	save, err := json.Marshal(ApiData)
+	if err != nil {
+		println("Error: JSON error")
+		return
+	}
+
+	file, err := os.Create("deezerdata.json")
+	if err != nil {
+		println("Error 2 with deezerdata")
+		return
+	}
+
+	file.Write(save)
+	file.Close()
+
+	println("All deezer informations are loaded !")
+}
+
+func LoadAllDeezerInformationsFromApi() {
 	for k, v := range GroupMap {
 		v.DZInformations = GetDeezerInformationsFromName(v.Name)
 		mutex.Lock()
 		GroupMap[k] = v
 		mutex.Unlock()
-		time.Sleep(time.Second)
-	}
-	LoadGenreMap()
-	LoadAlternativesForGroups()
-	println("All deezer informations are loaded !")
-}
-
-var genreMap = map[string]([]Group){}
-
-func LoadGenreMap() {
-	for _, group := range GroupMap {
-		for _, track := range group.DZInformations.TrackList.List {
-			for _, genre := range track.Album.GenreList.List {
-				println("yes")
-				val, ok := genreMap[genre.Name]
-				if !ok {
-					val = []Group{}
-				}
-				val = append(val, group)
-				genreMap[genre.Name] = val
-			}
-		}
 	}
 }
 
-func LoadAlternativesForGroups() {
-	for id, group := range GroupMap {
-		group.GroupAlternatives = []Group{}
-		for _, track := range group.DZInformations.TrackList.List {
-			for _, genre := range track.Album.GenreList.List {
-				group.GroupAlternatives = append(group.GroupAlternatives, genreMap[genre.Name]...)
-			}
-		}
-		mutex.Lock()
-		GroupMap[id] = group
-		mutex.Unlock()
+type SaveAPIInformation struct {
+	RequestAndResult map[string]struct {
+		TrackRequest DeezerTrackRequest
+		Search       DeezerSearch
+		Group        DeezerGroup
 	}
 }
+
+var ApiData = SaveAPIInformation{}
