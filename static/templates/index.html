@@ -44,7 +44,7 @@
         </div>
         {{ index .Fragments "messages.html" }}
     </header>
-    <body class="dark:bg-gray-800" style="margin-top: 15vh;">
+    <body class="dark:bg-gray-800 pb-0" style="margin-top: 15vh;">
         <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
             {{range .DeezerGenres}}
                 <a href="/genre/?genre={{.Id}}">
