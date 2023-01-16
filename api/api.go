@@ -1,11 +1,14 @@
 package api
 
 import (
+	"objects"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 	"unicode"
+	"utils"
 
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
@@ -49,6 +52,7 @@ func LoadGroups() {
 	wg.Wait()
 	go LoadAllDeezerInformations()
 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
+	go UpdateAllGroupsPics()
 }
 
 func transformAndCacheGroup(v ApiArtist) {
@@ -254,4 +258,22 @@ func LoadArtistWithImage(group, m string) Artist {
 		}
 	}
 	return artist
+}
+
+func UpdateAllGroupsPics() {
+	_, downloadImages, _ := objects.WebServerConfig.GetConfigItem(objects.DownloadPicture)
+	if !downloadImages {
+		return
+	}
+	println("Checking and updating groups images..")
+	groups := GetCachedGroups()
+	for _, a := range groups {
+		fileHash := utils.CalculatStringHash(a.Name)
+		_, err := os.OpenFile("static/assets/groups/"+fileHash+".jpeg", os.O_RDONLY, os.ModePerm)
+		if err != nil {
+			utils.DownloadPicture(a.ImageLink, "static/assets/groups/"+fileHash+".jpeg")
+		}
+		EditGroupImageLink(a.Id, "/static/assets/groups/"+fileHash+".jpeg")
+	}
+	println("All groups images are downloaded !")
 }

@@ -33,6 +33,9 @@ type HtmlData struct {
 }
 
 func InitHandlers() {
+	fs := http.FileServer(http.Dir("./static/"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/home", homeHandler)
 	http.HandleFunc("/test", testHandler)

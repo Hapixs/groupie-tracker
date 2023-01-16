@@ -224,10 +224,9 @@ func UpdateAllDeezerInformations(forceUpdate bool) {
 func DeezerApiUpdateroutine() {
 	for {
 		time.Sleep(time.Minute * 5)
-		println("Updating all deezer informations...")
+		println("Updating all deezer informations in background...")
 		UpdateAllDeezerInformations(true)
 		SaveDeezerApiCache()
-		println("Update done!")
 	}
 }
 
