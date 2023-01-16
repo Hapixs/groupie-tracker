@@ -13,7 +13,8 @@ import (
 type DeezerSearch struct {
 	Data []struct {
 		SearchArtist struct {
-			Id int `json:"id"`
+			Id   int    `json:"id"`
+			Name string `json:"name"`
 		} `json:"artist"`
 	} `json:"data"`
 }
@@ -168,8 +169,13 @@ func GetDeezerInformationsFromName(name string, update bool) DeezerInformations 
 		println("No groupe found for " + name)
 		return DeezerInformations{}
 	}
-
-	groupId := s.Data[0].SearchArtist.Id
+	groupId := 0
+	for _, data := range s.Data {
+		if strings.Contains(data.SearchArtist.Name, name) {
+			groupId = data.SearchArtist.Id
+			break
+		}
+	}
 	infos.Group = GetDeezerGroup(groupId, update)
 	trackRequest := GetDeezerTopTrack(groupId, 10, update)
 	UpdateGenreForTracksAlbum(&trackRequest)
