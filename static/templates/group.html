@@ -38,9 +38,9 @@
                 </div>
             </div>
 
-            <div class="grid grid-flow-col grid-rows-2 grid-cols-3 gap-8">
+            <div class="grid grid-flow-col lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-2 sm:grid-rows-5 mb-5 md:grid-cols-3 md:grid-rows-3">
                 {{ range .Group.DZInformations.TrackList.List }}
-                <div class="">
+                <div class="z-5">
                     <div x-data="playaudio()" class="h-80 w-80">
                         <p class="font-bold">{{.Title}}</p>
                         <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
@@ -66,13 +66,13 @@
                             <source src="{{.Preview}}" type="audio/mp3" />
                         </audio>
                     </div>
-                    <div class="flex space-x-2 justify-center">
+                    <div class="flex space-x-2 justify-center mt-0">
                         <span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Album.Genre.Name}}</span>
                     </div>
                 </div>
                 {{ end }}
             </div>
-            <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
+            <div class="container w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
                 {{range .Group.GroupAlternatives}}
                     <a href="/group/{{.Id}}/">
                         <div class="flex space-x-2 justify-center">
