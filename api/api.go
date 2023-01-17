@@ -32,6 +32,7 @@ type Group struct {
 type Artist struct {
 	Name      string
 	ImageLink string
+	WikiUrl   string
 }
 
 type Date struct {
@@ -243,7 +244,7 @@ func RemoveAccents(s string) string {
 }
 
 func LoadArtistWithImage(group, m string) Artist {
-	artist := Artist{m, ""}
+	artist := Artist{m, "", GetWikipediaPageLink(m)}
 	request := GetWikipediaImage(m)
 
 	for _, k := range request.Query.Page {
