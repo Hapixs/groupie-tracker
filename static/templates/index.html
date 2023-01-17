@@ -57,8 +57,8 @@
                 </a>
             {{end}}
         </div>
-        <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
-            {{range .Groups}}
+         <!--<div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center mx-auto">
+          <!--   {{range .Groups}}
                 <a href="/group/{{.Id}}/">
                     <div class="flex space-x-2 justify-center">
                         <span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.MostValuableGenre.Name}}</span>
@@ -69,12 +69,56 @@
                             <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{.Name}}</h5>
                         </div>
                     </div>
-                </a>
-            {{end}}
+                </a> 
+
+                <a href="/group/{{.Id}}/" class="group relative block">
+                    <img
+                      alt="Developer"
+                      src="{{.ImageLink}}"
+                      class="absolute object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                    />
+
+                    <div class="relative p-10">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
+                        {{.MostValuableGenre.Name}}
+                      </p>
+                  
+                      <p class="text-2xl font-bold  tracking-widesttext-white">{{.Name}}</p>
+                  
+                    </div>
+                  </a>
+
+            {{end}}-->
+            <div class="">
+            {{ range $key, $value := .GroupByGenres }}
+                <div class="flex">
+                    <a href="/genre/?genre={{$key.Id}}">
+                        <div class="rounded-lg hover:scale-110 shadow-lg bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
+                            <img class="rounded-t-lg" src="{{$key.Picture}}" alt={{$key.Name}}/>
+                            <div class="p-6">
+                                <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{$key.Name}}</h5>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="flex -space-x-2">
+                    {{ range $value}}
+                            <a href="/group/{{.Id}}" class="group hover:scale-150 hover:z-10 transform ease-in-out transition duration-500">
+                                <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                    <p class="text-sm text-white">
+                                      {{.Name}}
+                                    </p>
+                                  </div>
+                                <img class="inline-block h-40 w-40 rounded-xl object-cover ring-2 ring-white" src="{{.ImageLink}}" alt="Guy"/>
+                            </a>
+                        {{ end}}
+                </div>
+            </div> 
+            {{ end }}
+            </div>
             {{ if eq (len .Groups) 0 }}
                 <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
             {{end}}
-        </div>
+        <!--</div>-->
     </body>
     {{ index .Fragments "footer.html" }}
 </html>

@@ -29,7 +29,8 @@ type HtmlData struct {
 	Fragments   map[string](string)
 	ProjectName string
 
-	DeezerGenres []api.DeezerGenre
+	DeezerGenres  []api.DeezerGenre
+	GroupByGenres map[api.DeezerGenre][]api.Group
 }
 
 func InitHandlers() {

@@ -169,12 +169,15 @@ func GetDeezerInformationsFromName(name string, update bool) DeezerInformations 
 		println("No groupe found for " + name)
 		return DeezerInformations{}
 	}
-	groupId := 0
+	groupId := -1
 	for _, data := range s.Data {
 		if strings.Contains(data.SearchArtist.Name, name) {
 			groupId = data.SearchArtist.Id
 			break
 		}
+	}
+	if groupId < 0 {
+		groupId = s.Data[0].SearchArtist.Id
 	}
 	infos.Group = GetDeezerGroup(groupId, update)
 	trackRequest := GetDeezerTopTrack(groupId, 10, update)
@@ -254,7 +257,7 @@ func SaveDeezerApiCache() {
 }
 
 func DefineMostValuableGenreForGroup(group *Group) {
-	var top DeezerGenre = DeezerGenre{Name: "N/A"}
+	var top DeezerGenre = DeezerGenre{Name: ""}
 	table := map[DeezerGenre](int){top: 0}
 	for _, track := range group.DZInformations.TrackList.List {
 		i := 1
@@ -273,6 +276,11 @@ func DefineMostValuableGenreForGroup(group *Group) {
 	groups := []Group{*group}
 	val, ok := GroupByGenreMap[top]
 	if ok {
+		for _, v := range val {
+			if group.Id == v.Id {
+				return
+			}
+		}
 		groups = append(groups, val...)
 	}
 	GroupByGenreMap[top] = groups
