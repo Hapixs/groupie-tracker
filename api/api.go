@@ -1,18 +1,17 @@
 package api
 
 import (
+	"encoding/json"
+	"errors"
+	"io"
+	"net/http"
 	"objects"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-	"unicode"
 	"utils"
-
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
 )
 
 type Group struct {
@@ -43,22 +42,94 @@ type Date struct {
 var GroupMap = map[int](Group){}
 var wg sync.WaitGroup
 var mutex sync.Mutex
+var CacheApi = map[string]string{}
+
+func CallExternalApi[T any](url string, structure *T, sleepTime time.Duration) {
+	response, err := http.Get(url)
+	if err != nil {
+		println("Error when calling " + url)
+		return
+	}
+	defer response.Body.Close()
+	content, err := io.ReadAll(response.Body)
+	if err != nil {
+		println("Error when reading body of " + url)
+		return
+	}
+	err = json.Unmarshal(content, structure)
+	if err != nil {
+		println("Error when pasing body of " + url)
+		return
+	}
+
+	mutex.Lock()
+	CacheApi[url] = string(content)
+	mutex.Unlock()
+
+	time.Sleep(time.Duration(sleepTime))
+}
+
+func CallCacheApi[T any](url string, structure *T) error {
+	val, ok := CacheApi[url]
+	if ok {
+		return json.Unmarshal([]byte(val), structure)
+	}
+	println("Unable for " + url)
+	return errors.New("Unable to find in api cache " + url)
+}
+
+func GetFromApi[T any](url string, structure *T, update bool, sleepTime time.Duration) {
+	err := CallCacheApi(url, structure)
+	if err != nil || update {
+		println("Unable for " + url)
+		CallExternalApi(url, structure, sleepTime)
+	}
+}
+
+func SaveApiCache() {
+	save, err := json.Marshal(CacheApi)
+	if err != nil {
+		println("Error: JSON error")
+		return
+	}
+
+	file, err := os.Create("data.json")
+	if err != nil {
+		println("Error 2 with data")
+		return
+	}
+
+	file.Write(save)
+	file.Close()
+}
+
+func LoadApiData() {
+	content, err := os.ReadFile("data.json")
+	if err == nil {
+		json.Unmarshal(content, &CacheApi)
+	} else {
+		println("Seams like the first start of this web server.")
+		println("Some operations may take several minutes.")
+	}
+}
 
 func LoadGroups() {
 	println("Loading groups in cache for better performances")
+	LoadApiData()
 	groups := getAllArtist()
 	for _, v := range groups {
 		go transformAndCacheGroup(v)
+		wg.Add(1)
 	}
 	wg.Wait()
+
 	go LoadAllDeezerInformations()
-	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
 	go UpdateAllGroupsPics()
+	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
 }
 
 func transformAndCacheGroup(v ApiArtist) {
 	defer wg.Done()
-	wg.Add(1)
 	g := Group{
 		Id:             v.Id,
 		ImageLink:      v.Image,
@@ -160,15 +231,6 @@ func GetGroupListFiltredByDate(filter string) []Group {
 	return sortedGroups
 }
 
-func IsNumeric(s string) bool {
-	for _, c := range s {
-		if !(c >= 48 && c <= 57) {
-			return false
-		}
-	}
-	return true
-}
-
 func TransformDateToText(dateTime string) string {
 	d := strings.Split(dateTime, "-")
 	day, _ := strconv.Atoi(d[0])
@@ -233,15 +295,6 @@ func GetGroupListFiltredByAll(filter string) []Group {
 }
 
 // Thx wikipedia :D
-
-func RemoveAccents(s string) string {
-	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-	output, _, e := transform.String(t, s)
-	if e != nil {
-		panic(e)
-	}
-	return output
-}
 
 func LoadArtistWithImage(group, m string) Artist {
 	artist := Artist{m, "", GetWikipediaPageLink(m)}

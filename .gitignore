@@ -2,3 +2,4 @@
 static/assets/groups/*
 node_modules/
 deezerdata.json
+data.json

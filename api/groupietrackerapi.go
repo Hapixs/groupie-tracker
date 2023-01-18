@@ -1,23 +1,9 @@
 package api
 
 import (
-	"encoding/json"
-	"io"
-	"log"
-	"net/http"
 	"strconv"
+	"time"
 )
-
-const (
-	apiUrl = "https://groupietrackers.herokuapp.com/api"
-)
-
-type MainPageResponse struct {
-	Artists   string `json:"artists"`
-	Locations string `json:"locations"`
-	Dates     string `json:"dates"`
-	Relation  string `json:"relation"`
-}
 
 type ApiArtist struct {
 	Id           int      `json:"id"`
@@ -36,58 +22,16 @@ type ApiRelation struct {
 	DatesLocations map[string]([]string) `json:"datesLocations"`
 }
 
-func getApiUrl() []string {
-	response, err := http.Get(apiUrl)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer response.Body.Close()
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var mainPageResponse MainPageResponse
-	err = json.Unmarshal(body, &mainPageResponse)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return []string{mainPageResponse.Artists, mainPageResponse.Locations, mainPageResponse.Dates, mainPageResponse.Relation}
-}
-
 func getAllArtist() []ApiArtist {
-	url := getApiUrl()[0]
-	response, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer response.Body.Close()
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var artists []ApiArtist
-	err = json.Unmarshal(body, &artists)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return artists
+	var request []ApiArtist
+	url := "https://groupietrackers.herokuapp.com/api/artists"
+	GetFromApi(url, &request, false, time.Millisecond)
+	return request
 }
 
 func GetRelationInfo(id int) ApiRelation {
-	url := getApiUrl()[3] + "/" + strconv.Itoa(id)
-	response, err := http.Get(url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer response.Body.Close()
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var relation ApiRelation
-	err = json.Unmarshal(body, &relation)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return relation
+	var request ApiRelation
+	url := "https://groupietrackers.herokuapp.com/api/relation/" + strconv.Itoa(id)
+	GetFromApi(url, &request, false, time.Millisecond)
+	return request
 }
