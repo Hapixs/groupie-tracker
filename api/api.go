@@ -70,7 +70,9 @@ func CallExternalApi[T any](url string, structure *T, sleepTime time.Duration) {
 }
 
 func CallCacheApi[T any](url string, structure *T) error {
+	mutex.Lock()
 	val, ok := CacheApi[url]
+	mutex.Unlock()
 	if ok {
 		return json.Unmarshal([]byte(val), structure)
 	}
@@ -85,7 +87,9 @@ func GetFromApi[T any](url string, structure *T, update bool, sleepTime time.Dur
 }
 
 func SaveApiCache() {
+	mutex.Lock()
 	save, err := json.Marshal(CacheApi)
+	mutex.Unlock()
 	if err != nil {
 		println("Error: JSON error")
 		return
