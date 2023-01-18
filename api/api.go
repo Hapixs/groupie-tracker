@@ -74,14 +74,12 @@ func CallCacheApi[T any](url string, structure *T) error {
 	if ok {
 		return json.Unmarshal([]byte(val), structure)
 	}
-	println("Unable for " + url)
 	return errors.New("Unable to find in api cache " + url)
 }
 
 func GetFromApi[T any](url string, structure *T, update bool, sleepTime time.Duration) {
 	err := CallCacheApi(url, structure)
 	if err != nil || update {
-		println("Unable for " + url)
 		CallExternalApi(url, structure, sleepTime)
 	}
 }
