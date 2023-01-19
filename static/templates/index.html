@@ -90,12 +90,10 @@
                     </a>
                     <div class="flex -space-x-2 content-evenly">
                     {{ range $value}}
-                            <a href="/group/{{.Id}}" class="group hover:scale-150 hover:z-10 transform ease-in-out transition duration-500">
+                            <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
                                 <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                                    <p class="text-sm text-white">
-                                      {{.Name}}
-                                    </p>
-                                  </div>
+                                    <p class="text-sm text-white groupeName">{{.Name}}</p>
+                                </div>
                                 <img class="inline-block h-40 w-40 rounded-xl object-cover ring-2 ring-white" src="{{.ImageLink}}" alt="Guy"/>
                             </a>
                         {{ end}}

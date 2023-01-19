@@ -15,3 +15,10 @@ body {
     top: 5vh;
     padding-bottom: 15vh;
 }
+
+.groupeName {
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
