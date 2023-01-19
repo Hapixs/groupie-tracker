@@ -11,10 +11,15 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1;
 }
 
 body {
     position: relative;
     top: 5vh;
     padding-bottom: 15vh;
+    z-index: 1;
 }
+
+/* .musics prio */
+.musics 

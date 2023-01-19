@@ -41,14 +41,14 @@
 
             <div class="grid grid-flow-col lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-2 sm:grid-rows-5 mb-5 md:grid-cols-3 md:grid-rows-3">
                 {{ range .Group.DZInformations.TrackList.List }}
-                <div class="z-5">
+                <div class="">
                     <div x-data="playaudio()" class="h-80 w-80">
                         <p class="font-bold">{{.Title}}</p>
                         <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
                             <div class="inset-0 flex items-center justify-center">
                                 <div class="w-full h-full transition duration-300 ease-in-out bg-cyan-500 filter group-hover:blur-2xl"></div>
                             </div>
-                            <img alt="card audio player" class="rounded-xl" src="{{.Album.Cover}}" />
+                            <img alt="card audio player musics" class="rounded-xl" src="{{.Album.Cover}}" />
                             <div class="absolute inset-0 flex items-center justify-center transition duration-200 ease-in-out bg-black rounded-xl bg-opacity-30 group-hover:bg-opacity-20">
                                 <div x-show="!currentlyPlaying" class="bg-black bg-opacity-50 rounded-full p-0.5">
                                     <svg class="w-12 h-12 text-white text-opacity-0 transition duration-150 ease-in-out hover:text-opacity-20" viewBox="0 0 284 284" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
