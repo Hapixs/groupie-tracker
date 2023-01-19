@@ -1,19 +1,22 @@
 package handlers
 
 import (
-	"api"
 	"net/http"
 	"text/template"
+	"workers"
+
+	"golang.org/x/exp/maps"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
-	groups := api.GetCachedGroups()
+	groups := maps.Values(workers.GroupMap)
+
 	data := HtmlData{
 		ProjectName:   "Chazam",
 		PageName:      "home",
-		DeezerGenres:  api.GetDeezerGenreList(),
-		GroupByGenres: api.GroupByGenreMap,
+		DeezerGenres:  workers.GetDeezerGenreList(),
+		GroupByGenres: workers.GroupByGenreMap,
 	}
 
 	CheckForMessageQuery(r, &data)
@@ -26,13 +29,13 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			category := r.Form.Get("search_category")
 			switch category {
 			case "all":
-				groups = api.GetGroupListFiltredByAll(str)
+				//groups = api.GetGroupListFiltredByAll(str)
 			case "name":
-				groups = api.GetGroupListFiltredByName(str)
+				//groups = api.GetGroupListFiltredByName(str)
 			case "date":
-				groups = api.GetGroupListFiltredByDate(str) // Todo: translate to french
+				//groups = api.GetGroupListFiltredByDate(str) // Todo: translate to french
 			case "places":
-				groups = api.GetGroupListFiltredByLocation(str)
+				// groups = api.GetGroupListFiltredByLocation(str)
 			}
 			data.LastResearchCategory = category
 			data.LastResearchInput = str

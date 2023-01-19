@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"api"
 	"net/http"
 	"strconv"
 	"strings"
 	"text/template"
+	"workers"
 )
 
 func groupHandler(w http.ResponseWriter, r *http.Request) {
@@ -22,11 +22,11 @@ func groupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	group := api.GetGroupFromId(groupId)
+	group := workers.GroupMap[groupId]
+	group.DefineMostValuableGenreForGroup()
+
 	tmpl := template.Must(template.ParseFiles(groupTemplatePath))
-	api.UpdateAlternativeGroupsForGroup(&group)
 	data := HtmlData{
-		//Groups:      api.GetCachedGroups(),
 		Group:       group,
 		ProjectName: "Chazam",
 	}

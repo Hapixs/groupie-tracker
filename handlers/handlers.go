@@ -3,9 +3,11 @@ package handlers
 import (
 	"api"
 	"net/http"
+	"objects"
 	"os"
 	"strconv"
 	"utils"
+	"workers"
 )
 
 const (
@@ -24,13 +26,13 @@ type HtmlData struct {
 	LastResearchInput    string
 	LastResearchCategory string
 
-	Groups      []api.Group
-	Group       api.Group
+	Groups      []objects.Group
+	Group       objects.Group
 	Fragments   map[string](string)
 	ProjectName string
 
 	DeezerGenres  []api.DeezerGenre
-	GroupByGenres map[api.DeezerGenre][]api.Group
+	GroupByGenres map[api.DeezerGenre][]objects.Group
 }
 
 func InitHandlers() {
@@ -42,7 +44,7 @@ func InitHandlers() {
 	http.HandleFunc("/test", testHandler)
 	http.HandleFunc("/notfound", errorHandler)
 
-	for k := range api.GroupMap {
+	for k := range workers.GroupMap {
 		link := "/group/" + strconv.Itoa(k) + "/"
 		http.HandleFunc(link, groupHandler)
 	}

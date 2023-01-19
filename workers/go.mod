@@ -1,4 +1,4 @@
-module handlers
+module workers
 
 go 1.19
 

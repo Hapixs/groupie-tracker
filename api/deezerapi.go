@@ -48,9 +48,6 @@ type DeezerApiCache struct {
 	RequestAndResult map[string]string
 }
 
-var ApiData = DeezerApiCache{}
-var GroupByGenreMap = map[DeezerGenre]([]Group){}
-
 func SearchForDeezerGroupId(artist string, update bool) DeezerSearch {
 	var request DeezerSearch
 	artist = utils.FormatArtistName(artist)
@@ -122,76 +119,4 @@ func UpdateGenreForTracksAlbum(request *DeezerTrackRequest) {
 		genre := GetGenreById(album.Genre_Id, false)
 		request.List[id].Album.Genre = genre
 	}
-}
-
-func LoadAllDeezerInformations() {
-	println("Asyncron, loading all deezer informations for groups")
-	UpdateAllDeezerInformations(false)
-	SaveApiCache()
-	println("All deezer informations are loaded !")
-	go DeezerApiUpdateroutine()
-}
-
-func UpdateAllDeezerInformations(forceUpdate bool) {
-	for k, v := range GroupMap {
-		v.DZInformations = GetDeezerInformationsFromName(v.Name, forceUpdate)
-		DefineMostValuableGenreForGroup(&v)
-		mutex.Lock()
-		GroupMap[k] = v
-		mutex.Unlock()
-	}
-}
-
-func DeezerApiUpdateroutine() {
-	for {
-		time.Sleep(time.Minute * 5)
-		println("Updating all deezer informations in background...")
-		UpdateAllDeezerInformations(true)
-		SaveApiCache()
-	}
-}
-
-func DefineMostValuableGenreForGroup(group *Group) {
-	var top DeezerGenre = DeezerGenre{Name: ""}
-	table := map[DeezerGenre](int){top: 0}
-	for _, track := range group.DZInformations.TrackList.List {
-		i := 1
-		val, ok := table[track.Album.Genre]
-		if ok {
-			i += val
-		}
-		table[track.Album.Genre] = i
-	}
-	for k, v := range table {
-		if v > table[top] {
-			top = k
-		}
-	}
-	group.MostValuableGenre = top
-	groups := []Group{*group}
-	val, ok := GroupByGenreMap[top]
-	if ok {
-		for _, v := range val {
-			if group.Id == v.Id {
-				return
-			}
-		}
-		groups = append(groups, val...)
-	}
-	GroupByGenreMap[top] = groups
-}
-
-func UpdateAlternativeGroupsForGroup(group *Group) {
-	group.GroupAlternatives = GroupByGenreMap[group.MostValuableGenre]
-}
-
-func GetDeezerGenreList() []DeezerGenre {
-	list := []DeezerGenre{}
-	for k := range GroupByGenreMap {
-		if k.Name == "" {
-			continue
-		}
-		list = append(list, k)
-	}
-	return list
 }
