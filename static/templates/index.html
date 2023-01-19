@@ -43,7 +43,7 @@
         {{ index .Fragments "messages.html" }}
     </header>
     <body class="dark:bg-gray-800 pb-0" style="margin-top: 15vh;">
-        <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center mx-auto">
+        <!-- <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center mx-auto">
             {{range .Groups}}
             <a href="/group/{{.Id}}/">
                 <div class="flex space-x-2 justify-center">
@@ -64,7 +64,7 @@
                 </div>
             </a>
             {{end}}
-        </div>
+        </div> -->
         <div class="mx-5">
         {{ range $key, $value := .GroupByGenres }}
             <div class="flex">
@@ -77,14 +77,14 @@
                     </div>
                 </a>
                 <div class="flex">
-                    {{ range $value}}
-                        <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
-                            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                                <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
-                            </div>
-                            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}" alt="Guy"/>
-                        </a>
-                    {{ end }}
+                {{ range $value}}
+                    <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+                        <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                            <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
+                        </div>
+                        <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}" alt="Guy"/>
+                    </a>
+                {{ end }}
                 </div>
             </div>
         </div> 
