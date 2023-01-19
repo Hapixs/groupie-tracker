@@ -104,6 +104,9 @@
                 <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Musiques indisponibles où en cours de chargement...</p>
                 {{end}}
             </div>
+            <div class="divider h-full p-10"> 
+                <h2 class="text-5xl"> MEME STYLE </h2>
+            </div>
             <div class="container w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 justify-items-center mx-auto">
                 {{range .Group.GroupAlternatives}}
                     <a href="/group/{{.Id}}/">
