@@ -18,13 +18,11 @@
         <div class="mt-2 mx-5">
             <form method="post">
                 <div class="flex">
-                    <!-- <label for="category-select" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label> -->
                     <select name="search_category" id="category-select" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
                         <option {{ if eq .LastResearchCategory "all"}} selected {{ end }} value="all">Toutes les catégories</option>
                         <option {{ if eq .LastResearchCategory "name"}} selected {{ end }} value="name">Nom</option>
                         <option {{ if eq .LastResearchCategory "date"}} selected {{ end }} value="date">Date</option>
                         <option {{ if eq .LastResearchCategory "places"}} selected {{ end }} value="places">Endroits</option>
-                        <!-- <option value="logos">Logos</option> -->
                     </select>
                     <div class="relative w-full">
                         <input type="search" name="search_input" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" {{ if ne .LastResearchInput ""}} value="{{.LastResearchInput}}" {{ end }} placeholder="Search name, dates, ..." required>
@@ -77,26 +75,27 @@
                   </a>
 
             {{end}}-->
-            <div class="">
+            <div class="mx-5">
             {{ range $key, $value := .GroupByGenres }}
                 <div class="flex">
                     <a href="/genre/?genre={{$key.Id}}">
-                        <div class="rounded-lg shadow-lg hover:scale-110 bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
+                        <div class="rounded-lg shadow-lg hover:scale-110 bg-white w-48 mb-5 hover:dark:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
                             <img class="rounded-t-lg" src="{{$key.Picture}}" alt={{$key.Name}}/>
                             <div class="p-6">
                                 <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{$key.Name}}</h5>
                             </div>
                         </div>
                     </a>
-                    <div class="flex -space-x-2 content-evenly">
-                    {{ range $value}}
+                    <div class="flex">
+                        {{ range $value}}
                             <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
                                 <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                                    <p class="text-sm text-white groupeName">{{.Name}}</p>
+                                    <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
                                 </div>
-                                <img class="inline-block h-40 w-40 rounded-xl object-cover ring-2 ring-white" src="{{.ImageLink}}" alt="Guy"/>
+                                <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}" alt="Guy"/>
                             </a>
                         {{ end}}
+                    </div>
                 </div>
             </div> 
             {{ end }}
@@ -104,7 +103,6 @@
             {{ if eq (len .Groups) 0 }}
                 <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
             {{end}}
-        <!--</div>-->
     </body>
     {{ index .Fragments "footer.html" }}
 </html>
