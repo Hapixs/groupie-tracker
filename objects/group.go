@@ -13,7 +13,7 @@ type Group struct {
 	Members        []Artist
 	CreationYear   int
 	FirstAlbumDate string
-	DateLocations  []api.Date
+	DateLocations  map[string]([]api.Date)
 
 	DZInformations    api.DeezerInformations
 	GroupAlternatives []Group
@@ -45,6 +45,20 @@ func (group *Group) InitFromApiArtist(apiartist api.ApiArtist) {
 		}
 		artist.Load()
 		group.Members = append(group.Members, artist)
+	}
+
+	api.UpdateGroupRelation(&apiartist)
+	group.DateLocations = map[string]([]api.Date){}
+	for k, v := range apiartist.DatesLocations {
+		val, ok := group.DateLocations[k]
+		l := []api.Date{{
+			Locations: k,
+			DateTime:  v,
+		}}
+		if !ok {
+			l = append(l, val...)
+		}
+		group.DateLocations[k] = l
 	}
 }
 

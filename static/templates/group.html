@@ -11,15 +11,19 @@
         <link href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css" rel="stylesheet" type="text/css" />
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/@googlemaps/js-api-loader@1.0.0/dist/index.min.js"></script>
         <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">
         <link rel="stylesheet" href="/static/css/group.css">
         <script src="/static/js/script.js"></script>
+        <script src="/static/js/googlemap.js"></script>
         <title>{{ .ProjectName }} - {{ .Group.Name }}</title>
     </head>
+
     <header class="barre">
         {{ index .Fragments "navigationbar.html" }}
         {{ index .Fragments "messages.html" }}
     </header>
+
     <body class="dark:bg-gray-800 dark:text-white pb-0">
         <div class="container mx-auto my-2 text-center justify-center">
             <p class="font-black" style="font-size: 4rem;">{{.Group.Name}}</p>
@@ -103,6 +107,32 @@
                 {{ if eq (len .Group.DZInformations.TrackList.List) 0 }}
                 <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Musiques indisponibles où en cours de chargement...</p>
                 {{end}}
+            </div>
+            <div class="divider h-full p-10"> 
+                <h2 class="text-5xl"> TOURNEE </h2>
+            </div>
+            <div class="grid grid-flow-col grid-col-2 grid-row-1">
+                <div class="grid grid-flow-row">
+                    {{ range $key, $value := .Group.DateLocations }}
+                        {{ range $value }}      
+                           <button onclick="ChangeMapCoordinates({{.Loc.Lat}}, {{.Loc.Long}})">
+                                {{ $key }}
+                                <ul>
+                                {{ range .DateTime }}
+                                    <li> {{ . }} </li>
+                                {{ end }}
+                                </ul>
+                            </button> 
+                        {{ end }}
+                    {{ end }}
+                </div>
+                <div id="map" class="w-96 h-96" 
+                data-lat=0
+                data-lng=0></div>
+                <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
+                defer
+                ></script>  
             </div>
             <div class="divider h-full p-10"> 
                 <h2 class="text-5xl"> MEME STYLE </h2>

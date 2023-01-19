@@ -12,29 +12,32 @@ import (
 
 type Date struct {
 	Locations string
-	DateTime  string
+	DateTime  []string
+	Loc       Geoloc
 }
 
-var wg sync.WaitGroup
 var mutex sync.Mutex
 var CacheApi = map[string]string{}
 
-func CallExternalApi[T any](url string, structure *T, sleepTime time.Duration) {
-	response, err := http.Get(url)
+func CallExternalApi[T any](url string, structure *T, sleepTime time.Duration, headerVar map[string]string) error {
+	req, _ := http.NewRequest("GET", url, nil)
+
+	for k, v := range headerVar {
+		req.Header.Add(k, v)
+	}
+
+	response, err := http.DefaultClient.Do(req)
 	if err != nil {
-		println("Error when calling " + url)
-		return
+		return errors.New("Error when calling " + url)
 	}
 	defer response.Body.Close()
 	content, err := io.ReadAll(response.Body)
 	if err != nil {
-		println("Error when reading body of " + url)
-		return
+		return errors.New("Error when reading body of " + url)
 	}
 	err = json.Unmarshal(content, structure)
 	if err != nil {
-		println("Error when pasing body of " + url)
-		return
+		return errors.New("Error when pasing body of " + url)
 	}
 
 	mutex.Lock()
@@ -42,6 +45,7 @@ func CallExternalApi[T any](url string, structure *T, sleepTime time.Duration) {
 	mutex.Unlock()
 
 	time.Sleep(time.Duration(sleepTime))
+	return nil
 }
 
 func CallCacheApi[T any](url string, structure *T) error {
@@ -54,11 +58,12 @@ func CallCacheApi[T any](url string, structure *T) error {
 	return errors.New("Unable to find in api cache " + url)
 }
 
-func GetFromApi[T any](url string, structure *T, update bool, sleepTime time.Duration) {
+func GetFromApi[T any](url string, structure *T, update bool, sleepTime time.Duration, headerVar map[string]string) error {
 	err := CallCacheApi(url, structure)
 	if err != nil || update {
-		CallExternalApi(url, structure, sleepTime)
+		err = CallExternalApi(url, structure, sleepTime, headerVar)
 	}
+	return err
 }
 
 func SaveApiCacheToFile() {

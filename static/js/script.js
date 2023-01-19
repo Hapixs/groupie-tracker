@@ -1,5 +1,5 @@
 if (document.cookie.indexOf("cookies") > -1) {
-    document.getElementById("defaultModal").style.display = "none"
+   // document.getElementById("defaultModal").style.display = "none"
 }
 
 function CloseMessage (id) {

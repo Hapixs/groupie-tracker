@@ -18,12 +18,12 @@ type ApiArtist struct {
 func GetGroupieArtistList() []ApiArtist {
 	var request []ApiArtist
 	url := "https://groupietrackers.herokuapp.com/api/artists"
-	GetFromApi(url, &request, false, time.Millisecond)
+	GetFromApi(url, &request, false, time.Millisecond, nil)
 	return request
 }
 
-func UpdateGroupRelation(artist ApiArtist) {
-	request := &artist
+func UpdateGroupRelation(artist *ApiArtist) {
+	request := artist
 	url := "https://groupietrackers.herokuapp.com/api/relation/" + strconv.Itoa(artist.Id)
-	GetFromApi(url, &request, false, time.Millisecond)
+	GetFromApi(url, &request, false, time.Millisecond, nil)
 }

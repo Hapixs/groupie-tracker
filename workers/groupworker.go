@@ -18,6 +18,7 @@ func LoadGroups() {
 	api.LoadApiDataFromFile()
 	println("Loading groups in cache for better performances")
 	artists := api.GetGroupieArtistList()
+
 	for _, v := range artists {
 		go transformAndCacheGroup(v)
 		wg.Add(1)
@@ -25,6 +26,7 @@ func LoadGroups() {
 	wg.Wait()
 	println("Asyncron, loading all deezer informations for groups")
 	go UpdateAllDeezerInformations(false)
+	go UpdateAllGeolocInformation(false)
 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
 }
 
@@ -53,6 +55,29 @@ func UpdateAllDeezerInformations(forceUpdate bool) {
 	}
 	api.SaveApiCacheToFile()
 	println("Updated all deezer information !")
+}
+
+func UpdateAllGeolocInformation(forceUpdate bool) {
+	for i, value := range GroupMap {
+		for location, dates := range value.DateLocations {
+			for _, date := range dates {
+				city := location
+				geoloc := api.GetInformationForCity(city)
+				date.Loc = geoloc
+				val, ok := value.DateLocations[location]
+				l := []api.Date{date}
+				if !ok {
+					l = append(l, val...)
+				}
+				mutex.Lock()
+				value.DateLocations[location] = l
+				GroupMap[i] = value
+				mutex.Unlock()
+			}
+		}
+	}
+	api.SaveApiCacheToFile()
+	println("All geoloc information are loaded")
 }
 
 func GroupSliceContain(s []objects.Group, v objects.Group) bool {

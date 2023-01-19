@@ -52,35 +52,35 @@ func SearchForDeezerGroupId(artist string, update bool) DeezerSearch {
 	var request DeezerSearch
 	artist = utils.FormatArtistName(artist)
 	url := "https://api.deezer.com/search?q=" + artist
-	GetFromApi(url, &request, update, time.Second/10)
+	GetFromApi(url, &request, update, time.Second/10, nil)
 	return request
 }
 
 func GetDeezerGroup(id int, update bool) DeezerGroup {
 	var request DeezerGroup
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(id)
-	GetFromApi(url, &request, update, time.Second/10)
+	GetFromApi(url, &request, update, time.Second/10, nil)
 	return request
 }
 
 func GetDeezerTopTrack(groupId, amount int, update bool) DeezerTrackRequest {
 	var request DeezerTrackRequest
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(groupId) + "/top?limit=" + strconv.Itoa(amount)
-	GetFromApi(url, &request, update, time.Second/10)
+	GetFromApi(url, &request, update, time.Second/10, nil)
 	return request
 }
 
 func GetDeezerAlbumInformation(albumId int, update bool) DeezerAlbum {
 	var request DeezerAlbum
 	url := "https://api.deezer.com/album/" + strconv.Itoa(albumId)
-	GetFromApi(url, &request, update, time.Second/10)
+	GetFromApi(url, &request, update, time.Second/10, nil)
 	return request
 }
 
 func GetGenreById(id int, update bool) DeezerGenre {
 	var request DeezerGenre
 	url := "https://api.deezer.com/genre/" + strconv.Itoa(id)
-	GetFromApi(url, &request, update, time.Second/10)
+	GetFromApi(url, &request, update, time.Second/10, nil)
 	return request
 }
 
