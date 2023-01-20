@@ -4,7 +4,7 @@
     let lo = map.getAttribute("data-lng");
     var myLatLng = new google.maps.LatLng(la, lo);
     var options = {     
-        zoom: 15,
+        zoom: 8,
         center: myLatLng,
         panControl:false,
         zoomControl:false,

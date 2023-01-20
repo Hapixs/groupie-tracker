@@ -21,10 +21,7 @@
         <title>{{ .ProjectName }} - {{ .Group.Name }}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com"> 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Solitreo&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&display=swap" rel="stylesheet"> 
     </head>
 
     <header class="barre">
@@ -34,20 +31,20 @@
 
     <body class="bg-gradient-to-tl from-[#2F2F31] to-[#19123E] dark:text-white pb-0">
         <div class="container mx-auto my-2 text-center justify-center">
-            <p class="font-black " style="font-size: 4rem;">{{.Group.Name}}</p>
-            <div class="grid grid-cols-1 grid-rows-2 gap-5">
+            <p class="font-black pt-10 pd-10 font-['Bebas_Neue']" style="font-size: 4rem;">{{.Group.Name}}</p>
+            <div class="grid grid-cols-1 grid-rows-2">                
                 <div class="">
-                    <img src="{{.Group.ImageLink}}" alt="" class="w-96 mx-auto">
+                    <img src="{{.Group.ImageLink}}" alt="" class="rounded-lg w-96 mx-auto">
                 </div>
                 <div class="grid grid-flow-col justify-items-center h-full gap-10">
-                    <div class="grid grid-flow-row">
-                        <div><p class="text-2xl">M</p></div>
-                        <div><p class="text-2xl">E</p></div>
-                        <div><p class="text-2xl">M</p></div>
-                        <div><p class="text-2xl">B</p></div>
-                        <div><p class="text-2xl">R</p></div>
-                        <div><p class="text-2xl">E</p></div>
-                        <div><p class="text-2xl">S</p></div>
+                    <div class="grid grid-flow-row justify-left">
+                        <div><p class="text-7xl font-['Faster_One']">M</p></div>
+                        <div><p class="text-7xl font-['Faster_One']">E</p></div>
+                        <div><p class="text-7xl font-['Faster_One']">M</p></div>
+                        <div><p class="text-7xl font-['Faster_One']">B</p></div>
+                        <div><p class="text-7xl font-['Faster_One']">R</p></div>
+                        <div><p class="text-7xl font-['Faster_One']">E</p></div>
+                        <div><p class="text-7xl font-['Faster_One']">S</p></div>
                     </div>
                     <div class="rounded-xl w-full bg-[#121213] bg-opacity-20 grid grid-flow-col overflow-auto gap-8"> 
                         {{range .Group.Members}}
@@ -63,8 +60,8 @@
                     </div>
                 </div>
             </div>
-            <div class="divider h-full p-10"> 
-                <h2 class="text-5xl"> MUSIQUES </h2>
+            <div class="divider h-full pt-60 md:p-10 "> 
+                <h2 class="text-7xl font-['Lacquer']"> MUSIQUES </h2>
             </div>
             <div class="grid 
                     justify-items-center
@@ -113,17 +110,17 @@
                 <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Musiques indisponibles où en cours de chargement...</p>
                 {{end}}
             </div>
-            <div class="divider h-full p-10"> 
-                <h2 class="text-5xl"> TOURNEE </h2>
+            <div class="divider h-full pt-60 p-10"> 
+                <h2 class="text-7xl font-['Lacquer']"> DATES </h2>
             </div>
             <div class="grid 
             sm:grid-cols-1
-            lg:grid-cols-2 
+            lg:grid-cols-7   
             sm:auto-row-max
             sm:gap-2
-            gap-4
-            justify-items-center">
-                <div id="accordion-collapse" class="w-96" data-accordion="collapse">
+            gap-2
+            content-center">
+                <div id="accordion-collapse" class="lg:col-start-1 lg:col-span-3" data-accordion="collapse">
                     {{ range $key, $value := .Group.DateLocations }}
                         {{ range $value }}
                                 <h2 id="accordion-collapse-heading-{{$key}}">
@@ -142,11 +139,11 @@
                         {{ end }}
                     {{ end }}
                 </div>
-                <div id="map" class="w-96 h-96" data-lat=0 data-lng=0></div>
+                <div id="map" class="lg:col-start-5 lg:col-span-3 h-full" data-lat=0 data-lng=0></div>
                 <script loading="lazy" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer> </script>  
             </div>
-            <div class="divider h-full p-10"> 
-                <h2 class="text-5xl"> GROUPES SIMILAIRES </h2>
+            <div class="divider pt-60 md:p-10"> 
+                <p class="font-['Lacquer'] text-7xl"> SIMILAIRES </p>
             </div>
             <div class="
                 grid    
