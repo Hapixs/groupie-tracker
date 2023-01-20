@@ -22,9 +22,11 @@ type DeezerGroup struct {
 
 type DeezerTrackRequest struct {
 	List []struct {
-		Title   string `json:"title"`
-		Preview string `json:"preview"`
-		Album   struct {
+		Id          int    `json:"id"`
+		ReleaseDate string `json:"release_date"`
+		Title       string `json:"title"`
+		Preview     string `json:"preview"`
+		Album       struct {
 			Id    int    `json:"id"`
 			Title string `json:"title"`
 			Cover string `json:"cover_medium"`
@@ -67,6 +69,7 @@ func GetDeezerTopTrack(groupId, amount int, update bool) DeezerTrackRequest {
 	var request DeezerTrackRequest
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(groupId) + "/top?limit=" + strconv.Itoa(amount)
 	GetFromApi(url, &request, update, time.Second/10, nil)
+	GetTracksReleaseDate(&request, update)
 	return request
 }
 
@@ -82,6 +85,13 @@ func GetGenreById(id int, update bool) DeezerGenre {
 	url := "https://api.deezer.com/genre/" + strconv.Itoa(id)
 	GetFromApi(url, &request, update, time.Second/10, nil)
 	return request
+}
+
+func GetTracksReleaseDate(req *DeezerTrackRequest, update bool) {
+	for _, k := range req.List {
+		url := "https://api.deezer.com/track/" + strconv.Itoa(k.Id)
+		GetFromApi(url, req, update, time.Second/10, nil)
+	}
 }
 
 type DeezerInformations struct {
