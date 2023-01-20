@@ -10,13 +10,12 @@ import (
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
-	groups := maps.Values(workers.GroupMap)
+	groups := workers.GroupByGenreMap
 
 	data := HtmlData{
-		ProjectName:   "Chazam",
-		PageName:      "home",
-		DeezerGenres:  workers.GetDeezerGenreList(),
-		GroupByGenres: workers.GroupByGenreMap,
+		ProjectName:  "Chazam",
+		PageName:     "home",
+		DeezerGenres: workers.GetDeezerGenreList(),
 	}
 
 	CheckForMessageQuery(r, &data)
@@ -27,6 +26,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			str := r.Form.Get("search_input")
 			category := r.Form.Get("search_category")
+			groups = workers.FilterGroups(str)
 			switch category {
 			case "all":
 				//groups = api.GetGroupListFiltredByAll(str)
@@ -42,7 +42,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data.Groups = groups
+	data.GroupByGenres = groups
+	for _, k := range maps.Values(groups) {
+		data.Groups = append(data.Groups, k...)
+	}
 
 	PrepareDataWithFragments(&data)
 	tmpl.Execute(w, data)

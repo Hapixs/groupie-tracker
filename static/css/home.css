@@ -22,3 +22,10 @@ body {
     overflow: hidden;
     white-space: nowrap;
 }
+
+footer {
+    /* only positonnement without fixed */
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

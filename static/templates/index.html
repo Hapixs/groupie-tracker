@@ -18,13 +18,17 @@
         <div class="mt-2 mx-5">
             <form method="post">
                 <div class="flex">
-                    <select name="search_category" id="category-select" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
-                        <option {{ if eq .LastResearchCategory "all"}} selected {{ end }} value="all">Toutes les catégories</option>
-                        <option {{ if eq .LastResearchCategory "name"}} selected {{ end }} value="name">Nom</option>
-                        <option {{ if eq .LastResearchCategory "date"}} selected {{ end }} value="date">Date</option>
-                        <option {{ if eq .LastResearchCategory "places"}} selected {{ end }} value="places">Endroits</option>
-                    </select>
-                    <div class="relative w-full">
+                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"  class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button"> FIltres <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> </button>
+                    <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
+                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                          {{ range $key, $value := .GroupByGenres }} 
+                          <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{$key}}</a>
+                          </li>
+                          {{ end}}
+                        </ul>
+                    </div>    
+                   <div class="relative w-full">
                         <input type="search" name="search_input" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" {{ if ne .LastResearchInput ""}} value="{{.LastResearchInput}}" {{ end }} placeholder="Search name, dates, ..." required>
                         <button type="submit" class="absolute top-0.5 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -67,6 +71,7 @@
         </div> -->
         <div class="mx-5">
         {{ range $key, $value := .GroupByGenres }}
+            {{ if ne (len $value) 0 }}
             <div class="flex">
                 <a href="/genre/?genre={{$key.Id}}">
                     <div class="rounded-lg shadow-lg hover:scale-110 bg-white w-48 mb-5 hover:dark:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
@@ -89,8 +94,9 @@
             </div>
         </div> 
         {{ end }}
+        {{ end }}
         {{ if eq (len .Groups) 0 }}
-        <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
+            <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
         {{end}}
     </body>
     {{ index .Fragments "footer.html" }}

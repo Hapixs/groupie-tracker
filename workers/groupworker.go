@@ -4,9 +4,11 @@ import (
 	"api"
 	"objects"
 	"strconv"
+	"strings"
 	"sync"
 
 	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 )
 
 var GroupMap = map[int](objects.Group){}
@@ -95,4 +97,23 @@ func UpdateAlternativeGroupsForGroup(group *objects.Group) {
 
 func GetDeezerGenreList() []api.DeezerGenre {
 	return maps.Keys(GroupByGenreMap)
+}
+
+func FilterGroups(filter string) map[api.DeezerGenre][]objects.Group {
+	m := maps.Clone(GroupByGenreMap)
+	for k, v := range m {
+		tlist := []objects.Group{}
+		for _, g := range v {
+			if strings.Contains(strings.ToUpper(g.Name), strings.ToUpper(filter)) {
+				tlist = append(tlist, g)
+			}
+		}
+		slices.SortFunc(tlist, func(a, b objects.Group) bool {
+			return strings.Index(
+				strings.ToUpper(a.Name), strings.ToUpper(filter)) < strings.Index(
+				strings.ToUpper(b.Name), strings.ToUpper(filter))
+		})
+		m[k] = tlist
+	}
+	return m
 }
