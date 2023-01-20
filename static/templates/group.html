@@ -22,6 +22,9 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Solitreo&display=swap" rel="stylesheet">
     </head>
 
     <header class="barre">
@@ -31,7 +34,7 @@
 
     <body class="bg-gradient-to-tl from-[#2F2F31] to-[#19123E] dark:text-white pb-0">
         <div class="container mx-auto my-2 text-center justify-center">
-            <p class="font-black" style="font-size: 4rem;">{{.Group.Name}}</p>
+            <p class="font-black " style="font-size: 4rem;">{{.Group.Name}}</p>
             <div class="grid grid-cols-1 grid-rows-2 gap-5">
                 <div class="">
                     <img src="{{.Group.ImageLink}}" alt="" class="w-96 mx-auto">
@@ -82,7 +85,7 @@
                                 <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.ReleaseDate}}</div>
                             </div>
                             <div class="relative top-64 translate-y-0 transform opacity-0 transition-all group-hover:translate-y-6 group-hover:opacity-100">
-                                <div class="font-Solitreo text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Title}}</div>
+                                <div class=" font-['Bebas_Neue'] text-lg inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-black text-white rounded-full">{{.Title}}</div>
                             </div>  
                             <div class="flex justify-center items-center">
                                 <img alt="card audio player musics" class="rounded-xl" src="{{.Album.Cover}}" /> 
