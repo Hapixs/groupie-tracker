@@ -46,3 +46,18 @@
         defer
       ></script>  
 </body>
+
+<!-- <div class="grid grid-flow-row">
+                    {{ range $key, $value := .Group.DateLocations }}
+                        {{ range $value }}      
+                           <button onclick="ChangeMapCoordinates({{.Loc.Lat}}, {{.Loc.Long}})">
+                                {{ $key }}
+                                <ul>
+                                {{ range .DateTime }}
+                                    <li> {{ . }} </li>
+                                {{ end }}
+                                </ul>
+                            </button> 
+                        {{ end }}
+                    {{ end }}
+                </div>-- >
