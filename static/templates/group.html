@@ -26,7 +26,7 @@
         {{ index .Fragments "messages.html" }}
     </header>
 
-    <body class="dark:bg-gray-800 dark:text-white pb-0">
+    <body class="bg-gradient-to-tl from-[#2F2F31] to-[#19123E] dark:text-white pb-0">
         <div class="container mx-auto my-2 text-center justify-center">
             <p class="font-black" style="font-size: 4rem;">{{.Group.Name}}</p>
             <div class="grid grid-flow-row lg:grid-cols-2 sm:grid-cols-1 auto-rows-min gap-5">
@@ -37,15 +37,11 @@
                     <div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-5">
                         {{range .Group.Members}}
                         <div class="col-span-1">
-                            
-                            <!--<img src="{{ .ImageLink }}" alt="" class=" justify-center rounded-full shadow-lg w-1/2 mx-auto">
-                            <p class="text-2xl font-bold">{{.Name}}</p>
-                            <a href="{{.WikiUrl}}" target="_blank"> Wikipedia </a>-->
                             <a href="#" class="group relative block bg-black">
                                 <img
                                   alt="Developer"
                                   src="{{.ImageLink}}"
-                                  class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                                  class="absolute rounded-xl inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                                 />
                               
                                 <div class="relative p-8">
@@ -149,17 +145,14 @@
                 <script loading="lazy" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer> </script>  
             </div>
             <div class="divider h-full p-10"> 
-                <h2 class="text-5xl"> MEME STYLE </h2>
+                <h2 class="text-5xl"> GROUPES SIMILAIRES </h2>
             </div>
             <div class="
-                grid 
+                grid    
                 grid-flow-col
-                grid-cols-3">
-
-                <div class="col-start-1 col-end-2"> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/> </svg> 
-                </div>
-                <div class="col-start-1 col-span-5 grid grid-flow-col overflow-auto"> 
+                justify-items-center
+                h-full">
+                <div class="rounded-xl w-full bg-[#121213] bg-opacity-20 col-span-5 grid grid-flow-col overflow-auto m-10"> 
                      {{range .Group.GroupAlternatives}}
                         <a href="/group/{{.Id}}/">
                             <div class="flex space-x-2 mb-5">
@@ -173,9 +166,6 @@
                             </div>
                         </a>
                     {{end}}
-                </div>
-                <div class="col-end-7 col-span-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/> </svg>
                 </div>
             </div>
         </div>
