@@ -88,10 +88,10 @@ func GetGenreById(id int, update bool) DeezerGenre {
 }
 
 func GetTracksReleaseDate(req *DeezerTrackRequest, update bool) {
-	for _, k := range req.List {
+	for index, k := range req.List {
 		url := "https://api.deezer.com/track/" + strconv.Itoa(k.Id)
 		GetFromApi(url, &k, update, time.Second/10, nil)
-		println(k.ReleaseDate)
+		req.List[index] = k
 	}
 }
 
