@@ -71,13 +71,17 @@
             <div class="grid grid-flow-col lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-2 sm:grid-rows-5 mb-5 md:grid-cols-3 md:grid-rows-3">
                 {{ range .Group.DZInformations.TrackList.List }}
                     <div x-data="playaudio()" class="h-80 w-80">
-                        <p class="font-bold">{{.Title}}</p>
+                        <!--<p class="font-bold">{{.Title}}</p>-->
                         <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
                             <div class="inset-0 flex items-center justify-center">
                                 <div class="w-full h-full transition duration-300 ease-in-out bg-cyan-500 filter group-hover:blur-2xl"></div>
                             </div>
-                            <div class="relative translate-y-0 transform opacity-0 transition-all group-hover:translate-y-6 group-hover:opacity-100">
+                            <div class="flex place-items-start translate-y-0 transform opacity-0 transition-all group-hover:translate-y-6 group-hover:opacity-100">
+                                <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Title}}</div>
                                 <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Album.Genre.Name}}</div>
+                            </div>
+                            <div class="translate-y-0 transform opacity-0 transition-all group-hover:translate-y-6 group-hover:opacity-100">
+                                <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Title}}</div>
                             </div>  
                             <div class="flex justify-center items-center">
                                 <img alt="card audio player musics" class="rounded-xl" src="{{.Album.Cover}}" /> 
