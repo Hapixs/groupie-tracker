@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"api"
 	"net/http"
+	"objects"
 	"text/template"
 	"workers"
 
@@ -10,7 +12,8 @@ import (
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
-	groups := workers.GroupByGenreMap
+	groupsbygenre := workers.GroupByGenreMap
+	groups := []objects.Group{}
 
 	data := HtmlData{
 		ProjectName:  "Chazam",
@@ -26,7 +29,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			str := r.Form.Get("search_input")
 			category := r.Form.Get("search_category")
-			groups = workers.FilterGroups(str)
+			groups = workers.FilterGroupsByName(str)
+			data.TrackResearch = workers.FiltreAllTrackByName(str)
 			switch category {
 			case "all":
 				//groups = api.GetGroupListFiltredByAll(str)
@@ -41,10 +45,14 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			data.LastResearchInput = str
 		}
 	}
-
-	data.GroupByGenres = groups
-	for _, k := range maps.Values(groups) {
-		data.Groups = append(data.Groups, k...)
+	data.GroupByGenres = groupsbygenre
+	if len(groups) <= 0 && len(data.TrackResearch) <= 0 {
+		for _, k := range maps.Values(groupsbygenre) {
+			data.Groups = append(data.Groups, k...)
+		}
+	} else {
+		data.GroupByGenres = map[api.DeezerGenre][]objects.Group{}
+		data.Groups = groups
 	}
 
 	PrepareDataWithFragments(&data)

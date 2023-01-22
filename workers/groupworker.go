@@ -54,6 +54,7 @@ func UpdateAllDeezerInformations(forceUpdate bool) {
 		}
 		GroupByGenreMap[v.MostValuableGenre] = s
 		mutex.Unlock()
+		go addTrackByGroup(v.DZInformations.TrackList, v)
 	}
 	api.SaveApiCacheToFile()
 	println("Updated all deezer information !")
@@ -99,10 +100,9 @@ func GetDeezerGenreList() []api.DeezerGenre {
 	return maps.Keys(GroupByGenreMap)
 }
 
-func FilterGroups(filter string) map[api.DeezerGenre][]objects.Group {
-	m := maps.Clone(GroupByGenreMap)
-	for k, v := range m {
-		tlist := []objects.Group{}
+func FilterGroupsByName(filter string) []objects.Group {
+	tlist := []objects.Group{}
+	for _, v := range maps.Clone(GroupByGenreMap) {
 		for _, g := range v {
 			if strings.Contains(strings.ToUpper(g.Name), strings.ToUpper(filter)) {
 				tlist = append(tlist, g)
@@ -113,7 +113,16 @@ func FilterGroups(filter string) map[api.DeezerGenre][]objects.Group {
 				strings.ToUpper(a.Name), strings.ToUpper(filter)) < strings.Index(
 				strings.ToUpper(b.Name), strings.ToUpper(filter))
 		})
-		m[k] = tlist
 	}
-	return m
+	return tlist
 }
+
+// Filtrer les tracks
+// Filtrer par date de création
+// Filtrer par date de cr
+// Filtrer les membres
+// Filtrer pour tout
+
+// Crée des catégorie
+// Stocker plein de map sa mère
+// je sais pas quoi ajouter de plus

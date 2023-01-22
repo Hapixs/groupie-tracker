@@ -33,6 +33,7 @@ type HtmlData struct {
 
 	DeezerGenres  []api.DeezerGenre
 	GroupByGenres map[api.DeezerGenre][]objects.Group
+	TrackResearch []workers.TrackResearch
 }
 
 func InitHandlers() {
