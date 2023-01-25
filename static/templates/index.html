@@ -74,9 +74,9 @@
                 {{ range $key, $value := .GroupByGenres }}
                     {{ if ne (len $value) 0 }}
                         <div class="grid grid-rows-1 grid-cols-5">
-                            <a href="/genre/?genre={{$key.Id}} col-start-1 col-end-1 row-start-1 row-end-max h-full">
+                            <a href="/genre/?genre={{$key.Id}}" class="col-start-1 col-end-1 row-start-1 row-end-max h-full">
                                 <div class="rounded-lg shadow-lg w-48">
-                                    <img class="rounded-t-lg" src="{{$key.Picture}}" alt={{$key.Name}} loading="lazy"/>
+                                    <img class="rounded-t-lg" src="{{$key.Picture}}" alt="{{$key.Name}}" loading="lazy"/>
                                     <div class="p-6">
                                         <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{$key.Name}}</h5>
                                     </div>
