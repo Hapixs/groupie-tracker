@@ -46,12 +46,12 @@
         </div>
         {{ index .Fragments "messages.html" }}
     </header>
-    <body class="dark:bg-gray-800 pb-0" style="margin-top: 15vh;"> 
+    <body class="bg-gradient-to-b from-gray-900 to-gray-800 pb-0" style="margin-top: 15vh;"> 
         {{ if ne (len .GroupByGenres) 0 }}
             {{ range $key, $value := .GroupByGenres }}
                 {{ if ne (len $value) 0 }}
                     {{ if ne $key.Name "" }}
-                    <div class="flex place-content-center w-full h-[64rem] p-4">
+                    <div class="flex place-content-center w-full h-[64rem] p-1">
                          <div class="grow shadow-lg w-full">
                             <img class="rounded-t-lg w-full h-full blur-lg" src="{{$key.PictureXl}}" alt={{$key.Name}} loading="lazy"/>
                         </div>
