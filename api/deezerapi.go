@@ -41,9 +41,10 @@ type DeezerAlbum struct {
 }
 
 type DeezerGenre struct {
-	Id      int    `json:"id"`
-	Name    string `json:"name"`
-	Picture string `json:"picture_medium"`
+	Id        int    `json:"id"`
+	Name      string `json:"name"`
+	Picture   string `json:"picture_medium"`
+	PictureXl string `json:"picture_xl"`
 }
 
 type DeezerApiCache struct {

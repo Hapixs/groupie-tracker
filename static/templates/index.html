@@ -46,83 +46,60 @@
         </div>
         {{ index .Fragments "messages.html" }}
     </header>
-    <body class="dark:bg-gray-800 pb-0" style="margin-top: 15vh;">
-        <!-- <div class="container w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-items-center mx-auto">
-            {{range .Groups}}
-            <a href="/group/{{.Id}}/">
-                <div class="flex space-x-2 justify-center">
-                    <span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.MostValuableGenre.Name}}</span>
-                </div>
-                <div class="rounded-lg hover:scale-110 shadow-lg bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
-                    <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>
-                    <div class="p-6">
-                        <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{.Name}}</h5>
-                    </div>
-                </div>
-            </a> 
-            <a href="/group/{{.Id}}/" class="group relative block">
-                <img alt="Developer" src="{{.ImageLink}}" class="absolute object-cover opacity-75 transition-opacity group-hover:opacity-50"/>
-                <div class="relative p-10">
-                    <p class="text-sm font-medium uppercase tracking-widest text-pink-500">{{.MostValuableGenre.Name}}</p>
-                    <p class="text-2xl font-bold  tracking-widesttext-white">{{.Name}}</p>
-                </div>
-            </a>
-            {{end}}
-        </div> -->
-        <div class="mx-5 grid">
-            {{ if ne (len .GroupByGenres) 0 }}
-                {{ range $key, $value := .GroupByGenres }}
-                    {{ if ne (len $value) 0 }}
-                        <div class="grid grid-rows-1 grid-cols-5">
-                            <a href="/genre/?genre={{$key.Id}}" class="col-start-1 col-end-1 row-start-1 row-end-max h-full">
-                                <div class="rounded-lg shadow-lg w-48">
-                                    <img class="rounded-t-lg" src="{{$key.Picture}}" alt="{{$key.Name}}" loading="lazy"/>
-                                    <div class="p-6">
-                                        <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{$key.Name}}</h5>
+    <body class="dark:bg-gray-800 pb-0" style="margin-top: 15vh;"> 
+        {{ if ne (len .GroupByGenres) 0 }}
+            {{ range $key, $value := .GroupByGenres }}
+                {{ if ne (len $value) 0 }}
+                    {{ if ne $key.Name "" }}
+                    <div class="flex place-content-center w-full h-[64rem] p-4">
+                         <div class="grow shadow-lg w-full">
+                            <img class="rounded-t-lg w-full h-full blur-lg" src="{{$key.PictureXl}}" alt={{$key.Name}} loading="lazy"/>
+                        </div>
+                        <div class="absolute container  z-10">
+                            <div>
+                                <p class="text-2xl"> {{$key.Name }} </p>
+                            </div>
+                            <div class="grid grid-cols-7 w-full h-[48rem] place-content-center auto-rows-max gap-4">
+                                {{ range $value }} 
+                                    <div class="">
+                                        <img class="" src="{{.ImageLink}}"/> 
                                     </div>
-                                </div>
-                            </a>
-                            <div class="grid grid-flow-cols auto-cols-max">
-                                {{ range $value}}
-                                 <a href="/group/{{.Id}}">
-                                     <p class="">{{.Name}}</p>
-                                     <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}"/>
-                                 </a>
                                 {{ end }}
                             </div>
                         </div>
-                    {{ end }}
-                {{ end }}
-            {{ else }}
-                {{ if ne (len .Groups) 0}}
-                    {{ range .Groups }}
-                        <div class="flex">
-                            <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
-                                <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                                    <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
-                                </div>
-                                <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}"/>
-                            </a>
-                        </div>
-                    {{ end }}
-                {{ end }}
-                {{ if ne (len .TrackResearch) 0}}
-                    {{ range .TrackResearch}}
-                        <div class="flex">
-                            <a href="/group/{{.GroupId}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
-                                <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                                    <p class="text-sm dark:text-white groupeName">{{.Track.Title}}</p>
-                                </div>
-                                <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.Track.Album.Cover}}"/>
-                            </a>
-                        </div>
-                    {{ end }}
+                    </div>
+                    {{end }}
                 {{ end }}
             {{ end }}
-            {{ if eq (len .Groups) 0 }}
-                <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
-            {{end}}
-        </div>
+        {{ else }}
+            {{ if ne (len .Groups) 0}}
+                {{ range .Groups }}
+                    <div class="flex">
+                        <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+                            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
+                            </div>
+                            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}"/>
+                        </a>
+                    </div>
+                {{ end }}
+            {{ end }}
+            {{ if ne (len .TrackResearch) 0}}
+                {{ range .TrackResearch}}
+                    <div class="flex">
+                        <a href="/group/{{.GroupId}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+                            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <p class="text-sm dark:text-white groupeName">{{.Track.Title}}</p>
+                            </div>
+                            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.Track.Album.Cover}}"/>
+                        </a>
+                    </div>
+                {{ end }}
+            {{ end }}
+        {{ end }}
+        {{ if eq (len .Groups) 0 }}
+            <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
+        {{end}}
     </body>
     {{ index .Fragments "footer.html" }}
 </html>
