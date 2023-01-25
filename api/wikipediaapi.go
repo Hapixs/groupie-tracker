@@ -19,6 +19,9 @@ type WikiRequest struct {
 func GetWikipediaImage(artist string) WikiRequest {
 	var request WikiRequest
 	artist = utils.FormatArtistName(artist)
+	if artist == "logic" {
+		artist += " (rapper)"
+	}
 	url := "https://en.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=pageimages&format=json&pithumbsize=100"
 	GetFromApi(url, &request, false, time.Millisecond, nil)
 	return request
