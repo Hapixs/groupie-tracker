@@ -55,7 +55,7 @@
             {{ range $key, $value := .GroupByGenres }}
                 {{ if ne (len $value) 0 }}
                     {{ if ne $key.Name "" }}
-                    <div class="flex place-content-center w-full h-[64rem] p-1">
+                    <div class="flex place-content-center w-full h-[64rem] p-1 pt-[10rem] sticky top-6">
                          <div class="grow shadow-lg w-full">
                             <img class="rounded-t-lg w-full h-full blur-lg" src="{{$key.PictureXl}}" alt={{$key.Name}} loading="lazy"/>
                         </div>

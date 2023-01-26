@@ -68,7 +68,7 @@ func GetFromApi[T any](url string, structure *T, update bool, sleepTime time.Dur
 
 func SaveApiCacheToFile() {
 	mutex.Lock()
-	save, err := json.Marshal(CacheApi)
+	save, err := json.MarshalIndent(CacheApi, "", "\t")
 	mutex.Unlock()
 	if err != nil {
 		println("Error: JSON error")

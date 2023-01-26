@@ -19,7 +19,7 @@ type WikiRequest struct {
 func GetWikipediaImage(artist string) WikiRequest {
 	var request WikiRequest
 	artist = utils.FormatArtistName(artist)
-	if artist == "Logic" {
+	if artist == "Logic	" {
 		artist += " (rapper)"
 	} else if artist == "Flea" {
 		artist += " (musician)"
