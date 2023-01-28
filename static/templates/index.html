@@ -8,56 +8,27 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
         <link href="https://cdn.jsdelivr.net/npm/daisyui@2.47.0/dist/full.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.tailwindcss.com"></script>
-        <script src="/static/js/script.js"></script>
         <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">
         <link rel="stylesheet" href="/static/css/home.css">
         <title>{{ .ProjectName }} - Accueil</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Orbitron&family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&family=Reem+Kufi+Ink&family=Rock+Salt&family=Shadows+Into+Light&family=Unbounded&family=Metal+Mania&display=swap" rel="stylesheet"> 
-   
     </head>
     <header>
-        {{ index .Fragments "navigationbar.html" }}
-        <div class="mt-2 mx-5">
-            <form method="post">
-                <div class="flex">
-                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"  class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button"> FIltres <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> </button>
-                    <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700">
-                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                          {{ range $key, $value := .GroupByGenres }} 
-                          <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{$key}}</a>
-                          </li>
-                          {{ end}}
-                        </ul>
-                    </div>    
-                   <div class="relative w-full">
-                        <input type="search" name="search_input" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" {{ if ne .LastResearchInput ""}} value="{{.LastResearchInput}}" {{ end }} placeholder="Search name, dates, ..." required>
-                        <button type="submit" class="absolute top-0.5 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
-                            </svg>
-                        </button>
-                        <a class="absolute top-0.5 right-10 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-l-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="/">
-                            <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" stroke="currentColor" stroke-width="1.5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </form>
+        <div>
+            {{ index .Fragments "navigationbar.html" }}
         </div>
-        {{ index .Fragments "messages.html" }}
     </header>
-    <body class="bg-gradient-to-b from-gray-900 to-gray-800 pb-0" style="margin-top: 15vh;"> 
-        {{ if ne (len .GroupByGenres) 0 }}
+    <body class="bg-gradient-to-b from-gray-900 to-gray-800 "> 
+        <div>
+            {{ if ne (len .GroupByGenres) 0 }}
             {{ range $key, $value := .GroupByGenres }}
                 {{ if ne (len $value) 0 }}
                     {{ if ne $key.Name "" }}
-                    <div class="flex place-content-center w-full h-[64rem] p-1 pt-[10rem] sticky top-6">
-                         <div class="grow shadow-lg w-full">
-                            <img class="rounded-t-lg w-full h-full blur-lg" src="{{$key.PictureXl}}" alt={{$key.Name}} loading="lazy"/>
+                    <div class="flex place-content-center w-full sticky top-20">
+                         <div class="grow shadow-lg">
+                            <img class="rounded-t-lg w-full h-[60rem] blur-lg" src="{{$key.PictureXl}}" alt={{$key.Name}} loading="lazy"/>
                         </div>
                         <div class="absolute container  z-10">
                             <div class="divider h-full w-full">
@@ -105,6 +76,10 @@
         {{ if eq (len .Groups) 0 }}
             <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
         {{end}}
+        </div>
+         <script defer src="/static/js/script.js"></script>
     </body>
-    {{ index .Fragments "footer.html" }}
+    <footer>
+        {{ index .Fragments "footer.html" }}
+    </footer>
 </html>
