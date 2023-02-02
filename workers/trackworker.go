@@ -20,10 +20,10 @@ func addTrackByGroup(trackRequest api.DeezerTrackRequest, group objects.Group) {
 			Title:       t.Title,
 			Preview:     t.Preview,
 			Album: struct {
-				Id    int    "json:\"id\""
-				Title string "json:\"title\""
-				Cover string "json:\"cover_medium\""
-				Genre objects.MusicGenre
+				Id    int                `json:"id"`
+				Title string             `json:"title"`
+				Cover string             `json:"cover_medium"`
+				Genre objects.MusicGenre `json:"genre"`
 			}{
 				Id:    t.Album.Id,
 				Title: t.Album.Title,

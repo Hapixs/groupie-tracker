@@ -7,9 +7,9 @@ type Track struct {
 	Title       string `json:"title_short"`
 	Preview     string `json:"preview"`
 	Album       struct {
-		Id    int    `json:"id"`
-		Title string `json:"title"`
-		Cover string `json:"cover_medium"`
-		Genre MusicGenre
+		Id    int        `json:"id"`
+		Title string     `json:"title"`
+		Cover string     `json:"cover_medium"`
+		Genre MusicGenre `json:"genre"`
 	} `json:"album"`
 }

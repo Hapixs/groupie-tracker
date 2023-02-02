@@ -7,11 +7,11 @@ import (
 )
 
 type Artist struct {
-	Name      string
-	GroupName string
-	ImageLink string
-	WikiUrl   string
-	GroupId   int
+	Name      string `json:"name"`
+	GroupName string `json:"group_name"`
+	ImageLink string `json:"image_link"`
+	WikiUrl   string `json:"wiki_url"`
+	GroupId   int    `json:"groupid"`
 }
 
 func (artist *Artist) updatePicture() {
