@@ -31,10 +31,10 @@
         {{ index .Fragments "messages.html" }}
     </header>
 
-    <body onload="updateMemberBackWithColor();" class="w-full bg-gradient-to-b from-gray-900 to-gray-800 dark:text-white pb-0">
+    <body onload="updateMemberBackWithColor();" class="w-full bg-gradient-to-b dark:from-gray-900 from-blue-200 to-white dark:to-gray-800 dark:text-white pb-0">
         <div class="flex place-content-center w-full">
             <img src="/static/assets/soundbar.png" class="h-full"></img>
-            <p class="absolute font-black pt-20 pd-10 font-['Bebas_Neue'] text-9xl translate-y-5">{{.Group.Name}}</p>
+            <p class="absolute pt-20 pd-10 font-['Bebas_Neue'] text-9xl translate-y-5">{{.Group.Name}}</p>
         </div>
         <img src="{{.Group.ImageLink}}" id="groupImage" class="rounded-bl-lg pl-10 absolute w-96 f-96 mx-auto z-10"></img>
         <div id="memberList" class="grid w-full translate-y-10 bg-opacity-60">
