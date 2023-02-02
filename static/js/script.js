@@ -54,22 +54,6 @@ function playaudio() {
     }
 }
 
-// let currentlyPlaying = false;
-
-// function playaudio(audioElement) {
-//   if (!currentlyPlaying) {
-//     audioElement.play();
-//     currentlyPlaying = true;
-//   }
-// }
-
-// function stopaudio(audioElement) {
-//   audioElement.pause();
-//   audioElement.currentTime = 0;
-//   currentlyPlaying = false;
-// }
-
-
 function getAverageRGB(imgEl) {
 
     var blockSize = 5, // only visit every 5 pixels
@@ -180,7 +164,7 @@ function displaySuggestions() {
             var link = document.createElement("a");
             suggestion.textContent = data.artists[i].name;
             suggestion.className = classList;
-            link.href = "/group/"+data.artists[i].groupid+"/";
+            link.href = "/group/"+data.artists[i].groupid+"#members";
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }

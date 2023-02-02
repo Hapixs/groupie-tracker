@@ -9,11 +9,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
         <link href='https://fonts.googleapis.com/css?family=Nova Square' rel='stylesheet'>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="/static/css/notFound.css">
         <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">
-        <script src="/static/js/script.js"></script>
         <title>Error {{ .ErrorCode }}</title>
     </head>
     <header class="barre">
@@ -21,15 +18,16 @@
         {{ index .Fragments "messages.html" }}
     </header>
     <body class="dark:bg-gray-800">
-        <div class="-z-5 dark:text-blue-700 opacity-50 number" style="font-size: 35rem;font-family:'Nova Square';">{{ .ErrorCode }}</div>
-        <div title="Oh Snap" class="line-1 dark:text-gray-300 glitchCss">Oh Snap</div>
-        <div title="Page introuvable" class="line-2 dark:text-gray-300 glitchCss">Page introuvable</div>
+        <div class="-z-5 dark:text-blue-700 opacity-50 number textCss" style="font-size: 35rem;font-family:'Nova Square';">{{ .ErrorCode }}</div>
+        <div title="Oh Snap" class="line-1 dark:text-gray-300 glitchCss textCss">Oh Snap</div>
+        <div title="Page introuvable" class="line-2 dark:text-gray-300 glitchCss textCss">Page introuvable</div>
         <p class="subText">Essayez de retourner sur la <a href="/">page d'accueil</a>.</p>
         {{ if false }}
         {{ index .Fragments "cookie.html" }}
         {{ end }}
     </body>
-    {{ if false }}
+    <script src="/static/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     {{ index .Fragments "footer.html" }}
-    {{ end }}
 </html>

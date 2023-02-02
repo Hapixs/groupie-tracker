@@ -1,4 +1,4 @@
-  function initMap() {
+function initMap() {
     let map = document.getElementById("map");
     let la = map.getAttribute("data-lat");
     let lo = map.getAttribute("data-lng");
@@ -17,16 +17,16 @@
     }
     map = new google.maps.Map(map, options);
     var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-  });
+        position: myLatLng,
+        map: map,
+    });
 }
 
 function ChangeMapCoordinates(la, lo) {
-  map = document.getElementById("map")
-  map.setAttribute("data-lat", la)
-  map.setAttribute("data-lng", lo)
-  console.info(la)
-  console.info(lo)
-  initMap()
+    map = document.getElementById("map")
+    map.setAttribute("data-lat", la)
+    map.setAttribute("data-lng", lo)
+    console.info(la)
+    console.info(lo)
+    initMap()
 }
