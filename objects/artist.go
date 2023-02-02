@@ -11,6 +11,7 @@ type Artist struct {
 	GroupName string
 	ImageLink string
 	WikiUrl   string
+	GroupId   int
 }
 
 func (artist *Artist) updatePicture() {

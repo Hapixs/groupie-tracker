@@ -42,6 +42,7 @@ func (group *Group) InitFromApiArtist(apiartist api.ApiArtist) {
 		artist := Artist{
 			Name:      member,
 			GroupName: group.Name,
+			GroupId:   group.Id,
 		}
 		artist.Load()
 		group.Members = append(group.Members, artist)

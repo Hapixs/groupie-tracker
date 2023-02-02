@@ -74,6 +74,18 @@
                     </div>
                 {{ end }}
             {{ end }}
+            {{ if ne (len .TrackArtist) 0}}
+                {{ range .TrackArtist}}
+                    <div class="flex">
+                        <a href="/group/{{.GroupId}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+                            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
+                            </div>
+                            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}"/>
+                        </a>
+                    </div>
+                {{ end }}
+            {{ end }}
         {{ end }}
         {{ if eq (len .Groups) 0 }}
             <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>

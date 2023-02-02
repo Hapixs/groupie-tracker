@@ -1,0 +1,30 @@
+package workers
+
+import (
+	"objects"
+	"strings"
+
+	"golang.org/x/exp/slices"
+)
+
+var artistsList = []objects.Artist{}
+
+func addArtist(artists []objects.Artist) {
+	artistsList = append(artistsList, artists...)
+
+}
+
+func FiltreAllArtistByName(filter string) []objects.Artist {
+	list := []objects.Artist{}
+	for _, a := range artistsList {
+		if strings.Contains(strings.ToUpper(a.Name), strings.ToUpper(filter)) {
+			list = append(list, a)
+		}
+	}
+
+	slices.SortFunc(list, func(a, b objects.Artist) bool {
+		return strings.Index(strings.ToUpper(a.Name), strings.ToUpper(filter)) < strings.Index(strings.ToUpper(b.Name), strings.ToUpper(filter))
+	})
+
+	return list
+}

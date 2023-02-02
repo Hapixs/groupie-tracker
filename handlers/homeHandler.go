@@ -31,6 +31,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			category := r.Form.Get("search_category")
 			groups = workers.FilterGroupsByName(str)
 			data.TrackResearch = workers.FiltreAllTrackByName(str)
+			data.ArtistResearch = workers.FiltreAllArtistByName(str)
 			switch category {
 			case "all":
 				//groups = api.GetGroupListFiltredByAll(str)

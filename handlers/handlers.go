@@ -31,9 +31,10 @@ type HtmlData struct {
 	Fragments   map[string](string)
 	ProjectName string
 
-	DeezerGenres  []api.DeezerGenre
-	GroupByGenres map[api.DeezerGenre][]objects.Group
-	TrackResearch []workers.TrackResearch
+	DeezerGenres   []api.DeezerGenre
+	GroupByGenres  map[api.DeezerGenre][]objects.Group
+	TrackResearch  []workers.TrackResearch
+	ArtistResearch []objects.Artist
 }
 
 func InitHandlers() {
