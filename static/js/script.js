@@ -4,7 +4,7 @@ if (document.cookie.indexOf("cookies") > -1) {
 
 // document.getElementById("search-dropdown").addEventListener("change", function() {suggest();});
 // document.getElementById("search-dropdown").addEventListener("keyup", function() {suggest();});
-document.getElementById("search-dropdown").addEventListener("keydown", function() {displaySuggestions();});
+document.getElementById("search-dropdown").addEventListener("keyup", function() {displaySuggestions();});
 
 function CloseMessage (id) {
     document.getElementById(id).style.display = "none";
@@ -119,48 +119,12 @@ function updateMemberBackWithColor() {
     document.getElementById("memberList").setAttribute('class', document.getElementById("memberList").getAttribute('class')+" bg-["+hex+"]");
 }
 
-// function suggest() {
-//     textbar = document.getElementById("search-dropdown");
-//     apiSearch = "/api/search?q="+textbar.value;
-//     fetch(apiSearch)
-//     // add the proposition to the dropdown
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data);
-//         var dropdown = document.getElementById("select-dropdown");
-//         dropdown.innerHTML = "";
-//         console.log("Tracks:");
-//         trackTxt=document.createElement("option");
-//         trackTxt.value = "Tracks:";
-//         for (var i = 0; i < data.tracks.length; i++) {
-//             console.log(data.tracks[i].Track.title_short);
-//             var option = document.createElement("option");
-//             option.text = data.tracks[i].Track.title_short;
-//             dropdown.appendChild(option);
-//         }
-//         console.log("Artists:");
-//         for (var i = 0; i < data.artists.length; i++) {
-//             console.log(data.artists[i].Name);
-//             var option = document.createElement("option");
-//             option.text = data.artists[i].Name;
-//             dropdown.appendChild(option);
-//         }
-//         console.log("Albums:");
-//         for (var i = 0; i < data.groups.length; i++) {
-//             console.log(data.groups[i].Name);
-//             var option = document.createElement("option");
-//             option.text = data.groups[i].Name;
-//             dropdown.appendChild(option);
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//     }
-//     );
-// }
-
 function displaySuggestions() {
     var textbar = document.getElementById("search-dropdown");
+    if (textbar.value == "") {
+        document.getElementById("suggestions-div").innerHTML = "";
+        return;
+    }
     var apiSearch = "/api/search?q="+textbar.value;
     var classList = "py-2 px-5 text-align-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
     fetch(apiSearch)
@@ -173,12 +137,12 @@ function displaySuggestions() {
             var link = document.createElement("a");
             suggestion.textContent = data.tracks[i].title_short;
             suggestion.className = classList;
-            link.href = "/group/"+data.tracks[i].GroupId+"/";
+            link.href = "/group/"+data.tracks[i].groupid+"/";
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
         for (var i = 0; i < data.artists.length; i++) {
-            console.log(data.artists[i].Name);
+            // console.log(data.artists[i].name);
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
             suggestion.textContent = data.artists[i].name;
@@ -190,9 +154,9 @@ function displaySuggestions() {
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
-            suggestion.textContent = data.groups[i].name;
+            suggestion.textContent = data.groups[i].Name;
             suggestion.className = classList;
-            link.href = "/group/"+data.groups[i].id+"/";
+            link.href = "/group/"+data.groups[i].Id+"/";
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
