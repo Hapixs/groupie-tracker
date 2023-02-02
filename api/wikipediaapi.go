@@ -37,5 +37,5 @@ func GetWikipediaPageLink(artist string) string {
 	for _, page := range request.Query.Page {
 		return page.WikiUrl
 	}
-	return ""
+	return "/"
 }

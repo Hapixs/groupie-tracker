@@ -11,7 +11,7 @@ import (
 
 var trackById map[int]objects.Track = make(map[int]objects.Track)
 
-func addTrackByGroup(trackRequest api.DeezerTrackRequest, group objects.Group) {
+func addTrackByGroup(trackRequest api.DeezerTrackList, group objects.Group) {
 	for _, t := range trackRequest.List {
 		track := objects.Track{
 			GroupId:     group.Id,

@@ -116,13 +116,3 @@ func FilterGroupsByName(filter string) []objects.Group {
 	}
 	return tlist
 }
-
-// Filtrer les tracks
-// Filtrer par date de création
-// Filtrer par date de cr
-// Filtrer les membres
-// Filtrer pour tout
-
-// Crée des catégorie
-// Stocker plein de map sa mère
-// je sais pas quoi ajouter de plus

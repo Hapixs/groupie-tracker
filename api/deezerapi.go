@@ -7,6 +7,11 @@ import (
 	"utils"
 )
 
+type DeezerInformations struct {
+	Group     DeezerGroup
+	TrackList DeezerTrackList
+}
+
 type DeezerSearch struct {
 	Data []struct {
 		SearchArtist struct {
@@ -20,7 +25,7 @@ type DeezerGroup struct {
 	Sharelink string `json:"share"`
 }
 
-type DeezerTrackRequest struct {
+type DeezerTrackList struct {
 	List []struct {
 		Id          int    `json:"id"`
 		ReleaseDate string `json:"release_date"`
@@ -47,10 +52,6 @@ type DeezerGenre struct {
 	PictureXl string `json:"picture_xl"`
 }
 
-type DeezerApiCache struct {
-	RequestAndResult map[string]string
-}
-
 func SearchForDeezerGroupId(artist string, update bool) DeezerSearch {
 	var request DeezerSearch
 	artist = utils.FormatArtistName(artist)
@@ -66,8 +67,8 @@ func GetDeezerGroup(id int, update bool) DeezerGroup {
 	return request
 }
 
-func GetDeezerTopTrack(groupId, amount int, update bool) DeezerTrackRequest {
-	var request DeezerTrackRequest
+func GetDeezerTopTrack(groupId, amount int, update bool) DeezerTrackList {
+	var request DeezerTrackList
 	url := "https://api.deezer.com/artist/" + strconv.Itoa(groupId) + "/top?limit=" + strconv.Itoa(amount)
 	GetFromApi(url, &request, update, time.Second/10, nil)
 	GetTracksReleaseDate(&request, update)
@@ -88,17 +89,12 @@ func GetGenreById(id int, update bool) DeezerGenre {
 	return request
 }
 
-func GetTracksReleaseDate(req *DeezerTrackRequest, update bool) {
+func GetTracksReleaseDate(req *DeezerTrackList, update bool) {
 	for index, k := range req.List {
 		url := "https://api.deezer.com/track/" + strconv.Itoa(k.Id)
 		GetFromApi(url, &k, update, time.Second/10, nil)
 		req.List[index] = k
 	}
-}
-
-type DeezerInformations struct {
-	Group     DeezerGroup
-	TrackList DeezerTrackRequest
 }
 
 func GetDeezerInformationsFromName(name string, update bool) DeezerInformations {
@@ -115,20 +111,18 @@ func GetDeezerInformationsFromName(name string, update bool) DeezerInformations 
 			break
 		}
 	}
+
 	if groupId < 0 {
 		groupId = s.Data[0].SearchArtist.Id
 	}
+
 	infos.Group = GetDeezerGroup(groupId, update)
 	trackRequest := GetDeezerTopTrack(groupId, 10, update)
-	UpdateGenreForTracksAlbum(&trackRequest)
-	infos.TrackList = trackRequest
-	return infos
-}
-
-func UpdateGenreForTracksAlbum(request *DeezerTrackRequest) {
-	for id, track := range request.List {
+	for id, track := range trackRequest.List {
 		album := GetDeezerAlbumInformation(track.Album.Id, false)
 		genre := GetGenreById(album.Genre_Id, false)
-		request.List[id].Album.Genre = genre
+		trackRequest.List[id].Album.Genre = genre
 	}
+	infos.TrackList = trackRequest
+	return infos
 }
