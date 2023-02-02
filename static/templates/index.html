@@ -13,6 +13,9 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Orbitron&family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&family=Reem+Kufi+Ink&family=Rock+Salt&family=Shadows+Into+Light&family=Unbounded&family=Metal+Mania&display=swap" rel="stylesheet">
+        <script defer src="/static/js/script.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
         <title>{{ .ProjectName }} - Accueil</title>
     </head>
     <header>
@@ -89,9 +92,6 @@
             <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
         {{end}}
         </div>
-        <script defer src="/static/js/script.js"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
     </body>
     <footer>
         {{ index .Fragments "footer.html" }}
