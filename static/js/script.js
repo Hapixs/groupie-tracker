@@ -2,6 +2,9 @@ if (document.cookie.indexOf("cookies") > -1) {
    // document.getElementById("defaultModal").style.display = "none"
 }
 
+// document.getElementById("search-dropdown").addEventListener("change", function() {suggest();});
+document.getElementById("search-dropdown").addEventListener("keyup", function() {suggest();});
+
 function CloseMessage (id) {
     document.getElementById(id).style.display = "none";
 }
@@ -116,19 +119,26 @@ function updateMemberBackWithColor() {
 }
 
 function suggest() {
+    console.log("suggest");
     textbar = document.getElementById("search-dropdown");
     apiSearch = url+"/api/search?q="+textbar.value;
     fetch(apiSearch)
     // add the proposition to the dropdown
     .then(response => response.json())
     .then(data => {
-        var dropdown = document.getElementById("search-dropdown");
-        dropdown.innerHTML = "";
+        var options = document.getElementById("search-dropdown").options;
+        for (var i = 0; i < options.length; i++) {
+            options[i].remove();
+        }
         for (var i = 0; i < data.length; i++) {
             var option = document.createElement("option");
-            option.value = data[i].name;
-            dropdown.appendChild(option);
+            option.text = data[i].name;
+            option.value = data[i].id;
+            document.getElementById("search-dropdown").add(option);
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     }
-    )
+    );
 }
