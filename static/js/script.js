@@ -144,13 +144,13 @@ function displaySuggestions() {
             trackTitles.className = classTitle;
             suggestionsDiv.appendChild(trackTitles);
         }
-        
+
         for (var i = 0; i < data.tracks.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
             suggestion.textContent = data.tracks[i].title_short;
             suggestion.className = classList;
-            link.href = "/group/"+data.tracks[i].GroupId+"/";
+            link.href = "/group/"+data.tracks[i].GroupId+"#musique";
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
