@@ -126,15 +126,12 @@ function suggest() {
     // add the proposition to the dropdown
     .then(response => response.json())
     .then(data => {
-        var options = document.getElementById("search-dropdown").options;
-        for (var i = 0; i < options.length; i++) {
-            options[i].remove();
-        }
+        var dropdown = document.getElementById("search-dropdown");
+        dropdown.innerHTML = "";
         for (var i = 0; i < data.length; i++) {
             var option = document.createElement("option");
-            option.text = data[i].name;
-            option.value = data[i].id;
-            document.getElementById("search-dropdown").add(option);
+            option.value = data[i];
+            dropdown.appendChild(option);
         }
     })
     .catch(error => {
