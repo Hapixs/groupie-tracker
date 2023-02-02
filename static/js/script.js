@@ -3,7 +3,8 @@ if (document.cookie.indexOf("cookies") > -1) {
 }
 
 // document.getElementById("search-dropdown").addEventListener("change", function() {suggest();});
-document.getElementById("search-dropdown").addEventListener("keyup", function() {suggest();});
+// document.getElementById("search-dropdown").addEventListener("keyup", function() {suggest();});
+document.getElementById("search-dropdown").addEventListener("keydown", function() {displaySuggestions();});
 
 function CloseMessage (id) {
     document.getElementById(id).style.display = "none";
@@ -118,24 +119,71 @@ function updateMemberBackWithColor() {
     document.getElementById("memberList").setAttribute('class', document.getElementById("memberList").getAttribute('class')+" bg-["+hex+"]");
 }
 
-function suggest() {
-    console.log("suggest");
-    textbar = document.getElementById("search-dropdown");
-    apiSearch = url+"/api/search?q="+textbar.value;
+// function suggest() {
+//     textbar = document.getElementById("search-dropdown");
+//     apiSearch = "/api/search?q="+textbar.value;
+//     fetch(apiSearch)
+//     // add the proposition to the dropdown
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data);
+//         var dropdown = document.getElementById("select-dropdown");
+//         dropdown.innerHTML = "";
+//         console.log("Tracks:");
+//         trackTxt=document.createElement("option");
+//         trackTxt.value = "Tracks:";
+//         for (var i = 0; i < data.tracks.length; i++) {
+//             console.log(data.tracks[i].Track.title_short);
+//             var option = document.createElement("option");
+//             option.text = data.tracks[i].Track.title_short;
+//             dropdown.appendChild(option);
+//         }
+//         console.log("Artists:");
+//         for (var i = 0; i < data.artists.length; i++) {
+//             console.log(data.artists[i].Name);
+//             var option = document.createElement("option");
+//             option.text = data.artists[i].Name;
+//             dropdown.appendChild(option);
+//         }
+//         console.log("Albums:");
+//         for (var i = 0; i < data.groups.length; i++) {
+//             console.log(data.groups[i].Name);
+//             var option = document.createElement("option");
+//             option.text = data.groups[i].Name;
+//             dropdown.appendChild(option);
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     }
+//     );
+// }
+
+function displaySuggestions() {
+    var textbar = document.getElementById("search-dropdown");
+    var apiSearch = "/api/search?q="+textbar.value;
     fetch(apiSearch)
-    // add the proposition to the dropdown
     .then(response => response.json())
     .then(data => {
-        var dropdown = document.getElementById("search-dropdown");
-        dropdown.innerHTML = "";
-        for (var i = 0; i < data.length; i++) {
-            var option = document.createElement("option");
-            option.value = data[i];
-            dropdown.appendChild(option);
+        var suggestionsDiv = document.getElementById("suggestions-div");
+        suggestionsDiv.innerHTML = "";
+        for (var i = 0; i < data.tracks.length; i++) {
+            var suggestion = document.createElement("div");
+            suggestion.textContent = data.tracks[i].Track.title_short;
+            suggestionsDiv.appendChild(suggestion);
+        }
+        for (var i = 0; i < data.artists.length; i++) {
+            var suggestion = document.createElement("div");
+            suggestion.textContent = data.artists[i].Name;
+            suggestionsDiv.appendChild(suggestion);
+        }
+        for (var i = 0; i < data.groups.length; i++) {
+            var suggestion = document.createElement("div");
+            suggestion.textContent = data.groups[i].Name;
+            suggestionsDiv.appendChild(suggestion);
         }
     })
     .catch(error => {
         console.error('Error:', error);
-    }
-    );
+    });
 }
