@@ -114,3 +114,21 @@ function updateMemberBackWithColor() {
     var hex = rgbToHex(data.r, data.g, data.b);
     document.getElementById("memberList").setAttribute('class', document.getElementById("memberList").getAttribute('class')+" bg-["+hex+"]");
 }
+
+function suggest() {
+    textbar = document.getElementById("search-dropdown");
+    apiSearch = url+"/api/search?q="+textbar.value;
+    fetch(apiSearch)
+    // add the proposition to the dropdown
+    .then(response => response.json())
+    .then(data => {
+        var dropdown = document.getElementById("search-dropdown");
+        dropdown.innerHTML = "";
+        for (var i = 0; i < data.length; i++) {
+            var option = document.createElement("option");
+            option.value = data[i].name;
+            dropdown.appendChild(option);
+        }
+    }
+    )
+}
