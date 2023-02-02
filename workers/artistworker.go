@@ -10,8 +10,9 @@ import (
 var artistsList = []objects.Artist{}
 
 func addArtist(artists []objects.Artist) {
+	mutex.Lock()
 	artistsList = append(artistsList, artists...)
-
+	mutex.Unlock()
 }
 
 func FiltreAllArtistByName(filter string) []objects.Artist {

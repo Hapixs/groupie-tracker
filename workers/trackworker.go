@@ -9,65 +9,50 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var trackById map[int]struct {
-	Id          int    `json:"id"`
-	ReleaseDate string `json:"release_date"`
-	Title       string `json:"title_short"`
-	Preview     string `json:"preview"`
-	Album       struct {
-		Id    int    `json:"id"`
-		Title string `json:"title"`
-		Cover string `json:"cover_medium"`
-		Genre api.DeezerGenre
-	} `json:"album"`
-} = map[int]struct {
-	Id          int    `json:"id"`
-	ReleaseDate string `json:"release_date"`
-	Title       string `json:"title_short"`
-	Preview     string `json:"preview"`
-	Album       struct {
-		Id    int    `json:"id"`
-		Title string `json:"title"`
-		Cover string `json:"cover_medium"`
-		Genre api.DeezerGenre
-	} `json:"album"`
-}{}
-
-var groupByTrackId map[int]objects.Group = map[int]objects.Group{}
+var trackById map[int]objects.Track = make(map[int]objects.Track)
 
 func addTrackByGroup(trackRequest api.DeezerTrackRequest, group objects.Group) {
 	for _, t := range trackRequest.List {
-		trackById[t.Id] = t
-		groupByTrackId[t.Id] = group
+		track := objects.Track{
+			GroupId:     group.Id,
+			Id:          t.Id,
+			ReleaseDate: t.ReleaseDate,
+			Title:       t.Title,
+			Preview:     t.Preview,
+			Album: struct {
+				Id    int    "json:\"id\""
+				Title string "json:\"title\""
+				Cover string "json:\"cover_medium\""
+				Genre objects.MusicGenre
+			}{
+				Id:    t.Album.Id,
+				Title: t.Album.Title,
+				Cover: t.Album.Cover,
+				Genre: objects.MusicGenre{
+					Id:        t.Album.Genre.Id,
+					Name:      t.Album.Genre.Name,
+					Picture:   t.Album.Genre.Picture,
+					PictureXl: t.Album.Genre.PictureXl,
+					FontName:  "aria",
+				},
+			},
+		}
+		mutex.Lock()
+		trackById[t.Id] = track
+		mutex.Unlock()
 	}
 }
 
-type TrackResearch struct {
-	GroupId int
-	Track   struct {
-		Id          int    `json:"id"`
-		ReleaseDate string `json:"release_date"`
-		Title       string `json:"title_short"`
-		Preview     string `json:"preview"`
-		Album       struct {
-			Id    int    `json:"id"`
-			Title string `json:"title"`
-			Cover string `json:"cover_medium"`
-			Genre api.DeezerGenre
-		} `json:"album"`
-	}
-}
-
-func FiltreAllTrackByName(filter string) []TrackResearch {
-	list := []TrackResearch{}
+func FiltreAllTrackByName(filter string) []objects.Track {
+	list := []objects.Track{}
 	for _, t := range maps.Values(trackById) {
 		if strings.Contains(strings.ToUpper(t.Title), strings.ToUpper(filter)) {
-			list = append(list, TrackResearch{groupByTrackId[t.Id].Id, t})
+			list = append(list, t)
 		}
 	}
 
-	slices.SortFunc(list, func(a, b TrackResearch) bool {
-		return strings.Index(strings.ToUpper(a.Track.Title), strings.ToUpper(filter)) < strings.Index(strings.ToUpper(b.Track.Title), strings.ToUpper(filter))
+	slices.SortFunc(list, func(a, b objects.Track) bool {
+		return strings.Index(strings.ToUpper(a.Title), strings.ToUpper(filter)) < strings.Index(strings.ToUpper(b.Title), strings.ToUpper(filter))
 	})
 
 	return list

@@ -8,9 +8,9 @@ import (
 )
 
 type ApiRequest struct {
-	Groups  []objects.Group         `json:"groups"`
-	Artists []objects.Artist        `json:"artists"`
-	Tracks  []workers.TrackResearch `json:"tracks"`
+	Groups  []objects.Group  `json:"groups"`
+	Artists []objects.Artist `json:"artists"`
+	Tracks  []objects.Track  `json:"tracks"`
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {

@@ -32,16 +32,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			groups = workers.FilterGroupsByName(str)
 			data.TrackResearch = workers.FiltreAllTrackByName(str)
 			data.ArtistResearch = workers.FiltreAllArtistByName(str)
-			switch category {
-			case "all":
-				//groups = api.GetGroupListFiltredByAll(str)
-			case "name":
-				//groups = api.GetGroupListFiltredByName(str)
-			case "date":
-				//groups = api.GetGroupListFiltredByDate(str) // Todo: translate to french
-			case "places":
-				// groups = api.GetGroupListFiltredByLocation(str)
-			}
 			data.LastResearchCategory = category
 			data.LastResearchInput = str
 		}
