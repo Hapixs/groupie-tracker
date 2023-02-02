@@ -162,6 +162,7 @@ function updateMemberBackWithColor() {
 function displaySuggestions() {
     var textbar = document.getElementById("search-dropdown");
     var apiSearch = "/api/search?q="+textbar.value;
+    var classList = "py-2 px-5 text-align-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
     fetch(apiSearch)
     .then(response => response.json())
     .then(data => {
@@ -169,18 +170,31 @@ function displaySuggestions() {
         suggestionsDiv.innerHTML = "";
         for (var i = 0; i < data.tracks.length; i++) {
             var suggestion = document.createElement("div");
-            suggestion.textContent = data.tracks[i].Track.title_short;
-            suggestionsDiv.appendChild(suggestion);
+            var link = document.createElement("a");
+            suggestion.textContent = data.tracks[i].title_short;
+            suggestion.className = classList;
+            link.href = "/group/"+data.tracks[i].GroupId+"/";
+            link.appendChild(suggestion);
+            suggestionsDiv.appendChild(link);
         }
         for (var i = 0; i < data.artists.length; i++) {
+            console.log(data.artists[i].Name);
             var suggestion = document.createElement("div");
-            suggestion.textContent = data.artists[i].Name;
-            suggestionsDiv.appendChild(suggestion);
+            var link = document.createElement("a");
+            suggestion.textContent = data.artists[i].name;
+            suggestion.className = classList;
+            link.href = "/group/"+data.artists[i].groupid+"/";
+            link.appendChild(suggestion);
+            suggestionsDiv.appendChild(link);
         }
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
-            suggestion.textContent = data.groups[i].Name;
-            suggestionsDiv.appendChild(suggestion);
+            var link = document.createElement("a");
+            suggestion.textContent = data.groups[i].name;
+            suggestion.className = classList;
+            link.href = "/group/"+data.groups[i].id+"/";
+            link.appendChild(suggestion);
+            suggestionsDiv.appendChild(link);
         }
     })
     .catch(error => {
