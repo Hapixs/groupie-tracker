@@ -138,10 +138,12 @@ function displaySuggestions() {
         var suggestionsDiv = document.getElementById("suggestions-div");
         suggestionsDiv.innerHTML = "";
         
-        var trackTitles = document.createElement("div");
-        trackTitles.textContent = "Tracks";
-        trackTitles.className = classTitle;
-        suggestionsDiv.appendChild(trackTitles);
+        if (data.tracks.length > 0) {
+            var trackTitles = document.createElement("div");
+            trackTitles.textContent = "Tracks";
+            trackTitles.className = classTitle;
+            suggestionsDiv.appendChild(trackTitles);
+        }
         
         for (var i = 0; i < data.tracks.length; i++) {
             var suggestion = document.createElement("div");
@@ -152,12 +154,14 @@ function displaySuggestions() {
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
-        
-        var artistTitles = document.createElement("div");
-        artistTitles.textContent = "Artists";
-        artistTitles.className = classTitle;
-        suggestionsDiv.appendChild(artistTitles);
-        
+
+        if (data.artists.length > 0) {
+            var artistTitles = document.createElement("div");
+            artistTitles.textContent = "Artists";
+            artistTitles.className = classTitle;
+            suggestionsDiv.appendChild(artistTitles);
+        }
+
         for (var i = 0; i < data.artists.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
@@ -167,12 +171,14 @@ function displaySuggestions() {
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
-        
-        var groupTitles = document.createElement("div");
-        groupTitles.textContent = "Groups";
-        groupTitles.className = classTitle;
-        suggestionsDiv.appendChild(groupTitles);
-        
+
+        if (data.groups.length > 0) {
+            var groupTitles = document.createElement("div");
+            groupTitles.textContent = "Groups";
+            groupTitles.className = classTitle;
+            suggestionsDiv.appendChild(groupTitles);
+        }
+
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
@@ -182,6 +188,7 @@ function displaySuggestions() {
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
+
     })
     
     .catch(error => {
