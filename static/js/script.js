@@ -159,7 +159,6 @@ function displaySuggestions() {
         suggestionsDiv.appendChild(artistTitles);
         
         for (var i = 0; i < data.artists.length; i++) {
-            // console.log(data.artists[i].name);
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
             suggestion.textContent = data.artists[i].name;
