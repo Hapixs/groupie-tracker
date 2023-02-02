@@ -2,13 +2,9 @@ if (document.cookie.indexOf("cookies") > -1) {
    // document.getElementById("defaultModal").style.display = "none"
 }
 
-// document.getElementById("search-dropdown").addEventListener("change", function() {suggest();});
-// document.getElementById("search-dropdown").addEventListener("keyup", function() {suggest();});
-// document.getElementById("search-dropdown").addEventListener("keyup", function() {displaySuggestions();});
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("search-dropdown").addEventListener("keyup", function() {displaySuggestions();});
 });
-
 
 function CloseMessage (id) {
     document.getElementById(id).style.display = "none";
@@ -125,22 +121,28 @@ function updateMemberBackWithColor() {
 
 function displaySuggestions() {
     var textbar = document.getElementById("search-dropdown");
+    
     if (textbar.value == "") {
         document.getElementById("suggestions-div").innerHTML = "";
         return;
     }
+    
     var apiSearch = "/api/search?q="+textbar.value;
     var classList = "py-2 px-5 text-align-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
     var classTitle = "text-gray-500 dark:text-gray-400 text-sm font-bold px-5 py-2 border-b border-gray-200 dark:border-gray-700"  
+    
     fetch(apiSearch)
+    
     .then(response => response.json())
     .then(data => {
         var suggestionsDiv = document.getElementById("suggestions-div");
         suggestionsDiv.innerHTML = "";
+        
         var trackTitles = document.createElement("div");
         trackTitles.textContent = "Tracks";
         trackTitles.className = classTitle;
         suggestionsDiv.appendChild(trackTitles);
+        
         for (var i = 0; i < data.tracks.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
@@ -150,10 +152,12 @@ function displaySuggestions() {
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
+        
         var artistTitles = document.createElement("div");
         artistTitles.textContent = "Artists";
         artistTitles.className = classTitle;
         suggestionsDiv.appendChild(artistTitles);
+        
         for (var i = 0; i < data.artists.length; i++) {
             // console.log(data.artists[i].name);
             var suggestion = document.createElement("div");
@@ -164,10 +168,12 @@ function displaySuggestions() {
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
+        
         var groupTitles = document.createElement("div");
         groupTitles.textContent = "Groups";
         groupTitles.className = classTitle;
         suggestionsDiv.appendChild(groupTitles);
+        
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
@@ -178,6 +184,7 @@ function displaySuggestions() {
             suggestionsDiv.appendChild(link);
         }
     })
+    
     .catch(error => {
         console.error('Error:', error);
     });
