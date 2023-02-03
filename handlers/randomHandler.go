@@ -12,6 +12,6 @@ import (
 
 func randomHandler(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UnixNano())
-	id := rand.Intn((len(maps.Values(workers.GroupMap)) - 1) + 1)
+	id := rand.Intn(len(maps.Values(workers.GroupMap))) + 1
 	http.Redirect(w, r, "/group/"+strconv.Itoa(id)+"/", http.StatusSeeOther)
 }

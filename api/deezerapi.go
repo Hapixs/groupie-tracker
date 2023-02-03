@@ -57,7 +57,7 @@ func SearchForDeezerGroupId(artist string, update bool) DeezerSearch {
 	var request DeezerSearch
 	artist = utils.FormatArtistName(artist)
 	url := "https://api.deezer.com/search?q=" + artist
-	GetFromApi(url, &request, update, time.Second/10, nil)
+	GetFromApi(url, &request, update, time.Second/9, nil)
 	return request
 }
 
@@ -102,7 +102,7 @@ func GetDeezerInformationsFromName(name string, update bool) DeezerInformations 
 	infos := DeezerInformations{}
 	s := SearchForDeezerGroupId(name, update)
 	if len(s.Data) <= 0 {
-		println("No groupe found for " + name)
+		println("No group found for " + name)
 		return DeezerInformations{}
 	}
 	groupId := -1

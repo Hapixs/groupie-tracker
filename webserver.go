@@ -12,7 +12,6 @@ import (
 
 func main() {
 	objects.WebServerConfig.InitConfig()
-	println("Reading start arguments")
 	objects.GameProcessArguments(os.Args[1:])
 	utils.PrepareFolders()
 	workers.LoadGroups()
