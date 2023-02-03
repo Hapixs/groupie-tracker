@@ -116,6 +116,15 @@ function updateMemberBackWithColor() {
     document.getElementById("memberList").setAttribute('class', document.getElementById("memberList").getAttribute('class')+" bg-["+hex+"]");
 }
 
+function getGroupNameById(id) {
+    var apiSearch = "/api/group?id="+id;
+    fetch(apiSearch)
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("Name").textContent = data.name;
+    });
+}
+
 function displaySuggestions() {
     var textbar = document.getElementById("search-dropdown");
     
@@ -127,6 +136,7 @@ function displaySuggestions() {
     var apiSearch = "/api/search?q="+textbar.value;
     var classList = "py-2 px-5 text-align-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
     var classTitle = "text-gray-500 dark:text-gray-400 text-sm font-bold px-5 py-2 border-b border-gray-200 dark:border-gray-700"  
+    var classGroup = "py-2 px-5 text-align-right text-gray-500 dark:text-gray-400 text-sm font-bold border-b border-gray-200 dark:border-gray-700"
     
     fetch(apiSearch)
     
@@ -145,10 +155,13 @@ function displaySuggestions() {
         for (var i = 0; i < data.tracks.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
+            var group = document.createElement("p");
             suggestion.textContent = data.tracks[i].title_short;
             suggestion.className = classList;
+            group.textContent = getGroupNameById(data.tracks[i].GroupId);
             link.href = "/group/"+data.tracks[i].GroupId+"#musique";
             link.appendChild(suggestion);
+            link.appendChild(group);
             suggestionsDiv.appendChild(link);
         }
 
@@ -161,11 +174,14 @@ function displaySuggestions() {
 
         for (var i = 0; i < data.artists.length; i++) {
             var suggestion = document.createElement("div");
+            var group = document.createElement("p");
             var link = document.createElement("a");
             suggestion.textContent = data.artists[i].name;
             suggestion.className = classList;
+            group.textContent = getGroupNameById(data.tracks[i].GroupId);
             link.href = "/group/"+data.artists[i].groupid+"#members";
             link.appendChild(suggestion);
+            link.appendChild(group);
             suggestionsDiv.appendChild(link);
         }
 
@@ -178,11 +194,14 @@ function displaySuggestions() {
 
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
+            var group = document.createElement("p");
             var link = document.createElement("a");
             suggestion.textContent = data.groups[i].Name;
             suggestion.className = classList;
+            group.textContent = getGroupNameById(data.tracks[i].GroupId);
             link.href = "/group/"+data.groups[i].Id+"/";
             link.appendChild(suggestion);
+            link.appendChild(group);
             suggestionsDiv.appendChild(link);
         }
 
