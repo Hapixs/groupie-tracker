@@ -178,7 +178,7 @@ function displaySuggestions() {
     var apiSearch = "/api/search?q="+textbar.value;
     var classList = "py-2 px-5 text-align-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
     var classTitle = "text-gray-500 dark:text-gray-400 text-sm font-bold px-5 py-2 border-b border-gray-200 dark:border-gray-700"  
-    var classGroup = "py-2 px-5 text-align-right text-gray-500 dark:text-gray-400 text-sm font-bold border-b border-gray-200 dark:border-gray-700"
+    // var classGroup = "py-2 px-5 text-align-right text-gray-500 dark:text-gray-400 text-sm font-bold border-b border-gray-200 dark:border-gray-700"
     
     fetch(apiSearch)
     
