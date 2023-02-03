@@ -233,9 +233,9 @@ function displaySuggestions() {
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
-            suggestion.textContent = data.groups[i].Name;
+            suggestion.textContent = data.groups[i].name;
             suggestion.className = classList;
-            link.href = "/group/"+data.groups[i].Id+"/";
+            link.href = "/group/"+data.groups[i].id+"/";
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }

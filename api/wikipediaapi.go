@@ -1,7 +1,6 @@
 package api
 
 import (
-	"strings"
 	"time"
 	"utils"
 )
@@ -20,12 +19,7 @@ type WikiRequest struct {
 func GetWikipediaImage(artist string) WikiRequest {
 	var request WikiRequest
 	artist = utils.FormatArtistName(artist)
-	if strings.ToUpper(artist) == "LOGIC" {
-		artist += " (rapper)"
-	} else if strings.ToUpper(artist) == "FLEA" {
-		artist += " (musician)"
-	}
-	url := "https://en.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=pageimages&format=json&pithumbsize=100"
+	url := "https://fr.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=pageimages&format=json&pithumbsize=100"
 	GetFromApi(url, &request, false, time.Millisecond, nil)
 	return request
 }
@@ -33,7 +27,7 @@ func GetWikipediaImage(artist string) WikiRequest {
 func GetWikipediaPageLink(artist string) string {
 	var request WikiRequest
 	artist = utils.FormatArtistName(artist)
-	url := "https://en.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=info&inprop=url&format=json"
+	url := "https://fr.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=info&inprop=url&format=json"
 	GetFromApi(url, &request, false, time.Millisecond, nil)
 	for _, page := range request.Query.Page {
 		return page.WikiUrl
