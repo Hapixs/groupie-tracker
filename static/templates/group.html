@@ -37,10 +37,10 @@
     </header>
 
     <body onload="updateMemberBackWithColor();" class="w-full bg-gradient-to-b dark:from-gray-900 from-blue-200 to-white dark:to-gray-800 dark:text-white pb-0">
-        <div class="flex place-content-center w-full">
-            <img src="/static/assets/soundbarup.png" class="h-full" style="filter: invert(42%) sepia(87%) saturate(5079%) hue-rotate(218deg) brightness(100%) contrast(94%);"></img>
-            <p class="absolute mt-10 pt-20 pd-10 font-['Bebas_Neue'] text-9xl text-white translate-y-5">{{.Group.Name}}</p>
-    </div>
+        <div class="grid grid-rows-2 text-center w-full place-content-center">
+            <img src="/static/assets/soundbarup.png" style="filter: invert(42%) sepia(87%) saturate(5079%) hue-rotate(218deg) brightness(100%) contrast(94%);"></img>
+            <p class="font-['Bebas_Neue'] text-9xl text-white">{{.Group.Name}}</p>
+        </div>
 
         <img src="{{.Group.ImageLink}}" id="groupImage" class="mt-20 rounded-bl-lg pl-10 absolute w-96 f-96 mx-auto z-[2]"></img>
         <div id="memberList" class="mt-20 grid w-full translate-y-10 bg-opacity-60" id="members">
