@@ -1,6 +1,7 @@
 package api
 
 import (
+	"strings"
 	"time"
 	"utils"
 )
@@ -25,6 +26,9 @@ func GetWikipediaImage(artist string) WikiRequest {
 }
 
 func GetWikipediaPageLink(artist string) string {
+	if strings.EqualFold(artist, "Gary Maurice Lucas Jr.") {
+		return "https://fr.wikipedia.org/wiki/Joyner_Lucas"
+	}
 	var request WikiRequest
 	artist = utils.FormatArtistName(artist)
 	url := "https://fr.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=info&inprop=url&format=json"

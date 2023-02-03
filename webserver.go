@@ -18,4 +18,5 @@ func main() {
 	handlers.InitHandlers()
 	serverport, _, _ := objects.WebServerConfig.GetConfigItem(objects.ServerPort)
 	http.ListenAndServe(":"+strconv.Itoa(serverport), nil)
+	println("[WEB] Server ready to use on port" + strconv.Itoa(serverport))
 }

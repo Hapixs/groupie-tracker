@@ -26,7 +26,6 @@ func LoadGroups() {
 		wg.Add(1)
 	}
 	wg.Wait()
-	println("Asyncron, loading all deezer informations for groups")
 	go UpdateAllDeezerInformations(false)
 	go UpdateAllGeolocInformation(false)
 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
@@ -43,6 +42,7 @@ func transformAndCacheGroup(v api.ApiArtist) {
 }
 
 func UpdateAllDeezerInformations(forceUpdate bool) {
+	println("[ASYNC] Loading informations from deezer's api")
 	for k, v := range GroupMap {
 		v.DZInformations = api.GetDeezerInformationsFromName(v.Name, forceUpdate)
 		v.DefineMostValuableGenreForGroup()
@@ -61,6 +61,7 @@ func UpdateAllDeezerInformations(forceUpdate bool) {
 }
 
 func UpdateAllGeolocInformation(forceUpdate bool) {
+	println("[ASYNC] Loading geoloc informations")
 	for i, value := range GroupMap {
 		for location, dates := range value.DateLocations {
 			for _, date := range dates {
