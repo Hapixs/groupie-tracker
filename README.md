@@ -8,7 +8,7 @@
 
 ![](static/assets/soundbardown.png)
 
-# Installation
+# Chazam
 
 **Prérequis**
 >  - GoLang version `1.19.5` minimum ([download](https://go.dev/dl/))
@@ -26,3 +26,5 @@
 >   ```
 > ![]()
 
+**Utilisation**
+> Une foie le serveur web lancer il sera accsecible sur http://localhost:80
