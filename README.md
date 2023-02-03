@@ -11,16 +11,16 @@
 # **Chazam** - Le meilleur pour les fans
 
 **Prérequis**
->  - GoLang version `1.19.5` minimum ([download](https://go.dev/dl/))
->  - Minimum de `30MB` d'éspace de stockage
->  - Une connexion internet
+>  ● GoLang version `1.19.5` minimum ([download](https://go.dev/dl/)) <br>
+>  ● Minimum de `30MB` d'éspace de stockage<br>
+>  ● Une connexion internet <br>
 
 **Déploiement (simple)**
-> - Clone du répo
+> ● Clone du répo <br>
 >   ```
 >   $git clone git@github.com:Hapixs/groupie-tracker.git
 >   ```
-> - Lancement du serveur web
+> ● Lancement du serveur web <br>
 >   ```
 >   $go run groupie-tracker/webserver.go
 >   ```
