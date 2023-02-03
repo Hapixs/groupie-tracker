@@ -253,3 +253,21 @@ function getCurrentYear() {
     return n;
 }
   
+function updateDateRangeValue() {
+    document.getElementById('date-range-value').innerHTML = document.getElementById('date-range').value;
+}
+
+function updateMembersNumberValue() {
+    document.getElementById('members-number-value').innerHTML = document.getElementById('members-number').value;
+}
+
+function init() {
+    if (document.getElementById('date-range')) {
+        updateDateRangeValue();
+        document.getElementById('date-range').addEventListener('input', updateDateRangeValue);
+    }
+    if (document.getElementById('members-number')) {
+        updateMembersNumberValue();
+        document.getElementById('members-number').addEventListener('input', updateMembersNumberValue);
+    }
+}
