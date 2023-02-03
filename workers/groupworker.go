@@ -108,11 +108,11 @@ func FilterGroupsByName(filter string) []objects.Group {
 				tlist = append(tlist, g)
 			}
 		}
-		slices.SortFunc(tlist, func(a, b objects.Group) bool {
-			return strings.Index(
-				strings.ToUpper(a.Name), strings.ToUpper(filter)) < strings.Index(
-				strings.ToUpper(b.Name), strings.ToUpper(filter))
-		})
 	}
+	slices.SortFunc(tlist, func(a, b objects.Group) bool {
+		return strings.Index(
+			strings.ToUpper(a.Name), strings.ToUpper(filter)) < strings.Index(
+			strings.ToUpper(b.Name), strings.ToUpper(filter))
+	})
 	return tlist
 }
