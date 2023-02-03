@@ -4,6 +4,7 @@ import (
 	"api"
 	"net/http"
 	"objects"
+	"strconv"
 	"text/template"
 	"workers"
 
@@ -22,6 +23,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	CheckForMessageQuery(r, &data)
+
+	println("Date registered " + strconv.Itoa(len(workers.GetListOfLocation())))
 
 	if r.Method == "POST" {
 		if err := r.ParseForm(); err != nil {

@@ -13,7 +13,7 @@ type Group struct {
 	Members        []Artist                `json:"members"`
 	CreationYear   int                     `json:"creation_year"`
 	FirstAlbumDate string                  `json:"first_album_date"`
-	DateLocations  map[string]([]api.Date) `json:"date_locaitons"`
+	DateLocations  map[string]([]api.Date) `json:"date_locations"`
 
 	DZInformations    api.DeezerInformations `json:"deezer_informations"`
 	GroupAlternatives []Group                `json:"group_alternatives"`
@@ -89,7 +89,7 @@ func (group *Group) DefineMostValuableGenreForGroup() {
 		group.MostValuableGenre.FontName = "Lacquer"
 	case "Pop":
 		group.MostValuableGenre.FontName = "Reem_Kufi_Ink"
-	case "Raggae":
+	case "Reggae":
 		group.MostValuableGenre.FontName = "Shadows_Into_Light"
 	case "Metal":
 		group.MostValuableGenre.FontName = "Metal_Mania"

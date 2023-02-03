@@ -14,6 +14,7 @@ type Date struct {
 	Locations string
 	DateTime  []string
 	Loc       Geoloc
+	GroupId   int
 }
 
 var mutex sync.Mutex

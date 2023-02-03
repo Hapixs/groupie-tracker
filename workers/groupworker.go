@@ -36,6 +36,7 @@ func transformAndCacheGroup(v api.ApiArtist) {
 	group := objects.Group{}
 	group.InitFromApiArtist(v)
 	go addArtist(group.Members)
+	go AddGroupDates(group)
 	mutex.Lock()
 	GroupMap[v.Id] = group
 	mutex.Unlock()
