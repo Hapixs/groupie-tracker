@@ -17,7 +17,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&display=swap" rel="stylesheet"> 
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -37,12 +36,12 @@
 
     <body onload="updateMemberBackWithColor();" class="w-full bg-gradient-to-b dark:from-gray-900 from-blue-200 to-white dark:to-gray-800 dark:text-white pb-0">
         <div class="flex place-content-center w-full">
-            <img src="/static/assets/soundbar.png" class="h-full"></img>
-
-            <p class="absolute pt-20 pd-10 font-['Bebas_Neue'] text-9xl translate-y-5">{{.Group.Name}}</p>
+            <img src="/static/assets/soundbarup.png" class="h-full" style="filter: invert(42%) sepia(87%) saturate(5079%) hue-rotate(218deg) brightness(100%) contrast(94%);"></img>
+            <p class="absolute mt-10 pt-20 pd-10 font-['Bebas_Neue'] text-9xl text-white translate-y-5">{{.Group.Name}}</p>
     </div>
-        <img src="{{.Group.ImageLink}}" id="groupImage" class="rounded-bl-lg pl-10 absolute w-96 f-96 mx-auto z-[2]"></img>
-        <div id="memberList" class="grid w-full translate-y-10 bg-opacity-60" id="members">
+
+        <img src="{{.Group.ImageLink}}" id="groupImage" class="mt-20 rounded-bl-lg pl-10 absolute w-96 f-96 mx-auto z-[2]"></img>
+        <div id="memberList" class="mt-20 grid w-full translate-y-10 bg-opacity-60" id="members">
             <div class="w-full pl-[30rem] overflow-auto">
                 <div class="grid grid-flow-col overflow-auto">
                     {{range .Group.Members}}
@@ -58,8 +57,13 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-20 flex place-content-center w-full">
+            <img src="/static/assets/soundbardown.png" class="h-full" style="filter: invert(42%) sepia(87%) saturate(5079%) hue-rotate(218deg) brightness(100%) contrast(94%);"></img>
+        </div>
+
         <div class="container mx-auto my-2 text-center justify-center">
-            <div class="divider h-full pt-60 md:p-10" style="padding-top: 15em;" id="musique"> 
+            <div class="divider h-full pt-50 md:p-10" style="padding-top: 15em;" id="musique"> 
                 <h2 class="text-7xl font-['Lacquer']"> MUSIQUES </h2>
             </div>
             <div class="grid justify-items-center lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-1 sm:auto-rows-max mb-5">
