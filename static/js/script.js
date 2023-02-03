@@ -162,7 +162,6 @@ function getGroupNameById(id) {
 var lastfilter = ""
 
 function displaySuggestions() {
-    // console.log("displaySuggestions");
     var textbar = document.getElementById("search-dropdown");
     
     if (textbar.value == "") {
@@ -233,15 +232,11 @@ function displaySuggestions() {
 
         for (var i = 0; i < data.groups.length; i++) {
             var suggestion = document.createElement("div");
-            // var group = document.createElement("p");
             var link = document.createElement("a");
             suggestion.textContent = data.groups[i].Name;
             suggestion.className = classList;
-            // group.textContent = getGroupNameById(data.tracks[i].GroupId);
-            // group.className = classGroup;
             link.href = "/group/"+data.groups[i].Id+"/";
             link.appendChild(suggestion);
-            // link.appendChild(group);
             suggestionsDiv.appendChild(link);
         }
 
