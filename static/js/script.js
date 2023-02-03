@@ -128,6 +128,8 @@ function getGroupNameById(id) {
     return groupName;
 }
 
+var lastfilter = ""
+
 function displaySuggestions() {
     // console.log("displaySuggestions");
     var textbar = document.getElementById("search-dropdown");
@@ -136,6 +138,12 @@ function displaySuggestions() {
         document.getElementById("suggestions-div").innerHTML = "";
         return;
     }
+
+    if (textbar.value == lastfilter) {
+        return;
+    }
+
+    lastfilter = textbar.value;
     
     var apiSearch = "/api/search?q="+textbar.value;
     var classList = "py-2 px-5 text-align-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-200 dark:border-gray-700"
