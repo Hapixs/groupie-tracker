@@ -1,6 +1,7 @@
 package api
 
 import (
+	"strings"
 	"time"
 	"utils"
 )
@@ -19,9 +20,9 @@ type WikiRequest struct {
 func GetWikipediaImage(artist string) WikiRequest {
 	var request WikiRequest
 	artist = utils.FormatArtistName(artist)
-	if artist == "Logic	" {
+	if strings.ToUpper(artist) == "LOGIC" {
 		artist += " (rapper)"
-	} else if artist == "Flea" {
+	} else if strings.ToUpper(artist) == "FLEA" {
 		artist += " (musician)"
 	}
 	url := "https://en.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=pageimages&format=json&pithumbsize=100"

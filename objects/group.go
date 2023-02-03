@@ -7,17 +7,17 @@ import (
 )
 
 type Group struct {
-	Id             int
-	ImageLink      string
-	Name           string
-	Members        []Artist
-	CreationYear   int
-	FirstAlbumDate string
-	DateLocations  map[string]([]api.Date)
+	Id             int                     `json:"id"`
+	ImageLink      string                  `json:"image_link"`
+	Name           string                  `json:"name"`
+	Members        []Artist                `json:"members"`
+	CreationYear   int                     `json:"creation_year"`
+	FirstAlbumDate string                  `json:"first_album_date"`
+	DateLocations  map[string]([]api.Date) `json:"date_locaitons"`
 
-	DZInformations    api.DeezerInformations
-	GroupAlternatives []Group
-	MostValuableGenre api.DeezerGenre
+	DZInformations    api.DeezerInformations `json:"deezer_informations"`
+	GroupAlternatives []Group                `json:"group_alternatives"`
+	MostValuableGenre api.DeezerGenre        `json:"most_valuable_genre"`
 }
 
 func (group *Group) UpdatePicture() {

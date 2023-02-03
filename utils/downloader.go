@@ -4,32 +4,27 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"io"
-	"log"
 	"net/http"
 	"os"
 )
 
-func DownloadPicture(url string, localPath string) {
+func DownloadPicture(url string, localPath string) error {
 	file, err := os.Create(localPath)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
-	client := http.Client{
-		CheckRedirect: func(r *http.Request, via []*http.Request) error {
-			r.URL.Opaque = r.URL.Path
-			return nil
-		},
-	}
-	resp, err := client.Get(url)
+
+	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer resp.Body.Close()
+	defer file.Close()
 
 	io.Copy(file, resp.Body)
-
-	defer file.Close()
 	println("Downloaded " + file.Name())
+
+	return nil
 }
 
 func CalculatStringHash(value string) string {

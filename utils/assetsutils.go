@@ -4,17 +4,13 @@ import (
 	"os"
 )
 
-func PrepareFolders() {
+func PrepareFolders() error {
+	err := os.Mkdir("static/assets", os.ModePerm)
 
-	assetsErr := os.Mkdir("static/assets", os.ModePerm)
-
-	if assetsErr != nil {
-		println(assetsErr.Error())
+	if err != nil {
+		return err
 	}
 
-	groupsErr := os.Mkdir("static/assets/groups", os.ModePerm)
-
-	if groupsErr != nil {
-		println(assetsErr.Error())
-	}
+	err = os.Mkdir("static/assets/groups", os.ModePerm)
+	return err
 }

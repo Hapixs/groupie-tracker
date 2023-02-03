@@ -1,9 +1,7 @@
 package utils
 
 import (
-	"strconv"
 	"strings"
-	"time"
 	"unicode"
 
 	"golang.org/x/text/runes"
@@ -35,14 +33,14 @@ func FormatArtistName(artist string) string {
 	return artist
 }
 
-func TransformDateToText(dateTime string) string {
-	d := strings.Split(dateTime, "-")
-	day, _ := strconv.Atoi(d[0])
-	month, _ := strconv.Atoi(d[1])
-	year, _ := strconv.Atoi(d[2])
+// func TransformDateToText(dateTime string) string {
+// 	d := strings.Split(dateTime, "-")
+// 	day, _ := strconv.Atoi(d[0])
+// 	month, _ := strconv.Atoi(d[1])
+// 	year, _ := strconv.Atoi(d[2])
 
-	date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Now().Location())
+// 	date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Now().Location())
 
-	str := date.Weekday().String() + "-" + date.Month().String() + "-" + strconv.Itoa(date.Year())
-	return str
-}
+// 	str := date.Weekday().String() + "-" + date.Month().String() + "-" + strconv.Itoa(date.Year())
+// 	return str
+// }
