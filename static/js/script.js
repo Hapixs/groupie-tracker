@@ -34,10 +34,8 @@ function ChangeTheme() {
 }
 
 function playaudio() {
-    // play audio and only play one at a time
     return {
         currentlyPlaying: false,
-        //play and stop the audio
         playAndStop() {
             if (this.currentlyPlaying) {
                 this.$refs.audio.pause();
@@ -48,7 +46,6 @@ function playaudio() {
                 this.currentlyPlaying = true;
             }
         },
-        //stop the audio
         stop() {
             this.$refs.audio.pause();
             this.$refs.audio.currentTime = 0;
@@ -56,6 +53,22 @@ function playaudio() {
         }
     }
 }
+
+// let currentlyPlaying = false;
+
+// function playaudio(audioElement) {
+//   if (!currentlyPlaying) {
+//     audioElement.play();
+//     currentlyPlaying = true;
+//   }
+// }
+
+// function stopaudio(audioElement) {
+//   audioElement.pause();
+//   audioElement.currentTime = 0;
+//   currentlyPlaying = false;
+// }
+
 
 function getAverageRGB(imgEl) {
 
@@ -140,7 +153,7 @@ function displaySuggestions() {
         
         if (data.tracks.length > 0) {
             var trackTitles = document.createElement("div");
-            trackTitles.textContent = "Tracks";
+            trackTitles.textContent = "Musiques";
             trackTitles.className = classTitle;
             suggestionsDiv.appendChild(trackTitles);
         }
@@ -157,7 +170,7 @@ function displaySuggestions() {
 
         if (data.artists.length > 0) {
             var artistTitles = document.createElement("div");
-            artistTitles.textContent = "Artists";
+            artistTitles.textContent = "Artistes";
             artistTitles.className = classTitle;
             suggestionsDiv.appendChild(artistTitles);
         }
@@ -174,7 +187,7 @@ function displaySuggestions() {
 
         if (data.groups.length > 0) {
             var groupTitles = document.createElement("div");
-            groupTitles.textContent = "Groups";
+            groupTitles.textContent = "Groupes";
             groupTitles.className = classTitle;
             suggestionsDiv.appendChild(groupTitles);
         }
