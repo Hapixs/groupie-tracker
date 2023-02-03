@@ -159,14 +159,11 @@ function displaySuggestions() {
         for (var i = 0; i < data.tracks.length; i++) {
             var suggestion = document.createElement("div");
             var link = document.createElement("a");
-            // var group = document.createElement("p");
-            suggestion.textContent = data.tracks[i].title_short;
+            groupName = data.tracks[i].group_name;
+            suggestion.textContent = data.tracks[i].title_short + " - " + groupName;
             suggestion.className = classList;
-            // group.textContent = getGroupNameById(data.tracks[i].GroupId);
-            // group.className = classGroup;
             link.href = "/group/"+data.tracks[i].GroupId+"#musique";
             link.appendChild(suggestion);
-            // link.appendChild(group);
             suggestionsDiv.appendChild(link);
         }
 
@@ -179,15 +176,12 @@ function displaySuggestions() {
 
         for (var i = 0; i < data.artists.length; i++) {
             var suggestion = document.createElement("div");
-            var group = document.createElement("p");
             var link = document.createElement("a");
-            suggestion.textContent = data.artists[i].name;
+            groupName = data.artists[i].group_name;
+            suggestion.textContent = data.artists[i].name + " - " + groupName;
             suggestion.className = classList;
-            group.textContent = data.artists[i].group_name;
-            group.className = classGroup;
-            link.href = "/group/"+data.artists[i].groupid+"#members";
+            link.href = "/group/"+data.artists[i].Id+"/";
             link.appendChild(suggestion);
-            link.appendChild(group);
             suggestionsDiv.appendChild(link);
         }
 
