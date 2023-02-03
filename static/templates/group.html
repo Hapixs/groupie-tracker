@@ -17,6 +17,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Orbitron&family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&family=Reem+Kufi+Ink&family=Rock+Salt&family=Shadows+Into+Light&family=Unbounded&family=Metal+Mania&display=swap" rel="stylesheet">
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -64,7 +66,7 @@
 
         <div class="container mx-auto my-2 text-center justify-center">
             <div class="divider h-full pt-50 md:p-10" style="padding-top: 15em;" id="musique"> 
-                <h2 class="text-7xl font-['Lacquer']"> MUSIQUES </h2>
+                <h2 class="text-7xl font-['{{.Group.MostValuableGenre.FontName}}']"> MUSIQUES </h2>
             </div>
             <div class="grid justify-items-center lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-1 sm:auto-rows-max mb-5">
                 {{ range .Group.DZInformations.TrackList.List }}
@@ -108,7 +110,7 @@
                 {{end}}
             </div>
             <div class="divider h-full pt-60 p-10"> 
-                <h2 class="text-7xl font-['Lacquer']"> DATES </h2>
+                <h2 class="text-7xl font-['{{.Group.MostValuableGenre.FontName}}']"> DATES </h2>
             </div>
             <div class="grid sm:grid-cols-1 lg:grid-cols-7 sm:auto-row-max sm:gap-2 gap-2 content-center">
                 <div id="accordion-collapse" class="lg:col-start-1 lg:col-span-3" data-accordion="collapse">
@@ -133,7 +135,7 @@
                 <div id="map" class="lg:col-start-5 lg:col-span-3 h-96 lg:h-full" data-lat=0 data-lng=0></div>
             </div>
             <div class="divider pt-60 sm:p-10" style="padding-top: 15em;"> 
-                <p class="font-['Lacquer'] text-7xl"> SIMILAIRES </p>
+                <p class="font-['{{.Group.MostValuableGenre.FontName}}'] text-7xl"> SIMILAIRES </p>
             </div>
             <div class="grid grid-flow-col justify-items-center h-full">
                 <div class="rounded-xl w-full bg-[#121213] bg-opacity-20 col-span-5 grid grid-flow-col overflow-auto m-10 pb-10"> 

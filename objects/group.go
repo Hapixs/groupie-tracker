@@ -80,4 +80,22 @@ func (group *Group) DefineMostValuableGenreForGroup() {
 		}
 	}
 	group.MostValuableGenre = top
+	switch group.MostValuableGenre.Name {
+	case "Classique":
+		group.MostValuableGenre.FontName = "Nicoone"
+	case "Dance":
+		group.MostValuableGenre.FontName = "Orbitron"
+	case "Rap/Hip Hop":
+		group.MostValuableGenre.FontName = "Lacquer"
+	case "Pop":
+		group.MostValuableGenre.FontName = "Reem_Kufi_Ink"
+	case "Raggae":
+		group.MostValuableGenre.FontName = "Shadows_Into_Light"
+	case "Metal":
+		group.MostValuableGenre.FontName = "Metal_Mania"
+	case "Rock":
+		group.MostValuableGenre.FontName = "Rock_Salt"
+	case "Alternative":
+		group.MostValuableGenre.FontName = "Unbounded"
+	}
 }

@@ -38,7 +38,7 @@
                         <div class="absolute container z-10">
                             <div class="divider h-full w-full">
                                 <h2 class="text-7xl text-white
-                                font-['{{ if eq $key.Name "Classique"}}Niconne{{end}}{{ if eq $key.Name "Dance"}}Orbitron{{end}}{{ if eq $key.Name "Rap/Hip Hop"}}Lacquer{{end}}{{ if eq $key.Name "Pop"}}Reem_Kufi_Ink{{end}}{{ if eq $key.Name "Reggae"}}Shadows_Into_Light{{end}}{{ if eq $key.Name "Metal"}}Metal_Mania{{end}}{{ if eq $key.Name "Rock"}}Rock_Salt{{end}}{{ if eq $key.Name "Alternative"}}Unbounded{{end}}']">{{$key.Name}}</h2>
+                                font-['{{$key.FontName}}']">{{$key.Name}}</h2>
                             </div>
                             <div class="grid grid-cols-7 w-full h-[48rem] place-content-center auto-rows-max gap-4">
                                 {{ range $value }} 
