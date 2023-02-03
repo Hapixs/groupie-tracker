@@ -8,14 +8,14 @@
 
 ![](static/assets/soundbardown.png)
 
-# Chazam
+# **Chazam** - Le meilleur pour les fans
 
 **Prérequis**
 >  - GoLang version `1.19.5` minimum ([download](https://go.dev/dl/))
 >  - Minimum de `30MB` d'éspace de stockage
 >  - Une connexion internet
 
-**Déploiement**
+**Déploiement (simple)**
 > - Clone du répo
 >   ```
 >   $git clone git@github.com:Hapixs/groupie-tracker.git
@@ -24,7 +24,6 @@
 >   ```
 >   $go run groupie-tracker/webserver.go
 >   ```
-> ![]()
 
 **Utilisation**
 > Une foie le serveur web lancer il sera accsecible à l'addresse `localhost:80`
