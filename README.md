@@ -27,4 +27,4 @@
 > ![]()
 
 **Utilisation**
-> Une foie le serveur web lancer il sera accsecible sur http://localhost:80
+> Une foie le serveur web lancer il sera accsecible à l'addresse `localhost:80`
