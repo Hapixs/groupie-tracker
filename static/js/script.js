@@ -246,4 +246,10 @@ function displaySuggestions() {
         console.error('Error:', error);
     });
 }
+
+function getCurrentYear() {
+    var d = new Date();
+    var n = d.getFullYear();
+    return n;
+}
   
