@@ -15,6 +15,7 @@ func addTrackByGroup(trackRequest api.DeezerTrackList, group objects.Group) {
 	for _, t := range trackRequest.List {
 		track := objects.Track{
 			GroupId:     group.Id,
+			GroupName:   group.Name,
 			Id:          t.Id,
 			ReleaseDate: t.ReleaseDate,
 			Title:       t.Title,

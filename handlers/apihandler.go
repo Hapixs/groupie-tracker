@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"objects"
-	"strconv"
 	"workers"
 )
 
@@ -26,22 +25,4 @@ func searchApiHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(data)
-}
-
-func groupApiHandler(w http.ResponseWriter, r *http.Request) {
-	query := r.URL.Query().Get("id")
-
-	id, err := strconv.Atoi(query)
-
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode("Error")
-	}
-
-	g := workers.GroupMap[id]
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(g)
 }
