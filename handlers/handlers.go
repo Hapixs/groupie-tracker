@@ -14,6 +14,7 @@ const (
 	homeTemplatePath     = "static/templates/index.html"
 	notfoundTempaltePath = "static/templates/notfound.html"
 	groupTemplatePath    = "static/templates/group.html"
+	advencedTemplatePath = "static/templates/advenced.html"
 )
 
 type HtmlData struct {
@@ -54,6 +55,8 @@ func InitHandlers() {
 
 	http.HandleFunc("/random", randomHandler)
 	http.HandleFunc("/api/search", searchApiHandler)
+
+	http.HandleFunc("/advenced", advencedHandler)
 }
 
 func PrepareDataWithFragments(data *HtmlData) {
