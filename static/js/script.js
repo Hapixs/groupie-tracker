@@ -6,6 +6,37 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("search-dropdown").addEventListener("keyup", function() {displaySuggestions();});
 });
 
+document.addEventListener("keydown", function(event) {
+    const suggestionsDiv = document.getElementById("suggestions-div");
+    const links = suggestionsDiv.getElementsByTagName("a");
+    let selectedIndex = -1;
+    
+    for (let i = 0; i < links.length; i++) {
+        if (links[i].classList.contains("selected")) {
+            selectedIndex = i;
+            break;
+        }
+    }
+        
+    if (event.key === "ArrowDown") {
+        event.preventDefault();
+        if (selectedIndex === -1 || selectedIndex === links.length - 1) {
+            links[0].classList.add("selected");
+        } else {
+            links[selectedIndex].classList.remove("selected");
+            links[selectedIndex + 1].classList.add("selected");
+        }
+    } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        if (selectedIndex === -1 || selectedIndex === 0) {
+            links[links.length - 1].classList.add("selected");
+        } else {
+            links[selectedIndex].classList.remove("selected");
+            links[selectedIndex - 1].classList.add("selected");
+        }
+    }
+});
+
 function CloseMessage (id) {
     document.getElementById(id).style.display = "none";
 }
@@ -188,7 +219,7 @@ function displaySuggestions() {
             groupName = data.artists[i].group_name;
             suggestion.textContent = data.artists[i].name + " - " + groupName;
             suggestion.className = classList;
-            link.href = "/group/"+data.artists[i].Id+"/";
+            link.href = "/group/"+data.artists[i].groupid+"/";
             link.appendChild(suggestion);
             suggestionsDiv.appendChild(link);
         }
@@ -220,3 +251,4 @@ function displaySuggestions() {
         console.error('Error:', error);
     });
 }
+  
