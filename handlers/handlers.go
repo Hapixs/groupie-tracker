@@ -37,6 +37,9 @@ type HtmlData struct {
 
 	TrackResearch  []objects.Track
 	ArtistResearch []objects.Artist
+
+	ASearch_MembersNumber []int
+	ASearch_Locations     []string
 }
 
 func InitHandlers() {
