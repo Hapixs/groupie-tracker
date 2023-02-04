@@ -36,5 +36,10 @@ func GetWikipediaPageLink(artist string) string {
 	for _, page := range request.Query.Page {
 		return page.WikiUrl
 	}
+	url = "https://en.wikipedia.org/w/api.php?action=query&titles=" + artist + "&prop=info&inprop=url&format=json"
+	GetFromApi(url, &request, false, time.Millisecond, nil)
+	for _, page := range request.Query.Page {
+		return page.WikiUrl
+	}
 	return "/"
 }
