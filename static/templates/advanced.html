@@ -25,8 +25,8 @@
         {{ index .Fragments "navigationbar.html" }}
     </header>
     <body onload="init()">
-        <div class="mx-10 my-20">
-            <form method="post" action="/advanced">
+        <div class="">
+            <form method="post" action="/advanced" class="px-5 py-10">
                 <div class="date">
                     <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Date :</label>
                     <div class="currentValue">
@@ -35,12 +35,7 @@
                     <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                 </div>
                 <div class="membersNumber">
-                    <!-- <label for="members-number" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Nombre de membre du groupe</label>
-                    <input id="members-number" type="range" min="1" max="10" value="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                    <div class="currentValue">
-                        <span class="text-gray-700 dark:text-gray-300" id="members-number-value">1</span>
-                    </div> -->
-                    {{ range .MembersNumber }}
+                    {{ range .ASearch_MembersNumber }}
                         <label class="inline-flex items-center mt-3">
                             <input type="checkbox" class="form-checkbox" value="{{ . }}" name="membersNumber">
                             <span class="ml-2">{{ . }}</span>
@@ -49,9 +44,9 @@
                 </div>
                 <div>
                     <label class="block text-left" style="max-width: 300px">
-                        <span class="text-gray-700">Localistaion</span>
+                        <span class="text-gray-700">Localisation</span>
                         <select class="form-multiselect block w-full mt-1" multiple>
-                            {{ range .Locations }}
+                            {{ range .ASearch_Locations }}
                                 <option>{{ . }}</option>
                             {{ end }}
                         </select>
