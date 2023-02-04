@@ -55,8 +55,8 @@ func InitHandlers() {
 
 	http.HandleFunc("/random", randomHandler)
 	http.HandleFunc("/api/search", searchApiHandler)
-
 	http.HandleFunc("/advanced", advancedHandler)
+	http.HandleFunc("/hmm", hmmHandler)
 }
 
 func PrepareDataWithFragments(data *HtmlData) {
