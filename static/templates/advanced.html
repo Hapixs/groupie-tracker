@@ -26,9 +26,10 @@
         {{ index .Fragments "navigationbar.html" }}
     </header>
     <body onload="init()">
-        <form method="post" action="/advanced" class="px-10 py-20">
+        <h1 class="px-10 pt-20 text-3xl font-semibold text-white">Recherche avancée</h1>
+        <form method="post" action="/advanced" class="px-10">
             <div class="date">
-                <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Date :</label>
+                <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Année :</label>
                 <div class="currentValue">
                     <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
                 </div>
@@ -44,7 +45,7 @@
             </div>
             <div>
                 <label class="block text-left" style="max-width: 300px">
-                    <span class="text-gray-700">Localisation</span>
+                    <span class="text-white dark:text-gray-300">Localisations :</span>
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
                     <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>                            {{ range .ASearch_Locations }}
                             <option value="{{ . }}">{{ . }}</option>
