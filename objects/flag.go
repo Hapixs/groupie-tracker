@@ -67,7 +67,7 @@ func BuildFlagHelpMenu() []string {
 	return helpBlock
 }
 
-func GameProcessArguments(args []string) {
+func ProcessArguments(args []string) {
 	for len(args) > 0 {
 		arg := args[0]
 		if arg[0] == "-"[0] {
