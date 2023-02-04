@@ -14,6 +14,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Orbitron&family=Bebas+Neue&family=Comfortaa&family=Faster+One&family=Lacquer&family=Reem+Kufi+Ink&family=Rock+Salt&family=Shadows+Into+Light&family=Unbounded&family=Metal+Mania&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/advanced.css">
 
         <script defer src="/static/js/script.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -25,39 +26,34 @@
         {{ index .Fragments "navigationbar.html" }}
     </header>
     <body onload="init()">
-        <div class="">
-            <form method="post" action="/advanced" class="px-5 py-10">
-                <div class="date">
-                    <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Date :</label>
-                    <div class="currentValue">
-                        <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
-                    </div>
-                    <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+        <form method="post" action="/advanced" class="px-10 py-20">
+            <div class="date">
+                <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Date :</label>
+                <div class="currentValue">
+                    <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
                 </div>
-                <div class="membersNumber">
-                    {{ range .ASearch_MembersNumber }}
-                        <label class="inline-flex items-center mt-3">
-                            <input type="checkbox" class="form-checkbox" value="{{ . }}" name="membersNumber">
-                            <span class="ml-2">{{ . }}</span>
-                        </label>
-                    {{ end }}
-                </div>
-                <div>
-                    <label class="block text-left" style="max-width: 300px">
-                        <span class="text-gray-700">Localisation</span>
-                        <select class="form-multiselect block w-full mt-1" multiple>
-                            {{ range .ASearch_Locations }}
-                                <option>{{ . }}</option>
-                            {{ end }}
-                        </select>
+                <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+            </div>
+            <div class="membersNumber">
+                {{ range .ASearch_MembersNumber }}
+                    <label class="inline-flex items-center mt-3">
+                        <input type="checkbox" class="form-checkbox" value="{{ . }}" name="membersNumber">
+                        <span class="ml-2">{{ . }}</span>
                     </label>
-                </div>
-                <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
-            </form>
-        </div>
+                {{ end }}
+            </div>
+            <div>
+                <label class="block text-left" style="max-width: 300px">
+                    <span class="text-gray-700">Localisation</span>
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>                            {{ range .ASearch_Locations }}
+                            <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select>
+                </label>
+            </div>
+            <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
+        </form>
     </body>
-    <script>
-        
-    </script>
     {{ index .Fragments "footer.html" }}
 </html>
