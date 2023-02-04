@@ -26,35 +26,42 @@
         {{ index .Fragments "navigationbar.html" }}
     </header>
     <body onload="init()">
-        <h1 class="px-10 pt-20 text-3xl font-semibold text-white">Recherche avancée</h1>
+        <h1 class="px-10 pt-20 text-7xl font-semibold text-white text-center">Recherche avancée</h1>
         <form method="post" action="/advanced" class="px-10">
             <div class="date">
-                <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Année :</label>
+                <div class="divider h-full" id="localisations">
+                    <h2 class="text-5xl"> Année </h2>
+                </div>
                 <div class="currentValue">
                     <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
                 </div>
                 <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
             </div>
             <div class="membersNumber">
+                <div class="divider h-full pt-50 md:p-10" id="membersNumber"> 
+                    <h2 class="text-5xl"> Nombres de membre </h2>
+                </div>
                 {{ range .ASearch_MembersNumber }}
-                    <label class="inline-flex items-center mt-3">
-                        <input type="checkbox" class="form-checkbox" value="{{ . }}" name="membersNumber">
-                        <span class="ml-2">{{ . }}</span>
+                    <label class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="membersNumber" id="inlineCheckbox1">
+                        <label class="form-check-label inline-block text-white" for="inlineCheckbox1">{{ . }}</label>
                     </label>
                 {{ end }}
             </div>
             <div>
-                <label class="block text-left" style="max-width: 300px">
-                    <span class="text-white dark:text-gray-300">Localisations :</span>
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                    <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
-                        {{ range .ASearch_Locations }}
-                            <option value="{{ . }}">{{ . }}</option>
-                        {{ end }}
-                    </select>
-                </label>
+                <div class="divider h-full pt-50 md:p-10" id="localisations">
+                    <h2 class="text-5xl"> Localisations </h2>
+                </div>
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
+                {{ range .ASearch_Locations }}
+                    <option value="{{ . }}">{{ . }}</option>
+                {{ end }}
+                </select>
             </div>
-            <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
+            <div class="text-center py-5">
+                <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
+            </div>
         </form>
     </body>
     {{ index .Fragments "footer.html" }}
