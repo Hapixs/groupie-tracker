@@ -5,16 +5,17 @@ import (
 	"text/template"
 )
 
-func advencedHandler(w http.ResponseWriter, r *http.Request) {
+func advancedHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
 
 	data := HtmlData{
 		ProjectName: "Chazam",
-		PageName:    "advenced",
+		PageName:    "advanced",
 	}
 
 	if r.Method == "POST" {
 		// Todo: something
+		println("Advanced handler POST")
 	}
 
 	PrepareDataWithFragments(&data)
