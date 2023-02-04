@@ -9,8 +9,6 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var trackById map[int]objects.Track = make(map[int]objects.Track)
-
 func addTrackByGroup(trackRequest api.DeezerTrackList, group objects.Group) {
 	for _, t := range trackRequest.List {
 		track := objects.Track{

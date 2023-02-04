@@ -7,8 +7,6 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var artistsList = []objects.Artist{}
-
 func addArtist(artists []objects.Artist) {
 	mutex.Lock()
 	artistsList = append(artistsList, artists...)

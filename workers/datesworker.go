@@ -7,8 +7,6 @@ import (
 	"golang.org/x/exp/maps"
 )
 
-var Locations = map[string]([]api.Date){}
-
 func AddGroupDates(group objects.Group) {
 	mutex.Lock()
 	for _, v := range group.DateLocations {

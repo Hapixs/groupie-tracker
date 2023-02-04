@@ -5,16 +5,10 @@ import (
 	"objects"
 	"strconv"
 	"strings"
-	"sync"
 
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 )
-
-var GroupMap = map[int](objects.Group){}
-var GroupByGenreMap = map[api.DeezerGenre]([]objects.Group){}
-var wg sync.WaitGroup
-var mutex sync.Mutex
 
 func LoadGroups() {
 	api.LoadApiDataFromFile()
@@ -23,16 +17,16 @@ func LoadGroups() {
 
 	for _, v := range artists {
 		go transformAndCacheGroup(v)
-		wg.Add(1)
+		waitgroup.Add(1)
 	}
-	wg.Wait()
+	waitgroup.Wait()
 	go UpdateAllDeezerInformations(false)
 	go UpdateAllGeolocInformation(false)
 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
 }
 
 func transformAndCacheGroup(v api.ApiArtist) {
-	defer wg.Done()
+	defer waitgroup.Done()
 	group := objects.Group{}
 	group.InitFromApiArtist(v)
 	go addArtist(group.Members)
