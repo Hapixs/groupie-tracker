@@ -24,38 +24,42 @@
     <header>
         {{ index .Fragments "navigationbar.html" }}
     </header>
-    <body class="mx-48 my-20" onload="init()">
-        <form method="post" action="/advanced">
-            <div class="date">
-                <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Date :</label>
-                <div class="currentValue">
-                    <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
+    <body onload="init()">
+        <div class="mx-10 my-20">
+            <form method="post" action="/advanced">
+                <div class="date">
+                    <label for="date-range" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Date :</label>
+                    <div class="currentValue">
+                        <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
+                    </div>
+                    <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
                 </div>
-                <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-            </div>
-            <div class="membersNumber">
-                <!-- <label for="members-number" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Nombre de membre du groupe</label>
-                <input id="members-number" type="range" min="1" max="10" value="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                <div class="currentValue">
-                    <span class="text-gray-700 dark:text-gray-300" id="members-number-value">1</span>
-                </div> -->
-                {{ range 7 }}
-                    <input type="checkbox" name="{{ i }}" id="{{ i }}">
-                    <label for="{{ i }}">{{ i }}</label>
-                {{ end }}
-            </div>
-            <div>
-                <label class="block text-left" style="max-width: 300px">
-                    <span class="text-gray-700">Localistaion</span>
-                    <select class="form-multiselect block w-full mt-1" multiple>
-                        {{ range .Locations }}
-                            <option>{{ . }}</option>
-                        {{ end }}
-                    </select>
-                </label>
-            </div>
-            <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
-        </form>
+                <div class="membersNumber">
+                    <!-- <label for="members-number" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Nombre de membre du groupe</label>
+                    <input id="members-number" type="range" min="1" max="10" value="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    <div class="currentValue">
+                        <span class="text-gray-700 dark:text-gray-300" id="members-number-value">1</span>
+                    </div> -->
+                    {{ range .MembersNumber }}
+                        <label class="inline-flex items-center mt-3">
+                            <input type="checkbox" class="form-checkbox" value="{{ . }}" name="membersNumber">
+                            <span class="ml-2">{{ . }}</span>
+                        </label>
+                    {{ end }}
+                </div>
+                <div>
+                    <label class="block text-left" style="max-width: 300px">
+                        <span class="text-gray-700">Localistaion</span>
+                        <select class="form-multiselect block w-full mt-1" multiple>
+                            {{ range .Locations }}
+                                <option>{{ . }}</option>
+                            {{ end }}
+                        </select>
+                    </label>
+                </div>
+                <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
+            </form>
+        </div>
     </body>
     <script>
         
