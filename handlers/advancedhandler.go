@@ -18,6 +18,7 @@ func advancedHandler(w http.ResponseWriter, r *http.Request) {
 	data := HtmlData{
 		ProjectName: "Chazam",
 		PageName:    "advanced",
+		Groups:      workers.FilterGroupsByName(""),
 
 		ASearch_MembersNumber: MembersNumber,
 		ASearch_Locations:     workers.GetListOfLocation(),
