@@ -31,7 +31,8 @@ type HtmlData struct {
 	Fragments   map[string](string)
 	ProjectName string
 
-	DeezerGenres  []*objects.MusicGenre
+	Genres        []*objects.MusicGenre
+	GenresById    map[int]*objects.MusicGenre
 	GroupByGenres map[*objects.MusicGenre][]*objects.Group
 
 	TrackResearch  []*objects.Track

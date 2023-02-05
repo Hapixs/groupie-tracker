@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 	"objects"
-	"strconv"
 	"text/template"
 	"workers"
 
@@ -16,14 +15,13 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	groups := []*objects.Group{}
 
 	data := HtmlData{
-		ProjectName:  "Chazam",
-		PageName:     "home",
-		DeezerGenres: workers.GetDeezerGenreList(),
+		ProjectName: "Chazam",
+		PageName:    "home",
+		Genres:      workers.GetDeezerGenreList(),
+		GenresById:  workers.GenreById,
 	}
 
 	CheckForMessageQuery(r, &data)
-
-	println("Date registered " + strconv.Itoa(len(workers.GetListOfLocation())))
 
 	if r.Method == "POST" {
 		if err := r.ParseForm(); err != nil {
@@ -44,7 +42,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			data.Groups = append(data.Groups, k...)
 		}
 	} else {
-		data.GroupByGenres = map[*objects.MusicGenre][]*objects.Group{}
+		data.GroupByGenres = make(map[*objects.MusicGenre][]*objects.Group)
 		data.Groups = groups
 	}
 

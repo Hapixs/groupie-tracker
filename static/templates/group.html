@@ -74,14 +74,14 @@
                 <h2 class="text-7xl font-['{{.Group.MostValuableGenre.FontName}}']"> MUSIQUES </h2>
             </div>
             <div class="grid justify-items-center lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-1 sm:auto-rows-max mb-5">
-                {{ range .Group.DZInformations.TrackList.List }}
+                {{ range .Group.TrackList }}
                     <div x-data="playaudio()" class="h-80 w-80">
                         <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]" id="tracks">
                             <div class="inset-0 flex items-center justify-center">
                                 <div class="w-full h-full transition duration-300 ease-in-out bg-cyan-500 filter group-hover:blur-2xl"></div>
                             </div>
                             <div class="absolute mt-1 ml-1 translate-y-0 transform opacity-0 transition-all group-hover:translate-y-6 group-hover:opacity-100">
-                                <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Album.Genre.Name}}</div>
+                                <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.Genre.Name}}</div>
                                 <br>
                                 <div class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full">{{.ReleaseDate}}</div>
                             </div>
@@ -89,7 +89,7 @@
                                 <div class=" font-['Bebas_Neue'] text-lg inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-black text-white rounded-full">{{.Title}}</div>
                             </div>  
                             <div class="flex justify-center items-center">
-                                <img alt="card audio player musics" class="rounded-xl" src="{{.Album.Cover}}" /> 
+                                <img alt="card audio player musics" class="rounded-xl" src="{{.Cover}}" /> 
                                 <div class="absolute  items-center justify-center transition duration-200 ease-in-out rounded-xl bg-opacity-30 group-hover:bg-opacity-20">
                                     <div x-show="!currentlyPlaying" class="relative bg-black bg-opacity-50 rounded-full p-0.5">
                                         <svg class="w-12 h-12 text-white text-opacity-0 transition duration-150 ease-in-out hover:text-opacity-20" viewBox="0 0 284 284" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +110,7 @@
                         </audio>
                     </div>
                 {{ end }}
-                {{ if eq (len .Group.DZInformations.TrackList.List) 0 }}
+                {{ if eq (len .Group.TrackList) 0 }}
                 <p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Musiques indisponibles ou en cours de chargement...</p>
                 {{end}}
             </div>
@@ -119,10 +119,10 @@
             </div>
             <div class="grid sm:grid-cols-1 lg:grid-cols-7 sm:auto-row-max sm:gap-2 gap-2 content-center">
                 <div id="accordion-collapse" class="lg:col-start-1 lg:col-span-3" data-accordion="collapse">
-                    {{ range $key, $value := .Group.DateLocations }}
+                    {{ range $key, $value := .Group.LocationMap }}
                         {{ range $value }}
                                 <h2 id="accordion-collapse-heading-{{$key}}">
-                                    <button onclick="ChangeMapCoordinates({{.Loc.Lat}}, {{.Loc.Long}})" type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-collapse-body-{{$key}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$key}}">
+                                    <button onclick="ChangeMapCoordinates({{.Latitude}}, {{.Longitude}})" type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#accordion-collapse-body-{{$key}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$key}}">
                                         <span>{{ $key }}</span>
                                         <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                     </button>
@@ -130,7 +130,7 @@
                                 <div id="accordion-collapse-body-{{$key}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$key}}">
                                     <div class="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                                         {{ range .DateTime }}
-                                        <p> {{ . }} </p>
+                                            <p>{{ . }}</p>
                                         {{ end }}
                                     </div>
                                 </div>

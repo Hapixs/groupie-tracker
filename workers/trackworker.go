@@ -52,13 +52,14 @@ func buildTrackListFromGroupId(deezerGroupId, localGroupId int, localGroupName s
 			nil)
 
 		track := new(objects.Track)
-		track.Genre = *buildGenderFromDeezerId(deezerAlbumRequest.Id)
+		track.Genre = *buildGenderFromDeezerId(deezerAlbumRequest.Genre_Id)
 		track.GroupId = localGroupId
 		track.GroupName = localGroupName
 		track.Id = deezerTrack.Id
 		track.Preview = deezerTrack.Preview
 		track.Title = deezerTrack.Title
 		track.ReleaseDate = deezerTrack.ReleaseDate
+		track.Cover = deezerAlbumRequest.Cover
 		tracks = append(tracks, track)
 
 		mutex.Lock()

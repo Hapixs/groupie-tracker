@@ -30,13 +30,14 @@ func buildLocationFromGroupId(groupId int) map[string][]*objects.Location {
 		time.Millisecond,
 		nil)
 
-	for k, v := range groupieLocationRequest.DatesLocations {
-		val, ok := locationMap[k]
-		l := []*objects.Location{new(objects.Location)}
-		l[0].DateTime = v
-		l[0].Name = k
+	for location, dates := range groupieLocationRequest.DatesLocations {
+		val, ok := locationMap[location]
+		loc := new(objects.Location)
 
-		splited := strings.Split(k, "-")
+		loc.DateTime = dates
+		loc.Name = location
+
+		splited := strings.Split(location, "-")
 		cityName := strings.Replace(splited[0], "_", " ", -1)
 		countryName := strings.Replace(splited[1], "_", " ", -1)
 		url := "https://forward-reverse-geocoding.p.rapidapi.com/v1/forward?format=json&city=" + cityName + "&country=" + countryName
@@ -62,16 +63,19 @@ func buildLocationFromGroupId(groupId int) map[string][]*objects.Location {
 				header)
 		}
 
-		if len(geolocRequest) > 1 {
-			l[0].Logitude = geolocRequest[0].Long
-			l[0].Latitude = geolocRequest[0].Lat
+		if len(geolocRequest) >= 1 {
+			loc.Longitude = geolocRequest[0].Long
+			loc.Latitude = geolocRequest[0].Lat
 		}
 
+		list := make([]*objects.Location, 0)
+		list = append(list, loc)
 		if !ok {
-			l = append(l, val...)
+			list = append(list, val...)
 		}
 		mutex.Lock()
-		LocationByName[k] = l // pas sure que ca soit bon ca mon pote
+		LocationByName[location] = list
+		locationMap[location] = list
 		mutex.Unlock()
 	}
 

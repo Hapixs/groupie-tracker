@@ -8,12 +8,5 @@ type Track struct {
 	Title       string     `json:"title_short"`
 	Preview     string     `json:"preview"`
 	Genre       MusicGenre `json:"genre"`
-
-	// Deaprected
-	Album struct {
-		Id    int         `json:"id"`
-		Title string      `json:"title"`
-		Cover string      `json:"cover_medium"`
-		Genre *MusicGenre `json:"genre"`
-	} `json:"album"`
+	Cover       string     `json:"Cover"`
 }

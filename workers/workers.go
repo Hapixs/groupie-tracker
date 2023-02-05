@@ -7,7 +7,6 @@ import (
 )
 
 // Private variables of the package 'workers'
-var waitgroup sync.WaitGroup
 var mutex sync.Mutex
 
 // Publics variables of the package 'workers'
@@ -22,10 +21,9 @@ var TrackById = make(map[int]*objects.Track)
 var GroupById = make(map[int]*objects.Group)
 var GroupByGenre = map[*objects.MusicGenre]([]*objects.Group){}
 
+var GenreById = make(map[int]*objects.MusicGenre)
+
 func Init() {
 	api.LoadApiDataFromFile()
 	prepareGroups()
-
-	//temp
-	println(len(GroupList))
 }

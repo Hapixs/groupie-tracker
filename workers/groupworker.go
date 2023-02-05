@@ -4,6 +4,7 @@ import (
 	"api"
 	"logger"
 	"objects"
+	"strconv"
 	"strings"
 	"time"
 	"utils"
@@ -50,8 +51,6 @@ func prepareGroups() {
 		group.CreationYear = groupieArtist.CreationDate
 		group.FirstAlbumDate = groupieArtist.FirstAlbum
 
-		println("working for " + group.Name)
-
 		// Complex transformation
 		//todo members
 		//todo dates
@@ -84,78 +83,25 @@ func prepareGroups() {
 			group.Members = append(group.Members, *buildArtist(member, group.Name, group.Id))
 		}
 
+		DefineMostValuableGenreForGroup(group)
 		mutex.Lock()
 		GroupList = append(GroupList, group)
 		GroupById[group.Id] = group
+		ok := false
+		for k := range GroupByGenre {
+			if k.Name == group.MostValuableGenre.Name {
+				GroupByGenre[k] = append(GroupByGenre[k], group)
+				ok = !ok
+				break
+			}
+		}
+		if !ok {
+			GroupByGenre[group.MostValuableGenre] = append(make([]*objects.Group, 0), group)
+		}
 		mutex.Unlock()
 	}
+	logger.Log("All groups are loaded")
 }
-
-// func LoadGroups() {
-// 	api.LoadApiDataFromFile()
-// 	println("Loading groups in cache for better performances")
-// 	artists := api.GetGroupieArtistList()
-
-// 	for _, v := range artists {
-// 		go transformAndCacheGroup(v)
-// 		waitgroup.Add(1)
-// 	}
-// 	waitgroup.Wait()
-// 	go UpdateAllDeezerInformations(false)
-// 	go UpdateAllGeolocInformation(false)
-// 	println(strconv.Itoa(len(GroupMap)) + " groups have been loaded in cache!")
-// }
-
-// func transformAndCacheGroup(v api.ApiArtist) {
-// 	defer waitgroup.Done()
-// 	group := objects.Group{}
-// 	group.InitFromApiArtist(v)
-// 	mutex.Lock()
-// 	GroupMap[v.Id] = group
-// 	mutex.Unlock()
-// }
-
-// func UpdateAllDeezerInformations(forceUpdate bool) {
-// 	println("[ASYNC] Loading informations from deezer's api")
-// 	for k, v := range GroupMap {
-// 		v.DZInformations = api.GetDeezerInformationsFromName(v.Name, forceUpdate)
-// 		v.DefineMostValuableGenreForGroup()
-// 		mutex.Lock()
-// 		GroupMap[k] = v
-// 		s := GroupByGenreMap[v.MostValuableGenre]
-// 		if !GroupSliceContain(s, v) {
-// 			s = append(s, v)
-// 		}
-// 		GroupByGenreMap[v.MostValuableGenre] = s
-// 		mutex.Unlock()
-// 	}
-// 	api.SaveApiCacheToFile()
-// 	println("Updated all deezer information !")
-// }
-
-// func UpdateAllGeolocInformation(forceUpdate bool) {
-// 	println("[ASYNC] Loading geoloc informations")
-// 	for i, value := range GroupMap {
-// 		for location, dates := range value.DateLocations {
-// 			for _, date := range dates {
-// 				city := location
-// 				geoloc := api.GetInformationForCity(city)
-// 				date.Loc = geoloc
-// 				val, ok := value.DateLocations[location]
-// 				l := []api.Date{date}
-// 				if !ok {
-// 					l = append(l, val...)
-// 				}
-// 				mutex.Lock()
-// 				value.DateLocations[location] = l
-// 				GroupMap[i] = value
-// 				mutex.Unlock()
-// 			}
-// 		}
-// 	}
-// 	api.SaveApiCacheToFile()
-// 	println("All geoloc information are loaded")
-// }
 
 func GroupSliceContain(s []objects.Group, v objects.Group) bool {
 	for _, value := range s {
@@ -167,7 +113,12 @@ func GroupSliceContain(s []objects.Group, v objects.Group) bool {
 }
 
 func UpdateAlternativeGroupsForGroup(group *objects.Group) {
-	group.GroupAlternatives = GroupByGenre[group.MostValuableGenre]
+	for k, v := range GroupByGenre {
+		if k.Name == group.MostValuableGenre.Name {
+			group.GroupAlternatives = v
+			break
+		}
+	}
 }
 
 func GetDeezerGenreList() []*objects.MusicGenre {
@@ -187,4 +138,30 @@ func FilterGroupsByName(filter string) []*objects.Group {
 			strings.ToUpper(b.Name), strings.ToUpper(filter))
 	})
 	return tlist
+}
+
+func DefineMostValuableGenreForGroup(group *objects.Group) {
+	top := new(objects.MusicGenre)
+	top.Name = "none"
+	top.Id = -1
+
+	table := map[int](int){0: 0}
+	for _, track := range group.TrackList {
+		i := 1
+		val, ok := table[track.Genre.Id]
+		if ok {
+			i += val
+		}
+		table[track.Genre.Id] = i
+	}
+	for k, v := range table {
+		if v > table[top.Id] {
+			top = GenreById[k]
+		}
+	}
+	id := strconv.Itoa(top.Id)
+	if id == "0" {
+		top.Id = 0
+	}
+	group.MostValuableGenre = top
 }

@@ -1,58 +1,39 @@
-<!DOCTYPE html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico">    
-    <link rel="stylesheet" type="text/css" href="/static/css/map.css" />
-    <title>{{ .ProjectName }} - {{ .Group.Name }}</title>
-</head>
-
-<body>
-      <div id="map"></div>
-
-      <!-- 
-       The `defer` attribute causes the callback to execute after the full HTML
-       document has been parsed. For non-blocking uses, avoiding race conditions,
-       and consistent behavior across browsers, consider loading using Promises
-       with https://www.npmjs.com/package/@googlemaps/js-api-loader.
-      -->
-</body>
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="/static/js/script.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script>  
-<script>
-    function initMap() {
-      const myLatLng = { lat: {{ (index .Group.DateLocations 0).Loc.Lat}} , lng: {{ (index .Group.DateLocations 0).Loc.Long}} }
-        var options = {     
-            zoom: 10,
-            center: myLatLng
-        }
-        var map = new google.maps.Map(document.getElementById('map'), options);
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map
-        });
-    }
-</script>
-<!-- <div class="grid grid-flow-row">
-                    {{ range $key, $value := .Group.DateLocations }}
-                        {{ range $value }}      
-                           <button onclick="ChangeMapCoordinates({{.Loc.Lat}}, {{.Loc.Long}})">
-                                {{ $key }}
-                                <ul>
-                                {{ range .DateTime }}
-                                    <li> {{ . }} </li>
-                                {{ end }}
-                                </ul>
-                            </button> 
-                        {{ end }}
-                    {{ end }}
-                </div>-- >
+{{ if ne (len .Groups) 0}}
+{{ range .Groups }}
+    <div class="flex">
+        <a href="/group/{{.Id}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
+            </div>
+            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}"/>
+        </a>
+    </div>
+{{ end }}
+{{ end }}
+{{ if ne (len .TrackResearch) 0}}
+{{ range .TrackResearch}}
+    <div class="flex">
+        <a href="/group/{{.GroupId}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                <p class="text-sm dark:text-white groupeName">{{.Track.Title}}</p>
+            </div>
+            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.Track.Album.Cover}}"/>
+        </a>
+    </div>
+{{ end }}
+{{ end }}
+{{ if ne (len .TrackArtist) 0}}
+{{ range .TrackArtist}}
+    <div class="flex">
+        <a href="/group/{{.GroupId}}" class="group hover:scale-110 hover:z-10 transform ease-in-out transition duration-100">
+            <div class="mnt-20 translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                <p class="text-sm dark:text-white groupeName">{{.Name}}</p>
+            </div>
+            <img class="h-1/2 rounded-xl ring-2 ring-white" src="{{.ImageLink}}"/>
+        </a>
+    </div>
+{{ end }}
+{{ end }}
+{{ if eq (len .Groups) 0 }}
+<p style="position: absolute;left: 0;right: 0;text-align: center;font-size: 4vh;font-family: 'Fira Mono', monospace;letter-spacing: 0;color: rgb(97, 97, 97);opacity: 0.7;margin: 1%;">Pas de résultats, relisez ce que vous avez écrit...</p>
+{{end}}
