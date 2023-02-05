@@ -25,12 +25,12 @@
     <header>
         {{ index .Fragments "navigationbar.html" }}
     </header>
-    <body onload="init()">
-        <h1 class="px-10 pt-20 text-7xl font-semibold text-white text-center">Recherche avancée</h1>
-        <form method="post" action="/advanced" class="px-10">
+    <body onload="init()" class="w-full bg-gradient-to-b dark:from-gray-900 from-blue-200 to-white dark:to-gray-800 dark:text-white pb-0 ">
+        <h1 class="px-10 pt-20 text-6xl font-semibold text-white text-center">Recherche avancée</h1>
+        <form method="post" action="/advanced" class="px-10 pt-20">
             <div class="date">
                 <div class="divider h-full" id="localisations">
-                    <h2 class="text-5xl"> Année </h2>
+                    <h2 class="text-4xl"> Par année </h2>
                 </div>
                 <div class="currentValue">
                     <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
@@ -39,20 +39,20 @@
             </div>
             <div class="membersNumber">
                 <div class="divider h-full pt-50 md:p-10" id="membersNumber"> 
-                    <h2 class="text-5xl"> Nombres de membre </h2>
+                    <h2 class="text-4xl"> Nombres de membres du groupe </h2>
                 </div>
                 {{ range .ASearch_MembersNumber }}
                     <label class="form-check form-check-inline">
                         <input type="checkbox" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="membersNumber" id="inlineCheckbox1">
-                        <label class="form-check-label inline-block text-white" for="inlineCheckbox1">{{ . }}</label>
+                        <label class="form-check-label inline-block text-white font-['Bebas_Neue']" for="inlineCheckbox1">{{ . }}</label>
                     </label>
                 {{ end }}
             </div>
             <div>
                 <div class="divider h-full pt-50 md:p-10" id="localisations">
-                    <h2 class="text-5xl"> Localisations </h2>
+                    <h2 class="text-4xl"> Localisations </h2>
                 </div>
-                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selectionnez une ou plusieurs localisations</label>
                 <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
                 {{ range .ASearch_Locations }}
                     <option value="{{ . }}">{{ . }}</option>
@@ -60,9 +60,11 @@
                 </select>
             </div>
             <div class="text-center py-5">
-                <input type="submit" name="Valider" value="Valider" class="btn btn-primary">
+                <input type="submit" name="Rechercher" value="Rechercher" class="btn btn-primary">
             </div>
         </form>
     </body>
-    {{ index .Fragments "footer.html" }}
+    <footer>
+        {{ index .Fragments "footer.html" }}
+    </footer>
 </html>
