@@ -22,9 +22,9 @@ func groupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	group := workers.GroupMap[groupId]
+	group := workers.GroupById[groupId]
 	group.DefineMostValuableGenreForGroup()
-	workers.UpdateAlternativeGroupsForGroup(&group)
+	workers.UpdateAlternativeGroupsForGroup(group)
 	tmpl := template.Must(template.ParseFiles(groupTemplatePath))
 	data := HtmlData{
 		Group:       group,

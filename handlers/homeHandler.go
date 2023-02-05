@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"api"
 	"net/http"
 	"objects"
 	"strconv"
@@ -13,8 +12,8 @@ import (
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(homeTemplatePath))
-	groupsbygenre := workers.GroupByGenreMap
-	groups := []objects.Group{}
+	groupsbygenre := workers.GroupByGenre
+	groups := []*objects.Group{}
 
 	data := HtmlData{
 		ProjectName:  "Chazam",
@@ -45,7 +44,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 			data.Groups = append(data.Groups, k...)
 		}
 	} else {
-		data.GroupByGenres = map[api.DeezerGenre][]objects.Group{}
+		data.GroupByGenres = map[*objects.MusicGenre][]*objects.Group{}
 		data.Groups = groups
 	}
 

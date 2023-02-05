@@ -4,13 +4,11 @@ import (
 	"net/http"
 	"text/template"
 	"workers"
-
-	"golang.org/x/exp/maps"
 )
 
 func testHandler(w http.ResponseWriter, r *http.Request) {
 	data := HtmlData{
-		Group: maps.Values(workers.GroupMap)[0],
+		Group: workers.GroupList[0],
 	}
 	println(len(data.Group.DateLocations))
 	data.InfoMessage = "Test info message"

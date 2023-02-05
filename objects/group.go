@@ -7,17 +7,25 @@ import (
 )
 
 type Group struct {
-	Id             int                     `json:"id"`
-	ImageLink      string                  `json:"image_link"`
-	Name           string                  `json:"name"`
-	Members        []Artist                `json:"members"`
-	CreationYear   int                     `json:"creation_year"`
-	FirstAlbumDate string                  `json:"first_album_date"`
-	DateLocations  map[string]([]api.Date) `json:"date_locations"`
+	// Direct From groupie
+	Id             int    `json:"id"`
+	ImageLink      string `json:"image_link"`
+	Name           string `json:"name"`
+	CreationYear   int    `json:"creation_year"`
+	FirstAlbumDate string `json:"first_album_date"`
 
-	DZInformations    api.DeezerInformations `json:"deezer_informations"`
-	GroupAlternatives []Group                `json:"group_alternatives"`
-	MostValuableGenre api.DeezerGenre        `json:"most_valuable_genre"`
+	//Direct from deezer
+	DeezerId  int      `json:"deezerId"`
+	TrackList []*Track `json:"trackList"`
+
+	//Transformed by workers
+	DateLocations map[string]([]api.Date)  `json:"date_locations"` // deaprected
+	LocationMap   map[string]([]*Location) `json:"locations"`
+	Members       []Artist                 `json:"members"`
+
+	DZInformations    api.DeezerInformations `json:"deezer_informations"` // to remove
+	GroupAlternatives []*Group               `json:"group_alternatives"`
+	MostValuableGenre *MusicGenre            `json:"most_valuable_genre"`
 }
 
 func (group *Group) UpdatePicture() {
@@ -64,9 +72,9 @@ func (group *Group) InitFromApiArtist(apiartist api.ApiArtist) {
 }
 
 func (group *Group) DefineMostValuableGenreForGroup() {
-	var top api.DeezerGenre = api.DeezerGenre{Name: ""}
-	table := map[api.DeezerGenre](int){top: 0}
-	for _, track := range group.DZInformations.TrackList.List {
+	top := new(MusicGenre)
+	table := map[*MusicGenre](int){top: 0}
+	for _, track := range group.TrackList {
 		i := 1
 		val, ok := table[track.Album.Genre]
 		if ok {
@@ -80,22 +88,4 @@ func (group *Group) DefineMostValuableGenreForGroup() {
 		}
 	}
 	group.MostValuableGenre = top
-	switch group.MostValuableGenre.Name {
-	case "Classique":
-		group.MostValuableGenre.FontName = "Nicoone"
-	case "Dance":
-		group.MostValuableGenre.FontName = "Orbitron"
-	case "Rap/Hip Hop":
-		group.MostValuableGenre.FontName = "Lacquer"
-	case "Pop":
-		group.MostValuableGenre.FontName = "Reem_Kufi_Ink"
-	case "Reggae":
-		group.MostValuableGenre.FontName = "Shadows_Into_Light"
-	case "Metal":
-		group.MostValuableGenre.FontName = "Metal_Mania"
-	case "Rock":
-		group.MostValuableGenre.FontName = "Rock_Salt"
-	case "Alternative":
-		group.MostValuableGenre.FontName = "Unbounded"
-	}
 }

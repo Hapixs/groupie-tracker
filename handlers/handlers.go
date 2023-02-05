@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"api"
 	"net/http"
 	"objects"
 	"os"
@@ -27,16 +26,16 @@ type HtmlData struct {
 	LastResearchInput    string
 	LastResearchCategory string
 
-	Groups      []objects.Group
-	Group       objects.Group
+	Groups      []*objects.Group
+	Group       *objects.Group
 	Fragments   map[string](string)
 	ProjectName string
 
-	DeezerGenres  []api.DeezerGenre
-	GroupByGenres map[api.DeezerGenre][]objects.Group
+	DeezerGenres  []*objects.MusicGenre
+	GroupByGenres map[*objects.MusicGenre][]*objects.Group
 
-	TrackResearch  []objects.Track
-	ArtistResearch []objects.Artist
+	TrackResearch  []*objects.Track
+	ArtistResearch []*objects.Artist
 
 	ASearch_MembersNumber []int
 	ASearch_Locations     []string
@@ -51,8 +50,8 @@ func InitHandlers() {
 	http.HandleFunc("/test", testHandler)
 	http.HandleFunc("/notfound", errorHandler)
 
-	for k := range workers.GroupMap {
-		link := "/group/" + strconv.Itoa(k) + "/"
+	for _, k := range workers.GroupList {
+		link := "/group/" + strconv.Itoa(k.Id) + "/"
 		http.HandleFunc(link, groupHandler)
 	}
 

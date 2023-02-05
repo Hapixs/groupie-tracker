@@ -11,8 +11,21 @@ var waitgroup sync.WaitGroup
 var mutex sync.Mutex
 
 // Publics variables of the package 'workers'
-var GroupMap = map[int](objects.Group){}
-var GroupByGenreMap = map[api.DeezerGenre]([]objects.Group){}
-var trackById map[int]objects.Track = make(map[int]objects.Track)
-var Locations = map[string]([]api.Date){}
-var artistsList = []objects.Artist{}
+var GroupList = make([]*objects.Group, 0)
+var TrackList = make([]*objects.Track, 0)
+var GenreList = make([]*objects.MusicGenre, 0)
+var ArtistList = make([]*objects.Artist, 0)
+
+var LocationByName = make(map[string]([]*objects.Location))
+var TrackById = make(map[int]*objects.Track)
+
+var GroupById = make(map[int]*objects.Group)
+var GroupByGenre = map[*objects.MusicGenre]([]*objects.Group){}
+
+func Init() {
+	api.LoadApiDataFromFile()
+	prepareGroups()
+
+	//temp
+	println(len(GroupList))
+}
