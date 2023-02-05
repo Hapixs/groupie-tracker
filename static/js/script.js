@@ -68,16 +68,20 @@ function playaudio() {
     return {
         currentlyPlaying: false,
         playAndStop() {
+            stopAll();
             if (this.currentlyPlaying) {
+                console.log("stop");
                 this.$refs.audio.pause();
                 this.$refs.audio.currentTime = 0;
                 this.currentlyPlaying = false;
             } else {
+                console.log("play");
                 this.$refs.audio.play();
                 this.currentlyPlaying = true;
             }
         },
         stop() {
+            console.log("stop");
             this.$refs.audio.pause();
             this.$refs.audio.currentTime = 0;
             this.currentlyPlaying = false;
@@ -85,6 +89,18 @@ function playaudio() {
     }
 }
 
+function stopAll() {
+    var divAudio = document.getElementById("tracks");
+    for(var i = 0, len = divAudio.length; i < len;i++) {
+        if (divAudio.currentlyPlaying) {
+            playaudio();
+        } 
+    }
+    var audios = document.getElementsByTagName('audio');
+    for(var i = 0, len = audios.length; i < len;i++) {
+        audios[i].pause();
+    }
+}
 
 
 function getAverageRGB(imgEl) {

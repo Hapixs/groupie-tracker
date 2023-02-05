@@ -75,8 +75,8 @@
             </div>
             <div class="grid justify-items-center lg:grid-rows-2 lg:grid-cols-5 gap-8 sm:grid-cols-1 sm:auto-rows-max mb-5">
                 {{ range .Group.DZInformations.TrackList.List }}
-                    <div x-data="playaudio()" class="h-80 w-80" id="track{{.Title}}">
-                        <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]">
+                    <div x-data="playaudio()" class="h-80 w-80">
+                        <button @keydown.tab="playAndStop" @click="playAndStop" type="button" class="relative rounded-xl group cursor-pointer focus:outline-none focus:ring focus:ring-[#1F89AE]" id="tracks">
                             <div class="inset-0 flex items-center justify-center">
                                 <div class="w-full h-full transition duration-300 ease-in-out bg-cyan-500 filter group-hover:blur-2xl"></div>
                             </div>
