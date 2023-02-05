@@ -41,12 +41,14 @@
                 <div class="divider h-full pt-50 md:p-10" id="membersNumber"> 
                     <h2 class="text-4xl"> Nombres de membres du groupe </h2>
                 </div>
-                {{ range .ASearch_MembersNumber }}
-                    <label class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="membersNumber" id="inlineCheckbox1">
-                        <label class="form-check-label inline-block text-white font-['Bebas_Neue']" for="inlineCheckbox1">{{ . }}</label>
-                    </label>
-                {{ end }}
+                <div class="flex justify-center">
+                    {{ range .ASearch_MembersNumber }}
+                        <label class="form-check form-check-inline flex items-center">
+                            <input type="checkbox" class="justify-items-center form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="membersNumber" id="inlineCheckbox1">
+                            <label class="form-check-label inline-block text-white font-['Bebas_Neue'] mt-2" for="inlineCheckbox1">{{ . }}</label>
+                        </label>
+                    {{ end }}
+                </div>
             </div>
             <div>
                 <div class="divider h-full pt-50 md:p-10" id="localisations">
