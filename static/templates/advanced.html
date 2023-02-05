@@ -66,12 +66,12 @@
             </div>
             
         </form>
-        <div class="align">{{range .Groups}}
+        <div class="mb-64 sticky grid grid-cols-10 w-full place-content-center gap-4">{{range .Groups}}
                 <a href="/group/{{.Id}}/">
                     <div class="flex space-x-2 mb-5">
                         <span class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">{{.MostValuableGenre.Name}}</span>
                     </div>
-                    <div class="rounded-lg hover:scale-110 shadow-lg bg-white w-48 mb-5 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
+                    <div class="rounded-lg hover:scale-110 shadow-lg bg-white w-48 hover:bg-gray-600 easy-in duration-300 dark:bg-gray-600 mx-5" loading="lazy">
                         <img class="rounded-t-lg" src="{{.ImageLink}}" alt={{.Name}}/>
                         <div class="p-6">
                             <h5 class="text-gray-900 text-xl font-medium mb-2 dark:text-white text-center">{{.Name}}</h5>
