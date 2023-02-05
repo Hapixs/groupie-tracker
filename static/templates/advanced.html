@@ -45,7 +45,7 @@
                     {{ range .ASearch_MembersNumber }}
                         <label class="form-check form-check-inline flex items-center">
                             <input type="checkbox" class="justify-items-center form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="membersNumber" id="inlineCheckbox1">
-                            <label class="form-check-label inline-block text-white font-['Bebas_Neue'] mt-2" for="inlineCheckbox1">{{ . }}</label>
+                            <label class="form-check-label inline-block text:black black:text-white font-['Bebas_Neue'] mt-2" for="inlineCheckbox1">{{ . }}</label>
                         </label>
                     {{ end }}
                 </div>
@@ -62,7 +62,7 @@
                 </select>
             </div>
             <div class="text-center py-5">
-                <input type="submit" name="Rechercher" value="Rechercher" class="btn btn-primary">
+                <input type="submit" name="Rechercher" value="Rechercher" class="text-black border-blue-600 dark:text-white hover:bg-blue-600 btn btn-primary">
             </div>
         </form>
     </body>
