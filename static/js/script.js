@@ -85,6 +85,8 @@ function playaudio() {
     }
 }
 
+
+
 function getAverageRGB(imgEl) {
 
     var blockSize = 5, // only visit every 5 pixels
