@@ -20,7 +20,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 
-        <title>{{ .ProjectName }} - Advanced search</title>
+        <title>{{ .ProjectName }} - Recherche avancée</title>
     </head>
     <header>
         {{ index .Fragments "navigationbar.html" }}
@@ -54,7 +54,7 @@
                 <div class="divider h-full pt-50 md:p-10" id="localisations">
                     <h2 class="text-4xl"> Localisations </h2>
                 </div>
-                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selectionnez une ou plusieurs localisations</label>
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Séléctionnez une ou plusieurs localisations</label>
                 <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
                 {{ range .ASearch_Locations }}
                     <option value="{{ . }}">{{ . }}</option>
