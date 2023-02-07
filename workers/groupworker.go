@@ -177,7 +177,6 @@ func AdvencedFilter(year int, members []int, location string) []*objects.Group {
 		if len(members) > 0 {
 			m := false
 			for _, i := range members {
-				println(i)
 				m = len(v.Members) == i || m
 			}
 			if !m {
