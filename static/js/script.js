@@ -165,17 +165,6 @@ function updateMemberBackWithColor() {
     document.getElementById("memberList").setAttribute('class', document.getElementById("memberList").getAttribute('class')+" bg-["+hex+"]");
 }
 
-function getGroupNameById(id) {
-    // console.log("getGroupNameById");
-    var apiSearch = "/api/group?id="+id;
-    var groupName = "";
-    fetch(apiSearch)
-    .then(response => response.json())
-    .then(data => {
-        groupName = data.name;
-    });
-    return groupName;
-}
 
 var lastfilter = ""
 

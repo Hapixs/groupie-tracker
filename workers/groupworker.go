@@ -9,6 +9,7 @@ import (
 	"time"
 	"utils"
 
+	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 )
 
@@ -164,4 +165,32 @@ func DefineMostValuableGenreForGroup(group *objects.Group) {
 		top.Id = 0
 	}
 	group.MostValuableGenre = top
+}
+
+func AdvencedFilter(year int, members []int, location string) []*objects.Group {
+	tlist := []*objects.Group{}
+	for _, v := range GroupList {
+		ok := true
+		if year > 0 {
+			ok = v.CreationYear <= year
+		}
+		if len(members) > 0 {
+			m := false
+			for _, i := range members {
+				println(i)
+				m = len(v.Members) == i || m
+			}
+			if !m {
+				continue
+			}
+		}
+		if location != "" {
+			ok = ok && slices.Contains(maps.Keys(v.LocationMap), location)
+		}
+		if ok {
+			tlist = append(tlist, v)
+		}
+	}
+	return tlist
+
 }

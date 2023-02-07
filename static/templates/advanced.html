@@ -35,7 +35,7 @@
                 <div class="currentValue">
                     <span class="text-gray-700 dark:text-gray-300" id="date-range-value">1950</span>
                 </div>
-                <input id="date-range" type="range" min="1950" max="2023" value="1950" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                <input id="date-range" name="date-range" type="range" min="1950" max="2023" value="0" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
             </div>
             <div class="membersNumber">
                 <div class="divider h-full pt-50 md:p-10" id="membersNumber"> 
@@ -44,8 +44,8 @@
                 <div class="flex justify-center">
                     {{ range .ASearch_MembersNumber }}
                         <label class="form-check form-check-inline flex items-center">
-                            <input type="checkbox" class="justify-items-center form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="membersNumber" id="inlineCheckbox1">
-                            <label class="form-check-label inline-block text:black black:text-white font-['Bebas_Neue'] mt-2" for="inlineCheckbox1">{{ . }}</label>
+                            <input type="checkbox" class="justify-items-center form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" value="{{ . }}" name="inlineCheckbox_{{.}}" id="inlineCheckbox_{{.}}">
+                            <label class="form-check-label inline-block text:black black:text-white font-['Bebas_Neue'] mt-2" for="inlineCheckbox_{{.}}">{{ . }}</label>
                         </label>
                     {{ end }}
                 </div>
@@ -55,7 +55,7 @@
                     <h2 class="text-4xl"> Localisations </h2>
                 </div>
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Séléctionnez une ou plusieurs localisations</label>
-                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
+                <select id="countries" name="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
                 {{ range .ASearch_Locations }}
                     <option value="{{ . }}">{{ . }}</option>
                 {{ end }}
@@ -64,9 +64,8 @@
             <div class="text-center py-5">
                 <input type="submit" name="Rechercher" value="Rechercher" class="text-black border-blue-600 dark:text-white hover:bg-blue-600 btn btn-primary">
             </div>
-            
         </form>
-        <div class="mb-64 sticky grid grid-cols-10 w-full place-content-center gap-4">{{range .Groups}}
+        <div class="mb-64 sticky grid grid-cols-7 w-full place-content-center gap-4">{{range .Groups}}
                 <a href="/group/{{.Id}}/">
                     <div class="flex space-x-2 mb-5">
                         <span class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">{{.MostValuableGenre.Name}}</span>
