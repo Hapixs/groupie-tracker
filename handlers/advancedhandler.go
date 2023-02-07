@@ -12,7 +12,7 @@ func advancedHandler(w http.ResponseWriter, r *http.Request) {
 
 	MembersNumber := []int{}
 
-	for i := 0; i < 7; i++ {
+	for i := 1; i < 7; i++ {
 		MembersNumber = append(MembersNumber, i)
 	}
 
