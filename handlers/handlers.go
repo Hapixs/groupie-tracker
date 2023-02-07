@@ -48,7 +48,6 @@ func InitHandlers() {
 
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/home", homeHandler)
-	http.HandleFunc("/test", testHandler)
 	http.HandleFunc("/notfound", errorHandler)
 
 	for _, k := range workers.GroupList {
